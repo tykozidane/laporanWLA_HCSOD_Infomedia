@@ -10,17 +10,14 @@ class Import extends BaseController
 {
     public function index($nik = '')
     {
-        if(!empty($nik)){
-            $laporan = new Datalaporan();
-            $datalaporan = $laporan->getByNik($nik);
-            return view('homepage', compact('datalaporan'));  
-        } else {
-            $laporan = new Dataemployee();
-        $dataemployee = $laporan->getAllData();
-        return view('homepage', compact('dataemployee'));
-        }
+        return redirect()->route('employee');
     }
-
+    public function employee()
+    {
+        $laporan = new Dataemployee();
+        $dataemployee = $laporan->getAllData();
+        return view('dataemployee', compact('dataemployee'));
+    }
     // public function datapegawai($nik = '')
     // {
     //     if(!empty($nik)){
@@ -388,7 +385,7 @@ class Import extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newprimary = ($average_time*$quantity*($durasi*20))/1;
+                        $newprimary = ($average_time*$quantity*($durasi*235))/1;
                         // $datalaporan[$count]['quantity'] = $newprimary;
                         $datalaporan[$count]['primary'] = $newprimary;
                         $datalaporan[$count]['supportive'] = '';
@@ -399,7 +396,7 @@ class Import extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newsupportive = ($average_time*$quantity*($durasi*20))/1;
+                        $newsupportive = ($average_time*$quantity*($durasi*235))/1;
                         $datalaporan[$count]['primary'] = '';
                         $datalaporan[$count]['supportive'] = $newsupportive;
                         $datalaporan[$count]['outside'] = '';
@@ -410,7 +407,7 @@ class Import extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newoutside = ($average_time*$quantity*($durasi*20))/1;
+                        $newoutside = ($average_time*$quantity*($durasi*235))/1;
                         $datalaporan[$count]['primary'] = '';
                         $datalaporan[$count]['supportive'] = '';
                         $datalaporan[$count]['outside'] = $newoutside;
@@ -422,9 +419,9 @@ class Import extends BaseController
         };
         $pegawai = new Dataemployee();
         $datapegawai = $pegawai->getByNik($nik); 
-        $nonprojectaverage = (($counting['bkpdaily']+$counting['bksdaily']+$counting['bkodaily'])/3+($counting['bkpweekly']+$counting['bksweekly']+$counting['bkoweekly'])/3+($counting['bkpmonthly']+$counting['bksmonthly']+$counting['bkomonthly'])/3+($counting['bkpyearly']+$counting['bksyearly']+$counting['bkoyearly'])/3)/3;    
-        $projectaverage = (($counting['bkpdailyp']+$counting['bksdailyp']+$counting['bkodailyp'])/3+($counting['bkpweeklyp']+$counting['bksweeklyp']+$counting['bkoweeklyp'])/3+($counting['bkpmonthlyp']+$counting['bksmonthlyp']+$counting['bkomonthlyp'])/3+($counting['bkpyearlyp']+$counting['bksyearlyp']+$counting['bkoyearlyp'])/3)/3;    
-        $fte = ($nonprojectaverage+$projectaverage)/1504;
+        $nonprojectaverage = (($counting['bkpdaily']+$counting['bksdaily']+$counting['bkodaily'])/3+($counting['bkpweekly']+$counting['bksweekly']+$counting['bkoweekly'])/3+($counting['bkpmonthly']+$counting['bksmonthly']+$counting['bkomonthly'])/3+($counting['bkpyearly']+$counting['bksyearly']+$counting['bkoyearly'])/3)/4;    
+        $projectaverage = (($counting['bkpdailyp']+$counting['bksdailyp']+$counting['bkodailyp'])/3+($counting['bkpweeklyp']+$counting['bksweeklyp']+$counting['bkoweeklyp'])/3+($counting['bkpmonthlyp']+$counting['bksmonthlyp']+$counting['bkomonthlyp'])/3+($counting['bkpyearlyp']+$counting['bksyearlyp']+$counting['bkoyearlyp'])/3)/4;    
+        $fte = ($nonprojectaverage+$projectaverage)/2/1504;
         foreach($datapegawai as $b) {
             if ($b['fte'] == $fte){
                 continue;
@@ -433,7 +430,7 @@ class Import extends BaseController
                 $db->table('employee')->set('fte', $fte)->where('nik', $b['nik'])->update();
             }
         }
-        return view('homepage', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte'));  
+        return view('detailwla', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte'));  
         } else {
         $laporan = new Dataemployee();
         $dataemployee = $laporan->getAllData();
@@ -445,7 +442,7 @@ class Import extends BaseController
     {
         $laporan = new Dataemployee();
         $dataemployee = $laporan->getAllData();
-        return view('importpage', compact('dataemployee'));
+        return view('newimportpage', compact('dataemployee'));
     }
     public function upload()
     {
@@ -526,7 +523,7 @@ class Import extends BaseController
                 // echo $quantity;
                 $db->table('wla')->insert($datasimpan);
             }
-            return redirect()->to('/import');
+            return redirect()->to(('/datapegawai/').'/'.$niknya);
         }
     }
 }

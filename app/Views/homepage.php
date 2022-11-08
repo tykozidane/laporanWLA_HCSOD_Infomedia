@@ -16,6 +16,7 @@
       <th scope="col">Departemen</th>
       <th scope="col">Divisi</th>
       <th scope="col">Direktorat</th>
+      <th scope="col">Full Time Equivalent (FTE)</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -29,6 +30,7 @@
       <td><?php echo $datanya['dept'] ?></td>
       <td><?php echo $datanya['divisi'] ?></td>
       <td><?php echo $datanya['direktorat'] ?></td>
+      <td><?php echo $datanya['fte'] ?></td>
     </tr>
     <?php
                 }
@@ -43,6 +45,7 @@
     <?php } else { 
       foreach($datapegawai as $pegawai){?>
 <h1>Data WLA <br><?php echo $pegawai['nama']?><br><?php echo $pegawai['nik'] ?></h1>
+<br> <a href="<?= base_url('/printwla/').'/'.$pegawai['nik'] ?>" class="btn btn-primary">PRINT PDF</a>
 <?php } ?>
 <table class="table text-center " id="tablewla">
   <thead>
@@ -185,6 +188,7 @@
   </tbody>
 </table>
 <button id="button-excel">Create Excel</button>
+
 <?php }?>
 </div>
 <script>

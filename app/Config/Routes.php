@@ -1,7 +1,6 @@
 <?php
 
 namespace Config;
-
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -17,7 +16,7 @@ if (is_file(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Import');
+$routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -35,10 +34,12 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Import::datapegawai');
+$routes->get('/', 'Import::index');
 $routes->get('/import', 'Import::importform');
+$routes->get('/employee', 'Import::employee');
 $routes->get('/datapegawai/', 'Import::datapegawai');
 $routes->get('/datapegawai/(:any)', 'Import::datapegawai/$1');
+$routes->get('/printwla/(:any)', 'ExportPDF::printpdf/$1');
 
 $routes->post('/import/upload', 'Import::upload');
 
