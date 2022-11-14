@@ -16,7 +16,6 @@
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <script src="library/dselect.js"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
@@ -28,7 +27,7 @@
   <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href="#" target="_blank">
+      <a class="navbar-brand m-0" target="_blank">
         <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">HC Applications</span>
       </a>
@@ -37,7 +36,7 @@
    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" href="<?= base_url('employee') ?>">
+          <a class="nav-link" href="<?= base_url('employee') ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
             </div>
@@ -45,7 +44,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('events') ?>">
+          <a class="nav-link active" href="<?= base_url('events') ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
@@ -87,7 +86,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">WLA Tables</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Event</li>
           </ol>
           <h6 class="font-weight-bolder text-white mb-0">Tables</h6>
         </nav>
@@ -108,52 +107,64 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
-              <h6>Import</h6>
+              <h6>List Event table</h6>
+              <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('events').'/create' ?>">Add Event</a></button>
+            </div>
+            </div>
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+              <div class="input-group">
+                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Type here...">
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-              
-  <div class="card-body">
-    <h5 class="card-title">Upload File Data yang akan diimport</h5>
-    <p class="card-text">File harus berformat xlx. dll</p>
-  <?= form_open_multipart('import/upload') ?> 
-    <?php
-    $session = \Config\Services::session();
-    if(!empty($session->getFlashdata('pesan'))) {
-      echo '<div class="alert alert-danger" role="alert">
-      '. $session->getFlashdata('pesan') .'</div>';
-    } 
-    ?>
-    <div class="form-group row">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-       <label class="input-group-text" for="inputGroupSelect01">Employee</label>
-      </div>
-        <select id="nik" name="nik">
-        <option selected>Choose...</option>
-        <?php
-                foreach ($dataemployee as $datanya) {
-                ?>
-        <option value="<?= $datanya['nik'] ?>">(<?php echo $datanya['nik'] ?>) <?php echo $datanya['nama'] ?></option>
-        <?php
+                <table class="table align-items-center mb-0" id="myTable">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Event</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori Event</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">LTV</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php  
+                    foreach ($dataevent as $datanya) {
+                    ?>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                          
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm"><?php echo $datanya['nama'] ?></h6>
+                            </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0"><?php echo $datanya['tgl'] ?></p>
+                        </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs text-secondary mb-0"><?php echo $datanya['cat_event'] ?></p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold"><?php echo $datanya['jam'] ?></span>
+                      </td>
+                      <td class="align-middle">
+                        <button class="btn btn-link text-secondary mb-0">
+                          <a href="<?= base_url('/dataevent/').'/'.$datanya['id_event'] ?>"><i class="fa fa-ellipsis-v text-xs"></i></a> 
+                        </button>
+                      </td>
+                    </tr>
+                    <?php
                 }
                 ?>
-        </select>
-      </div>
-        <label for="staticEmail" class="col-sm-2 col-form-label">Upload</label>
-        <div class="col-sm-4">
-          <input type="file" name="fileimport" class="form-control">
-        </div>
-      </div>
-      <div class="form-group row">
-      <label for="staticEmail" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-4">
-          <button type="submit" class="btn btn-success">Import Data</button>
-        </div>
-      </div>
-    <?= form_close(); ?>
-  </div>
+                    
+                  </tbody>
+                </table>
               </div>
             </div>
             
@@ -197,15 +208,6 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
-  <script>
-
-var select_box_element = document.querySelector('#nik');
-
-dselect(select_box_element, {
-    search: true
-});
-
-</script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 
@@ -214,7 +216,27 @@ dselect(select_box_element, {
   <script src="js/demo/datatables-demo.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
-  
+  <!--Search name ini table-->
+  <script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+    }
+    </script>
 
 </body>
 

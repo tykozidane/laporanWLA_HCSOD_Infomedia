@@ -20,7 +20,16 @@
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-   
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -37,7 +46,7 @@
    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" href="<?= base_url('employee') ?>">
+          <a class="nav-link" href="<?= base_url('employee') ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
             </div>
@@ -45,7 +54,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('events') ?>">
+          <a class="nav-link active" href="<?= base_url('events') ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
@@ -87,9 +96,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">WLA Tables</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Events</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Tables</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Form Add Event</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -108,48 +117,50 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
-              <h6>Import</h6>
+              <h6>Add Event</h6>
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
               
   <div class="card-body">
-    <h5 class="card-title">Upload File Data yang akan diimport</h5>
-    <p class="card-text">File harus berformat xlx. dll</p>
-  <?= form_open_multipart('import/upload') ?> 
-    <?php
-    $session = \Config\Services::session();
-    if(!empty($session->getFlashdata('pesan'))) {
-      echo '<div class="alert alert-danger" role="alert">
-      '. $session->getFlashdata('pesan') .'</div>';
-    } 
-    ?>
+    <h5 class="card-title">Form Event</h5>
+    <p class="card-text">Masukan detail yang ada sesuai dengan event yang akan dilaksanakan</p>
+  <?= form_open_multipart('events/upload') ?> 
     <div class="form-group row">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-       <label class="input-group-text" for="inputGroupSelect01">Employee</label>
-      </div>
-        <select id="nik" name="nik">
-        <option selected>Choose...</option>
-        <?php
-                foreach ($dataemployee as $datanya) {
-                ?>
-        <option value="<?= $datanya['nik'] ?>">(<?php echo $datanya['nik'] ?>) <?php echo $datanya['nama'] ?></option>
-        <?php
-                }
-                ?>
+      <div class="mb-3">
+        <label for="namaevent" class="form-label">Nama Event</label>
+        <input type="text" class="form-control" id="nama" name="nama">
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+    </div>  
+    <div class="mb-3">
+        <label for="kategori" class="form-label">Kategori Event</label>
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        <select class="form-select" id="cat_event" name="cat_event" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="leader talk value">Leader Talk Value</option>
+            <option value="Sharing Session">Sharing Session</option>
         </select>
-      </div>
-        <label for="staticEmail" class="col-sm-2 col-form-label">Upload</label>
-        <div class="col-sm-4">
-          <input type="file" name="fileimport" class="form-control">
-        </div>
+    </div>
+    <div class="mb-3">
+        <label for="speaker" class="form-label">Speaker</label>
+        <input type="text" class="form-control" id="speaker" name="speaker">
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+    </div>
+    <div class="mb-3">
+        <label for="tanggal" class="form-label">Tanggal</label>
+        <input type="date" class="form-control" id="datePickerId" name="tanggal">
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+    </div>
+    <div class="mb-3">
+        <label for="jam" class="form-label">Jam</label>
+        <input type="time" class="form-control" id="jam" name="jam">
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+    </div>
       </div>
       <div class="form-group row">
-      <label for="staticEmail" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-4">
-          <button type="submit" class="btn btn-success">Import Data</button>
+        <div class="col-sm">
+          <button type="submit" class="btn btn-success">Add Event</button>
         </div>
       </div>
     <?= form_close(); ?>
@@ -205,6 +216,9 @@ dselect(select_box_element, {
     search: true
 });
 
+</script>
+<script>
+    datePickerId.min = new Date().toISOString().split("T")[0];
 </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

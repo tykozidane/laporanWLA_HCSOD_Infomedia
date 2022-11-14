@@ -40,8 +40,14 @@ $routes->get('/employee', 'Import::employee');
 $routes->get('/datapegawai/', 'Import::datapegawai');
 $routes->get('/datapegawai/(:any)', 'Import::datapegawai/$1');
 $routes->get('/printwla/(:any)', 'ExportPDF::printpdf/$1');
+$routes->get('/events', 'EventController::index');
+$routes->get('/events/absen', 'EventController::theday');
+$routes->get('/events/create', 'EventController::formadd');
+$routes->get('/dataevent/(:any)', 'EventController::cektime/$1');
 
 $routes->post('/import/upload', 'Import::upload');
+$routes->post('/events/upload', 'EventController::upload');
+$routes->post('/absen/check', 'EventController::checkabsen');
 
 /*
  * --------------------------------------------------------------------

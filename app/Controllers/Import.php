@@ -476,6 +476,7 @@ class Import extends BaseController
             $spreadsheet = $render->load($file_excel);
             $data = $spreadsheet->getActiveSheet()->toArray();
             $niknya = $this->request->getPost('nik');
+            $count =1;
             foreach ($data as $x => $row) {
                 if ($x == 0) {
                     continue;
@@ -507,8 +508,9 @@ class Import extends BaseController
                    $keterangan = $row[10]; 
                 }
                 $db = \Config\Database::connect();
-
+                $idnya = uniqid($count, $niknya);
                 $datasimpan = [
+                    'id' => $idnya,
                     'nik' => $niknya,
                     'activity' => $activity,
                     'detail' => $detail,
@@ -520,10 +522,12 @@ class Import extends BaseController
                     'quantity' => $quantity,
                     'keterangan' => $keterangan
                 ];
-                // echo $quantity;
+                $count++;
+                // echo $idnya;
                 $db->table('wla')->insert($datasimpan);
             }
-            return redirect()->to(('/datapegawai/').'/'.$niknya);
+            $this->datapegawai($niknya);
+            return redirect()->route('employee');
         }
     }
 }
