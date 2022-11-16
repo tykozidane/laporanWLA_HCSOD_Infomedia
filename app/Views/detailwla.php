@@ -427,7 +427,7 @@
                       
                         <div class="ms-4">
                           
-                          <h6 class="text-sm mb-0">Sum of FTE</h6>
+                          <h6 class="text-sm mb-0">Full Time Equivalent (FTE)</h6>
                         </div>
                       </div>
                     </td>
@@ -438,6 +438,42 @@
                       </div>
                     </td>
                   </tr>
+                  <tr>
+                    <td class="w-30">
+                      <div class="d-flex px-2 py-1 align-items-center">
+                      
+                        <div class="ms-4">
+                          
+                          <h6 class="text-sm mb-0">Indeks FTE</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <?php if($fte < 0.99 & $fte > 0) {?>
+                      <td colspan="3">
+                      <div class="text-center">
+                        <h6 class="text-sm mb-0">Underload</h6>
+                      </div>
+                    </td>
+                      <?php } else if($fte > 1 & $fte < 1.28 ) {  ?>
+                        <td colspan="3">
+                      <div class="text-center">
+                        <h6 class="text-sm mb-0">Normal</h6>
+                      </div>
+                    </td>
+                      <?php } else if($fte > 1.28 ) {  ?>
+                        <td colspan="3">
+                      <div class="text-center">
+                        <h6 class="text-sm mb-0">Overload</h6>
+                      </div>
+                    </td>
+                      <?php } else {?>
+                        <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">-</span>
+                      </td>
+                      <?php }?>
+                    
+                  </tr>
+                  
                 </tbody>
               </table>
             </div>
@@ -568,17 +604,17 @@
                     </td>
                     <td>
                       <div class="text-center">
-                        <h6 class="text-sm mb-0"><?php echo ($counting['bkpdaily']+$counting['bkpweekly']+ $counting['bkpmonthly']+$counting['bkpyearly'])/4 ?></h6>
+                        <h6 class="text-sm mb-0"><?php echo $rataprimary ?></h6>
                       </div>
                     </td>
                     <td>
                       <div class="text-center">
-                        <h6 class="text-sm mb-0"><?php echo ($counting['bksdaily']+$counting['bksweekly']+ $counting['bksmonthly']+$counting['bksyearly'])/4 ?></h6>
+                        <h6 class="text-sm mb-0"><?php echo $ratasupportive ?></h6>
                       </div>
                     </td>
                     <td class="align-middle text-sm">
                       <div class="col text-center">
-                        <h6 class="text-sm mb-0"><?php echo ($counting['bkodaily']+$counting['bkoweekly']+ $counting['bkomonthly']+$counting['bkoyearly'])/4 ?></h6>
+                        <h6 class="text-sm mb-0"><?php echo $rataoutside ?></h6>
                       </div>
                     </td>
                   </tr>
@@ -725,17 +761,17 @@
                     </td>
                     <td>
                       <div class="text-center">
-                         <h6 class="text-sm mb-0"><?php echo ($counting['bkpdailyp']+$counting['bkpweeklyp']+ $counting['bkpmonthlyp']+$counting['bkpyearlyp'])/4 ?></h6>
+                        <h6 class="text-sm mb-0"><?php echo $rataprimaryp ?></h6>
                       </div>
                     </td>
                     <td>
                       <div class="text-center">
-                        <h6 class="text-sm mb-0"><?php echo ($counting['bksdailyp']+$counting['bksweeklyp']+ $counting['bksmonthlyp']+$counting['bksyearlyp'])/4 ?></h6>
+                        <h6 class="text-sm mb-0"><?php echo $ratasupportivep ?></h6>
                       </div>
                     </td>
                     <td class="align-middle text-sm">
                       <div class="col text-center">
-                        <h6 class="text-sm mb-0"><?php echo ($counting['bkodailyp']+$counting['bkoweeklyp']+ $counting['bkomonthlyp']+$counting['bkoyearlyp'])/4 ?></h6>
+                        <h6 class="text-sm mb-0"><?php echo $rataoutsidep ?></h6>
                       </div>
                     </td>
                   </tr>

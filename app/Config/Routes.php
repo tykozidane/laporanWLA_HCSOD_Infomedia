@@ -48,6 +48,7 @@ $routes->get('/dataevent/(:any)', 'EventController::cektime/$1');
 $routes->post('/import/upload', 'Import::upload');
 $routes->post('/events/upload', 'EventController::upload');
 $routes->post('/absen/check/(:any)', 'EventController::checkabsen/$1');
+$routes->post('/absen/checkin/(:any)', 'EventController::checkin/$1');
 
 /*
  * --------------------------------------------------------------------

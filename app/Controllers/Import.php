@@ -385,7 +385,7 @@ class Import extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newprimary = ($average_time*$quantity*($durasi*235))/1;
+                        $newprimary = ($average_time*$quantity*($durasi*20))/1;
                         // $datalaporan[$count]['quantity'] = $newprimary;
                         $datalaporan[$count]['primary'] = $newprimary;
                         $datalaporan[$count]['supportive'] = '';
@@ -396,7 +396,7 @@ class Import extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newsupportive = ($average_time*$quantity*($durasi*235))/1;
+                        $newsupportive = ($average_time*$quantity*($durasi*20))/1;
                         $datalaporan[$count]['primary'] = '';
                         $datalaporan[$count]['supportive'] = $newsupportive;
                         $datalaporan[$count]['outside'] = '';
@@ -407,7 +407,7 @@ class Import extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newoutside = ($average_time*$quantity*($durasi*235))/1;
+                        $newoutside = ($average_time*$quantity*($durasi*20))/1;
                         $datalaporan[$count]['primary'] = '';
                         $datalaporan[$count]['supportive'] = '';
                         $datalaporan[$count]['outside'] = $newoutside;
@@ -419,8 +419,127 @@ class Import extends BaseController
         };
         $pegawai = new Dataemployee();
         $datapegawai = $pegawai->getByNik($nik); 
-        $nonprojectaverage = (($counting['bkpdaily']+$counting['bksdaily']+$counting['bkodaily'])/3+($counting['bkpweekly']+$counting['bksweekly']+$counting['bkoweekly'])/3+($counting['bkpmonthly']+$counting['bksmonthly']+$counting['bkomonthly'])/3+($counting['bkpyearly']+$counting['bksyearly']+$counting['bkoyearly'])/3)/4;    
-        $projectaverage = (($counting['bkpdailyp']+$counting['bksdailyp']+$counting['bkodailyp'])/3+($counting['bkpweeklyp']+$counting['bksweeklyp']+$counting['bkoweeklyp'])/3+($counting['bkpmonthlyp']+$counting['bksmonthlyp']+$counting['bkomonthlyp'])/3+($counting['bkpyearlyp']+$counting['bksyearlyp']+$counting['bkoyearlyp'])/3)/4;    
+        $rataprimary = 0;
+        $cp =0;
+        if($counting['bkpdaily']!=0){
+            $rataprimary += $counting['bkpdaily'];
+            $cp++;
+        }
+        if($counting['bkpweekly']!=0){
+            $rataprimary += $counting['bkpweekly'];
+            $cp++;
+        }
+        if($counting['bkpmonthly']!=0){
+            $rataprimary += $counting['bkpmonthly'];
+            $cp++;
+        }
+        if($counting['bkpyearly']!=0){
+            $rataprimary += $counting['bkpyearly'];
+            $cp++;
+        }
+        $ratasupportive = 0;
+        $cs =0;
+        if($counting['bksdaily']!=0){
+            $ratasupportive += $counting['bksdaily'];
+            $cs++;
+        }
+        if($counting['bksweekly']!=0){
+            $ratasupportive += $counting['bksweekly'];
+            $cs++;
+        }
+        if($counting['bksmonthly']!=0){
+            $ratasupportive += $counting['bksmonthly'];
+            $cs++;
+        }
+        if($counting['bksyearly']!=0){
+            $ratasupportive += $counting['bksyearly'];
+            $cs++;
+        }
+        $rataoutside = 0;
+        $co =0;
+        if($counting['bkodaily']!=0){
+            $rataoutside += $counting['bkodaily'];
+            $co++;
+        }
+        if($counting['bkoweekly']!=0){
+            $rataoutside += $counting['bkoweekly'];
+            $co++;
+        }
+        if($counting['bkomonthly']!=0){
+            $rataoutside += $counting['bkomonthly'];
+            $co++;
+        }
+        if($counting['bkoyearly']!=0){
+            $rataoutside += $counting['bkoyearly'];
+            $co++;
+        }
+        
+        $rataprimaryp = 0;
+        $cpp =0;
+        if($counting['bkpdailyp']!=0){
+            $rataprimaryp += $counting['bkpdailyp'];
+            $cpp++;
+        }
+        if($counting['bkpweeklyp']!=0){
+            $rataprimaryp += $counting['bkpweeklyp'];
+            $cpp++;
+        }
+        if($counting['bkpmonthlyp']!=0){
+            $rataprimaryp += $counting['bkpmonthlyp'];
+            $cpp++;
+        }
+        if($counting['bkpyearlyp']!=0){
+            $rataprimaryp += $counting['bkpyearlyp'];
+            $cpp++;
+        }
+        $ratasupportivep = 0;
+        $csp= 0;
+        if($counting['bksdailyp']!=0){
+            $ratasupportivep += $counting['bksdailyp'];
+            $csp++;
+        }
+        if($counting['bksweeklyp']!=0){
+            $ratasupportivep += $counting['bksweeklyp'];
+            $csp++;
+        }
+        if($counting['bksmonthlyp']!=0){
+            $ratasupportivep += $counting['bksmonthlyp'];
+            $csp++;
+        }
+        if($counting['bksyearlyp']!=0){
+            $ratasupportivep += $counting['bksyearlyp'];
+            $csp++;
+        }
+        $rataoutsidep = 0;
+        $cop =0;
+        if($counting['bkodailyp']!=0){
+            $rataoutsidep += $counting['bkodailyp'];
+            $cop++;
+        }
+        if($counting['bkoweeklyp']!=0){
+            $rataoutsidep += $counting['bkoweeklyp'];
+            $cop++;
+        }
+        if($counting['bkomonthlyp']!=0){
+            $rataoutsidep += $counting['bkomonthlyp'];
+            $cop++;
+        }
+        if($counting['bkoyearlyp']!=0){
+            $rataoutsidep += $counting['bkoyearlyp'];
+            $cop++;
+        }
+        $nonprojectaverage = 0; 
+        $cnpa =0;
+        if($rataprimary != 0){ $rataprimary = $rataprimary/$cp; $nonprojectaverage += $rataprimary; $cnpa++;}
+        if($ratasupportive != 0){ $ratasupportive = $ratasupportive/$cs; $nonprojectaverage += $ratasupportive; $cnpa++;}
+        if($rataoutside != 0){ $rataoutside = $rataoutside/$co; $nonprojectaverage += $rataoutside; $cnpa++;} 
+        $nonprojectaverage = $nonprojectaverage/$cnpa; 
+        $projectaverage =  0; 
+        $cpa =0;
+        if($rataprimaryp != 0){ $rataprimaryp = $rataprimaryp/$cpp; $projectaverage += $rataprimaryp; $cpa++;}
+        if($ratasupportivep != 0){ $ratasupportivep = $ratasupportivep/$csp; $projectaverage += $ratasupportivep; $cpa++;}
+        if($rataoutsidep != 0){  $rataoutsidep = $rataoutsidep/$cop; $projectaverage += $rataoutsidep; $cpa++;} 
+        $projectaverage = $projectaverage/$cpa; 
         $fte = ($nonprojectaverage+$projectaverage)/2/1504;
         foreach($datapegawai as $b) {
             if ($b['fte'] == $fte){
@@ -430,7 +549,7 @@ class Import extends BaseController
                 $db->table('employee')->set('fte', $fte)->where('nik', $b['nik'])->update();
             }
         }
-        return view('detailwla', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte'));  
+        return view('detailwla', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte', 'rataprimary', 'ratasupportive', 'rataoutside', 'rataprimaryp', 'ratasupportivep', 'rataoutsidep'));  
         } else {
         $laporan = new Dataemployee();
         $dataemployee = $laporan->getAllData();

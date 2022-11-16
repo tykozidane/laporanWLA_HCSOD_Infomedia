@@ -158,7 +158,7 @@
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">Underload</span>
                       </td>
-                      <?php } else if($datanya['fte'] > 1 & $datanya['fte'] > 1.28 ) {  ?>
+                      <?php } else if($datanya['fte'] > 1 & $datanya['fte'] < 1.28 ) {  ?>
                         <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">Normal</span>
                       </td>

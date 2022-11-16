@@ -91,7 +91,14 @@ class EventController extends BaseController
         $laporan = new Dataemployee();
         $dataemployee = $laporan->getByNikfirst($nik);
         if(empty($datanya)){
-            return view('eventspage/checkinpage', compact('dataemployee', 'passdataevent'));
+            return view('eventspage/chekinpage', compact('dataemployee', 'passdataevent'));
+        } else {
+            echo "isi voting";
         }
+    }
+    public function checkin($id)
+    {
+        $nik = $this->request->getPost('nik');
+        echo $nik;
     }
 }

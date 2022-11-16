@@ -299,7 +299,7 @@ class ExportPDF extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newprimary = ($average_time*$quantity*($durasi*20))/1;
+                        $newprimary = ($average_time*$quantity*($durasi*235))/1;
                         // $datalaporan[$count]['quantity'] = $newprimary;
                         $datalaporan[$count]['primary'] = $newprimary;
                         $datalaporan[$count]['supportive'] = '';
@@ -310,7 +310,7 @@ class ExportPDF extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newsupportive = ($average_time*$quantity*($durasi*20))/1;
+                        $newsupportive = ($average_time*$quantity*($durasi*235))/1;
                         $datalaporan[$count]['primary'] = '';
                         $datalaporan[$count]['supportive'] = $newsupportive;
                         $datalaporan[$count]['outside'] = '';
@@ -321,7 +321,7 @@ class ExportPDF extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newoutside = ($average_time*$quantity*($durasi*20))/1;
+                        $newoutside = ($average_time*$quantity*($durasi*235))/1;
                         $datalaporan[$count]['primary'] = '';
                         $datalaporan[$count]['supportive'] = '';
                         $datalaporan[$count]['outside'] = $newoutside;
@@ -336,7 +336,7 @@ class ExportPDF extends BaseController
         $nonprojectaverage = (($counting[0]+$counting[1]+$counting[2])/3+($counting[3]+$counting[4]+$counting[5])/3+($counting[6]+$counting[7]+$counting[8])/3+($counting[9]+$counting[10]+$counting[11])/3)/4;    
         $projectaverage = (($counting[12]+$counting[13]+$counting[14])/3+($counting[15]+$counting[16]+$counting[17])/3+($counting[18]+$counting[19]+$counting[20])/3+($counting[21]+$counting[22]+$counting[23])/3)/4;    
         $totalaverage = $nonprojectaverage+$projectaverage;
-        $fte = ($nonprojectaverage+$projectaverage)/1504;
+        $fte = ($totalaverage/2)/1504;
         // $html =  view('homepage', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte')); 
         
         require_once('..\vendor\tecnickcom\tcpdf\tcpdf.php'); 
@@ -476,7 +476,22 @@ class ExportPDF extends BaseController
       <th class="table-bordered" colspan="2">Full Time Equivalent (FTE)</th>
       <td class="table-bordered" colspan="2">'.$fte.'</td>
     </tr>';
-    
+    if($fte < 0.99 & $fte > 0){
+        $content .= '<tr>
+        <th class="table-bordered" colspan="2">Indeks FTE</th>
+        <td class="table-bordered" colspan="2">Underload</td>
+      </tr>'; 
+    } else if ($fte < 1.28 & $fte > 1){
+        $content .= '<tr>
+        <th class="table-bordered" colspan="2">Indeks FTE</th>
+        <td class="table-bordered" colspan="2">Normal</td>
+      </tr>';
+    } else if ($fte > 1.28){
+        $content .= '<tr>
+        <th class="table-bordered" colspan="2">Indeks FTE</th>
+        <td class="table-bordered" colspan="2">Overload</td>
+      </tr>';
+    }
       $content .= '</table>';  
         $pdf->writeHTML($content);
         $this->response->setContentType('application/pdf');
