@@ -16,4 +16,8 @@ class Dataevent extends Model
     {
         return$this->where('id_event', $id)->find();
     }
+    public function getByIdfirst($id)
+    {
+        return$this->where('id_event', $id)->first();
+    }
 }

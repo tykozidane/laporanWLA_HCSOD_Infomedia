@@ -40,21 +40,27 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
-              <h6>Event</h6>
+              <h6>Import</h6>
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
               
   <div class="card-body">
-    <h5 class="card-title"><?= $passdataevent['nama'] ?><br>Speaker : <?= $passdataevent['speaker'] ?></h5>
-    <p class="card-text">Pada Tanggal : <?= $passdataevent['tgl'] ?> <br>Jam : <?= $passdataevent['jam'] ?></p>
-    
-  <?= form_open_multipart('/absen/check/'.$passdataevent['id_event']) ?> 
+    <h5 class="card-title">Upload File Data yang akan diimport</h5>
+    <p class="card-text">File harus berformat xlx. dll</p>
+  <?= form_open_multipart('import/upload') ?> 
+    <?php
+    $session = \Config\Services::session();
+    if(!empty($session->getFlashdata('pesan'))) {
+      echo '<div class="alert alert-danger" role="alert">
+      '. $session->getFlashdata('pesan') .'</div>';
+    } 
+    ?>
     <div class="form-group row">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-       <label class="input-group-text" for="inputGroupSelect01">Pilih Nama Anda</label>
+       <label class="input-group-text" for="inputGroupSelect01">Employee</label>
       </div>
       <div class="">
         <select id="nik" name="nik">
@@ -68,13 +74,16 @@
                 ?>
         </select></div>
       </div>
-        <div class="form-group row">
-      <label for="staticEmail" class="col-sm-2 col-form-label"></label>
-        <div class="">
-          <button type="submit" class="btn btn-success">Next</button>
+        <label for="staticEmail" class="col-sm-2 col-form-label">Upload</label>
+        <div class="col-sm-4">
+          <input type="file" name="fileimport" class="form-control">
         </div>
       </div>
-      
+      <div class="form-group row">
+      <label for="staticEmail" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-4">
+          <button type="submit" class="btn btn-success">Import Data</button>
+        </div>
       </div>
     <?= form_close(); ?>
   </div>

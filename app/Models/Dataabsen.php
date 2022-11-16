@@ -14,6 +14,10 @@ class Dataabsen extends Model
     }
     public function getByNik($id)
     {
-        return $this->where('id_absen', $id)->find();
+        return $this->where('id_absen', $id)->first();
+    }
+    public function getByIdNik($id, $nik)
+    {
+        return $this->where('id_event', $id)->where('nik', $nik)->first();
     }
 }

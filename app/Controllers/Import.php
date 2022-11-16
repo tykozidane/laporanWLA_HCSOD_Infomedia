@@ -444,6 +444,7 @@ class Import extends BaseController
         $dataemployee = $laporan->getAllData();
         return view('newimportpage', compact('dataemployee'));
     }
+    
     public function upload()
     {
         $validation = \Config\Services::validation();

@@ -126,6 +126,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jabatan</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Departemen</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">FTE</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -153,6 +154,23 @@
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold"><?php echo $datanya['fte'] ?></span>
                       </td>
+                      <?php if($datanya['fte'] < 0.99 & $datanya['fte'] > 0) {?>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Underload</span>
+                      </td>
+                      <?php } else if($datanya['fte'] > 1 & $datanya['fte'] > 1.28 ) {  ?>
+                        <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Normal</span>
+                      </td>
+                      <?php } else if($datanya['fte'] > 1.28 ) {  ?>
+                        <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Overload</span>
+                      </td>
+                      <?php } else {?>
+                        <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">-</span>
+                      </td>
+                      <?php }?>
                       <td class="align-middle">
                         <button class="btn btn-link text-secondary mb-0">
                           <a href="<?= base_url('/datapegawai/').'/'.$datanya['nik'] ?>"><i class="fa fa-ellipsis-v text-xs"></i></a> 

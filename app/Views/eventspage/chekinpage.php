@@ -59,13 +59,7 @@
       <div class="">
         <select id="nik" name="nik">
         <option selected>Choose...</option>
-        <?php
-                foreach ($dataemployee as $datanya) {
-                ?>
-        <option value="<?= $datanya['nik'] ?>">(<?php echo $datanya['nik'] ?>) <?php echo $datanya['nama'] ?></option>
-        <?php
-                }
-                ?>
+        <option value="<?= $dataemployee['nik'] ?>">(<?php echo $dataemployee['nik'] ?>) <?php echo $dataemployee['nama'] ?></option>
         </select></div>
       </div>
         <div class="form-group row">

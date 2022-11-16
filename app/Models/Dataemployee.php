@@ -16,4 +16,8 @@ class Dataemployee extends Model
     {
         return $this->where('nik', $nik)->find();
     }
+    public function getByNikfirst($nik)
+    {
+        return $this->where('nik', $nik)->first();
+    }
 }

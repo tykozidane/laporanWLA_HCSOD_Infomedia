@@ -54,6 +54,7 @@ class EventController extends BaseController
     {
         $data = new Dataevent();
         $dataevent = $data->getById($id);
+        $passdataevent = $data->getByIdfirst($id);
         date_default_timezone_set('Asia/Jakarta');
         $time = date('H:i:s');
         $date = date('Y:m:d');
@@ -62,12 +63,12 @@ class EventController extends BaseController
                 if($datanya['jam'] < $time){
                     $laporan = new Dataemployee();
                     $dataemployee = $laporan->getAllData();
-                    return view('eventspage/formabsen', compact('dataemployee', 'dataevent'));
+                    return view('eventspage/pilihanawal', compact('dataemployee', 'passdataevent'));
                 }
                 if($datanya['jam'] > $time){
                     $laporan = new Dataemployee();
                     $dataemployee = $laporan->getAllData();
-                    return view('eventspage/formabsen', compact('dataemployee', 'dataevent'));
+                    return view('eventspage/pilihanawal', compact('dataemployee', 'passdataevent'));
                 }
             }
             else {
@@ -80,8 +81,17 @@ class EventController extends BaseController
             }
         }
     }
-    public function checkabsen()
+    public function checkabsen($id)
     {
-
+        $nik = $this->request->getPost('nik');
+        $cekabsen = new Dataabsen();
+        $datanya = $cekabsen->getByIdNik($id, $nik);
+        $data = new Dataevent();
+        $passdataevent = $data->getByIdfirst($id);
+        $laporan = new Dataemployee();
+        $dataemployee = $laporan->getByNikfirst($nik);
+        if(empty($datanya)){
+            return view('eventspage/checkinpage', compact('dataemployee', 'passdataevent'));
+        }
     }
 }

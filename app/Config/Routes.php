@@ -37,17 +37,17 @@ $routes->set404Override();
 $routes->get('/', 'Import::index');
 $routes->get('/import', 'Import::importform');
 $routes->get('/employee', 'Import::employee');
-$routes->get('/datapegawai/', 'Import::datapegawai');
+$routes->get('/datapegawai', 'Import::datapegawai');
 $routes->get('/datapegawai/(:any)', 'Import::datapegawai/$1');
 $routes->get('/printwla/(:any)', 'ExportPDF::printpdf/$1');
 $routes->get('/events', 'EventController::index');
-$routes->get('/events/absen', 'EventController::theday');
+$routes->get('/theday', 'EventController::theday');
 $routes->get('/events/create', 'EventController::formadd');
 $routes->get('/dataevent/(:any)', 'EventController::cektime/$1');
 
 $routes->post('/import/upload', 'Import::upload');
 $routes->post('/events/upload', 'EventController::upload');
-$routes->post('/absen/check', 'EventController::checkabsen');
+$routes->post('/absen/check/(:any)', 'EventController::checkabsen/$1');
 
 /*
  * --------------------------------------------------------------------
