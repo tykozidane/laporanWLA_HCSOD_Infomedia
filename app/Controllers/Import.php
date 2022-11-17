@@ -635,6 +635,42 @@ class Import extends BaseController
                 } else {
                    $keterangan = $row[10]; 
                 }
+                if($detail == NULL){
+                    $db = \Config\Database::connect();
+                    $db->table('wla')->where('nik', $niknya)->delete();
+                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Detail Yang Belum Diisi');
+                    return redirect()->to('/import');
+                }
+                if($average_time == NULL){
+                    $db = \Config\Database::connect();
+                    $db->table('wla')->where('nik', $niknya)->delete();
+                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Average Time Yang Belum Diisi');
+                    return redirect()->to('/import');
+                }
+                if($cat_wla == NULL){
+                    $db = \Config\Database::connect();
+                    $db->table('wla')->where('nik', $niknya)->delete();
+                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Job Relevance Yang Belum Diisi');
+                    return redirect()->to('/import');
+                }
+                if($type_wla  == NULL){
+                    $db = \Config\Database::connect();
+                    $db->table('wla')->where('nik', $niknya)->delete();
+                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Type of Work Yang Belum Diisi');
+                    return redirect()->to('/import');
+                }
+                if($periode == NULL){
+                    $db = \Config\Database::connect();
+                    $db->table('wla')->where('nik', $niknya)->delete();
+                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Periode Yang Belum Diisi');
+                    return redirect()->to('/import');
+                }
+                if($quantity  == NULL){
+                    $db = \Config\Database::connect();
+                    $db->table('wla')->where('nik', $niknya)->delete();
+                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Quantity Yang Belum Diisi');
+                    return redirect()->to('/import');
+                }
                 $db = \Config\Database::connect();
                 $idnya = uniqid($count, $niknya);
                 $datasimpan = [
