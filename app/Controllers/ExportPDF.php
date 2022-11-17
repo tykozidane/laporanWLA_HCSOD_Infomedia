@@ -447,15 +447,23 @@ class ExportPDF extends BaseController
         if($rataprimary != 0){ $rataprimary = $rataprimary/$cp; $nonprojectaverage += $rataprimary; $cnpa++;}
         if($ratasupportive != 0){ $ratasupportive = $ratasupportive/$cs; $nonprojectaverage += $ratasupportive; $cnpa++;}
         if($rataoutside != 0){ $rataoutside = $rataoutside/$co; $nonprojectaverage += $rataoutside; $cnpa++;} 
-        $nonprojectaverage = $nonprojectaverage/$cnpa; 
+        if($cnpa != 0) {
+            $nonprojectaverage = $nonprojectaverage/$cnpa; 
+        } 
         $projectaverage =  0; 
         $cpa =0;
         if($rataprimaryp != 0){ $rataprimaryp = $rataprimaryp/$cpp; $projectaverage += $rataprimaryp; $cpa++;}
         if($ratasupportivep != 0){ $ratasupportivep = $ratasupportivep/$csp; $projectaverage += $ratasupportivep; $cpa++;}
         if($rataoutsidep != 0){  $rataoutsidep = $rataoutsidep/$cop; $projectaverage += $rataoutsidep; $cpa++;} 
-        $projectaverage = $projectaverage/$cpa; 
+        if($cpa != 0){
+            $projectaverage = $projectaverage/$cpa; 
+        }
+        if($nonprojectaverage == 0 || $projectaverage == 0){
+            $fte = ($nonprojectaverage+$projectaverage)/1504;
+        } else {
+            $fte = ($nonprojectaverage+$projectaverage)/2/1504;
+        }
         $totalaverage = $nonprojectaverage+$projectaverage;
-        $fte = ($totalaverage/2)/1504;
         // $html =  view('homepage', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte')); 
         
         require_once('..\vendor\tecnickcom\tcpdf\tcpdf.php'); 
@@ -558,7 +566,7 @@ class ExportPDF extends BaseController
     <tr>
       <td class="table-bordered" colspan="2">Daily</td>
       <td class="table-bordered">'.$counting[12].'</td>
-      <td class="table-bordered">'.$counting[3].'</td>
+      <td class="table-bordered">'.$counting[13].'</td>
       <td class="table-bordered">'.$counting[14].'</td>
     </tr>
     <tr>
