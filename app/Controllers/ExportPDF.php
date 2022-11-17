@@ -299,7 +299,7 @@ class ExportPDF extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newprimary = ($average_time*$quantity*($durasi*235))/1;
+                        $newprimary = ($average_time*$quantity*($durasi*20))/1;
                         // $datalaporan[$count]['quantity'] = $newprimary;
                         $datalaporan[$count]['primary'] = $newprimary;
                         $datalaporan[$count]['supportive'] = '';
@@ -310,7 +310,7 @@ class ExportPDF extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newsupportive = ($average_time*$quantity*($durasi*235))/1;
+                        $newsupportive = ($average_time*$quantity*($durasi*20))/1;
                         $datalaporan[$count]['primary'] = '';
                         $datalaporan[$count]['supportive'] = $newsupportive;
                         $datalaporan[$count]['outside'] = '';
@@ -321,7 +321,7 @@ class ExportPDF extends BaseController
                         $average_time = $x['average_time'];
                         $quantity = $x['quantity'];
                         $durasi = $x['durasi'];
-                        $newoutside = ($average_time*$quantity*($durasi*235))/1;
+                        $newoutside = ($average_time*$quantity*($durasi*20))/1;
                         $datalaporan[$count]['primary'] = '';
                         $datalaporan[$count]['supportive'] = '';
                         $datalaporan[$count]['outside'] = $newoutside;
@@ -333,8 +333,127 @@ class ExportPDF extends BaseController
         };
         $pegawai = new Dataemployee();
         $datapegawai = $pegawai->getByNik($nik); 
-        $nonprojectaverage = (($counting[0]+$counting[1]+$counting[2])/3+($counting[3]+$counting[4]+$counting[5])/3+($counting[6]+$counting[7]+$counting[8])/3+($counting[9]+$counting[10]+$counting[11])/3)/4;    
-        $projectaverage = (($counting[12]+$counting[13]+$counting[14])/3+($counting[15]+$counting[16]+$counting[17])/3+($counting[18]+$counting[19]+$counting[20])/3+($counting[21]+$counting[22]+$counting[23])/3)/4;    
+        $rataprimary = 0;
+        $cp =0;
+        if($counting[0]!=0){
+            $rataprimary += $counting[0];
+            $cp++;
+        }
+        if($counting[3]!=0){
+            $rataprimary += $counting[3];
+            $cp++;
+        }
+        if($counting[6]!=0){
+            $rataprimary += $counting[6];
+            $cp++;
+        }
+        if($counting[9]!=0){
+            $rataprimary += $counting[9];
+            $cp++;
+        }
+        $ratasupportive = 0;
+        $cs =0;
+        if($counting[1]!=0){
+            $ratasupportive += $counting[1];
+            $cs++;
+        }
+        if($counting[4]!=0){
+            $ratasupportive += $counting[4];
+            $cs++;
+        }
+        if($counting[7]!=0){
+            $ratasupportive += $counting[7];
+            $cs++;
+        }
+        if($counting[10]!=0){
+            $ratasupportive += $counting[10];
+            $cs++;
+        }
+        $rataoutside = 0;
+        $co =0;
+        if($counting[2]!=0){
+            $rataoutside += $counting[2];
+            $co++;
+        }
+        if($counting[5]!=0){
+            $rataoutside += $counting[5];
+            $co++;
+        }
+        if($counting[8]!=0){
+            $rataoutside += $counting[8];
+            $co++;
+        }
+        if($counting[11]!=0){
+            $rataoutside += $counting[11];
+            $co++;
+        }
+        
+        $rataprimaryp = 0;
+        $cpp =0;
+        if($counting[12]!=0){
+            $rataprimaryp += $counting[12];
+            $cpp++;
+        }
+        if($counting[15]!=0){
+            $rataprimaryp += $counting[15];
+            $cpp++;
+        }
+        if($counting[18]!=0){
+            $rataprimaryp += $counting[18];
+            $cpp++;
+        }
+        if($counting[21]!=0){
+            $rataprimaryp += $counting[21];
+            $cpp++;
+        }
+        $ratasupportivep = 0;
+        $csp= 0;
+        if($counting[13]!=0){
+            $ratasupportivep += $counting[13];
+            $csp++;
+        }
+        if($counting[16]!=0){
+            $ratasupportivep += $counting[16];
+            $csp++;
+        }
+        if($counting[19]!=0){
+            $ratasupportivep += $counting[19];
+            $csp++;
+        }
+        if($counting[22]!=0){
+            $ratasupportivep += $counting[22];
+            $csp++;
+        }
+        $rataoutsidep = 0;
+        $cop =0;
+        if($counting[14]!=0){
+            $rataoutsidep += $counting[14];
+            $cop++;
+        }
+        if($counting[17]!=0){
+            $rataoutsidep += $counting[17];
+            $cop++;
+        }
+        if($counting[20]!=0){
+            $rataoutsidep += $counting[20];
+            $cop++;
+        }
+        if($counting[23]!=0){
+            $rataoutsidep += $counting[23];
+            $cop++;
+        }
+        $nonprojectaverage = 0; 
+        $cnpa =0;
+        if($rataprimary != 0){ $rataprimary = $rataprimary/$cp; $nonprojectaverage += $rataprimary; $cnpa++;}
+        if($ratasupportive != 0){ $ratasupportive = $ratasupportive/$cs; $nonprojectaverage += $ratasupportive; $cnpa++;}
+        if($rataoutside != 0){ $rataoutside = $rataoutside/$co; $nonprojectaverage += $rataoutside; $cnpa++;} 
+        $nonprojectaverage = $nonprojectaverage/$cnpa; 
+        $projectaverage =  0; 
+        $cpa =0;
+        if($rataprimaryp != 0){ $rataprimaryp = $rataprimaryp/$cpp; $projectaverage += $rataprimaryp; $cpa++;}
+        if($ratasupportivep != 0){ $ratasupportivep = $ratasupportivep/$csp; $projectaverage += $ratasupportivep; $cpa++;}
+        if($rataoutsidep != 0){  $rataoutsidep = $rataoutsidep/$cop; $projectaverage += $rataoutsidep; $cpa++;} 
+        $projectaverage = $projectaverage/$cpa; 
         $totalaverage = $nonprojectaverage+$projectaverage;
         $fte = ($totalaverage/2)/1504;
         // $html =  view('homepage', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte')); 
@@ -418,6 +537,12 @@ class ExportPDF extends BaseController
       <td class="table-bordered">'.$counting[11].'</td>
     </tr>
     <tr>
+      <td class="table-bordered" colspan="2">Average Workload</td>
+      <td class="table-bordered">'.$rataprimary.'</td>
+      <td class="table-bordered">'.$ratasupportive.'</td>
+      <td class="table-bordered">'.$rataoutside.'</td>
+    </tr>
+    <tr>
       <td class="table-bordered" colspan="2">Non Project Average Workload</td>
       <td class="table-bordered" colspan="3">'.$nonprojectaverage.'</td>
     </tr>
@@ -453,6 +578,12 @@ class ExportPDF extends BaseController
       <td class="table-bordered">'.$counting[21].'</td>
       <td class="table-bordered">'.$counting[22].'</td>
       <td class="table-bordered">'.$counting[23].'</td>
+    </tr>
+    <tr>
+      <td class="table-bordered" colspan="2">Average Workload</td>
+      <td class="table-bordered">'.$rataprimaryp.'</td>
+      <td class="table-bordered">'.$ratasupportivep.'</td>
+      <td class="table-bordered">'.$rataoutsidep.'</td>
     </tr>
     <tr>
       <td class="table-bordered" colspan="2">Non Project Average Workload</td>

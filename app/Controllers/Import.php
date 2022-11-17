@@ -128,30 +128,30 @@ class Import extends BaseController
             }
             $count = 0;
             $counting = [];
-            $counting['bkpdaily'] = 0;
-            $counting['bksdaily'] = 0;
-            $counting['bkodaily'] = 0;
-            $counting['bkpdailyp'] = 0;
-            $counting['bksdailyp'] = 0;
-            $counting['bkodailyp'] = 0;
-            $counting['bkpweekly'] = 0;
-            $counting['bksweekly'] = 0;
-            $counting['bkoweekly'] = 0;
-            $counting['bkpweeklyp'] = 0;
-            $counting['bksweeklyp'] = 0;
-            $counting['bkoweeklyp'] = 0;
-            $counting['bkpmonthly'] = 0;
-            $counting['bksmonthly'] = 0;
-            $counting['bkomonthly'] = 0;
-            $counting['bkpmonthlyp'] = 0;
-            $counting['bksmonthlyp'] = 0;
-            $counting['bkomonthlyp'] = 0;
-            $counting['bkpyearly'] = 0;
-            $counting['bksyearly'] = 0;
-            $counting['bkoyearly'] = 0;
-            $counting['bkpyearlyp'] = 0;
-            $counting['bksyearlyp'] = 0;
-            $counting['bkoyearlyp'] = 0;
+            $counting['bkpdaily'] = 0; //0
+            $counting['bksdaily'] = 0; //1
+            $counting['bkodaily'] = 0;//2
+            $counting['bkpdailyp'] = 0; //12
+            $counting['bksdailyp'] = 0; //13
+            $counting['bkodailyp'] = 0; //14
+            $counting['bkpweekly'] = 0; //3
+            $counting['bksweekly'] = 0; //4
+            $counting['bkoweekly'] = 0; //5
+            $counting['bkpweeklyp'] = 0; //15
+            $counting['bksweeklyp'] = 0; //16
+            $counting['bkoweeklyp'] = 0; //17
+            $counting['bkpmonthly'] = 0; //6
+            $counting['bksmonthly'] = 0; //7
+            $counting['bkomonthly'] = 0; //8
+            $counting['bkpmonthlyp'] = 0; //18
+            $counting['bksmonthlyp'] = 0; //19
+            $counting['bkomonthlyp'] = 0; //20
+            $counting['bkpyearly'] = 0; //9
+            $counting['bksyearly'] = 0; //10
+            $counting['bkoyearly'] = 0; //11
+            $counting['bkpyearlyp'] = 0; //21
+            $counting['bksyearlyp'] = 0; //22
+            $counting['bkoyearlyp'] = 0; //23
         foreach($datalaporan as $x){
             if ($x['periode'] == 'Daily'){
                 if($x['type_wla'] == 'Non Project'){
