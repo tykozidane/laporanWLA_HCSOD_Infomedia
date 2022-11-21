@@ -18,8 +18,9 @@
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-</head>
+  </head>
 
 <body class="g-sidenav-show bg-gray-100">
 <div class="position-absolute w-100 min-height-300 top-0" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
@@ -130,15 +131,14 @@
            <!-- <img src="../assets/img/team-1.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm"> -->
            </div>
           </div>
-          <?php 
-      foreach($datapegawai as $pegawai){?>
+          
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-              <?php echo $pegawai['nama']?>
+              <?php echo $datapegawai['nama']?>
               </h5>
               <p class="mb-0 font-weight-bold text-sm">
-              <?php echo $pegawai['dept']?>
+              <?php echo $datapegawai['dept']?>
               </p>
             </div>
           </div>
@@ -150,16 +150,22 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= base_url('/printwla/').'/'.$pegawai['nik'] ?>" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Print</a>
+                    <a href="<?= base_url('/printwla/').'/'.$datapegawai['nik'] ?>" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Print</a>
+                  </a>
+                </li>
+                <li class="nav-item">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modaldelete">
+                    <img src="../assets/img/delete.png" height="20px" width="15px" alt="main_logo"></button>
+                    <!-- <a href="<?= base_url('/deletewla/').'/'.$datapegawai['nik'] ?>" class="btn btn-sm btn-red float-right mb-0 d-none d-lg-block"><img src="../assets/img/delete.png" height="20px" width="15px" alt="main_logo"></a> -->
                   </a>
                 </li>
                </ul>
             </div>
           </div>
-          <?php } ?>
         </div>
       </div>
     </div>
+    
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-md-8">
@@ -815,12 +821,35 @@
       </footer>
     </div>
   </div>
- 
+ <!-- Modal -->
+<div class="modal fade" id="modaldelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete All Data <br><?php echo $datapegawai['nama']?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      Are you sure want to delete all data?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="<?= base_url('/deletewla/').'/'.$datapegawai['nik'] ?>"><button type="button" class="btn btn-danger">Delete</button></a>
+      </div>
+    </div>
+  </div>
+</div>
   <!--   Core JS Files   -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {

@@ -50,10 +50,15 @@
     
   <?= form_open_multipart('/absen/checkin/'.$passdataevent['id_event']) ?> 
   <legend>Absensi</legend>
+  <div class="mb-3">
+      <label for="disabledTextInput" class="form-label">NIK</label>
+      <input type="text" id="nik" name="nik" class="form-control" value="<?= $dataemployee['nik'] ?>"  readonly>
+    </div>
     <div class="mb-3">
       <label for="disabledTextInput" class="form-label">Nama</label>
-      <input type="text" id="nik" name="nik" class="form-control" placeholder="<?= $dataemployee['nama'] ?>" disabled>
+      <input type="text" id="nama" name="nama" class="form-control" value="<?= $dataemployee['nama'] ?>"  readonly>
     </div>
+    
     <button type="submit" class="btn btn-primary">Submit</button>
     <?= form_close(); ?>
   

@@ -40,6 +40,7 @@ $routes->get('/employee', 'Import::employee');
 $routes->get('/datapegawai', 'Import::datapegawai');
 $routes->get('/datapegawai/(:any)', 'Import::datapegawai/$1');
 $routes->get('/printwla/(:any)', 'ExportPDF::printpdf/$1');
+$routes->get('/deletewla/(:any)', 'Import::deletewla/$1');
 $routes->get('/events', 'EventController::index');
 $routes->get('/theday', 'EventController::theday');
 $routes->get('/events/create', 'EventController::formadd');

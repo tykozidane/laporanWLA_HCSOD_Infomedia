@@ -7,7 +7,10 @@ use CodeIgniter\Model;
 class Dataabsen extends Model
 {
     protected $table = 'absen';
-
+    protected $allowedFields = ['id_absen', 'id_event', 'nik', 'vote', 'notes', 'jam_checkin', 'last_update' ];
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
     public function getAllData()
     {
         return $this->findAll();
@@ -19,5 +22,20 @@ class Dataabsen extends Model
     public function getByIdNik($id, $nik)
     {
         return $this->where('id_event', $id)->where('nik', $nik)->first();
+    }
+    public function insertData($datasimpan)
+    {
+       return $this->insert($datasimpan);
+        // return true;
+    }
+    public function dataUpdate($id, $data)
+    {
+        $this->where('id_absen', $id)->update($data);
+        return true;
+    }
+    public function dataDelete($id)
+    {
+        $this->where('id_absen', $id)->delete();
+        return true;
     }
 }

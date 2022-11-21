@@ -418,7 +418,7 @@ class Import extends BaseController
             $count++;
         };
         $pegawai = new Dataemployee();
-        $datapegawai = $pegawai->getByNik($nik); 
+        $datapegawai = $pegawai->getByNikfirst($nik); 
         $rataprimary = 0;
         $cp =0;
         if($counting['bkpdaily']!=0){
@@ -549,14 +549,11 @@ class Import extends BaseController
         } else {
             $fte = ($nonprojectaverage+$projectaverage)/2/1504;
         }
-        foreach($datapegawai as $b) {
-            if ($b['fte'] == $fte){
-                continue;
-            } else {
-                $db = \Config\Database::connect();
-                $db->table('employee')->set('fte', $fte)->where('nik', $b['nik'])->update();
-            }
-        }
+            if ($datapegawai['fte'] != $fte){
+                 $db = \Config\Database::connect();
+                $db->table('employee')->set('fte', $fte)->where('nik', $datapegawai['nik'])->update();
+            } 
+        
         return view('detailwla', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte', 'rataprimary', 'ratasupportive', 'rataoutside', 'rataprimaryp', 'ratasupportivep', 'rataoutsidep'));  
         } else {
         $laporan = new Dataemployee();
@@ -564,7 +561,13 @@ class Import extends BaseController
         return view('homepage', compact('dataemployee'));
         }
     }
-
+    public function deletewla($nik){
+        $wla = new Datalaporan();
+        $deletedatawla = $wla->dataDelete($nik);
+        $pegawai = new Dataemployee();
+        $updatefte = $pegawai->updateFteZero($nik);
+        return redirect()->to('/employee');
+    }
     public function importform()
     {
         $laporan = new Dataemployee();
@@ -671,7 +674,7 @@ class Import extends BaseController
                     $this->session->setFlashdata('pesan', 'Terdapat Bagian Quantity Yang Belum Diisi');
                     return redirect()->to('/import');
                 }
-                $db = \Config\Database::connect();
+                
                 $idnya = uniqid($count, $niknya);
                 $datasimpan = [
                     'id' => $idnya,
@@ -688,7 +691,9 @@ class Import extends BaseController
                 ];
                 $count++;
                 // echo $idnya;
-                $db->table('wla')->insert($datasimpan);
+                // $db->table('wla')->insert($datasimpan);
+                $wla = new Datalaporan();
+                $insertdata = $wla->insertData($datasimpan);
             }
             $this->datapegawai($niknya);
             return redirect()->route('employee');

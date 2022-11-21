@@ -34,8 +34,6 @@ class EventController extends BaseController
         $tanggal = $this->request->getPost('tanggal');
         $jam = $this->request->getPost('jam');
 
-        $db = \Config\Database::connect();
-
                 $datasimpan = [
                     'id_event'=>$id,
                     'nama'=>$namaevent,
@@ -45,7 +43,9 @@ class EventController extends BaseController
                     'jam'=>$jam
                 ];
                 // echo $quantity;
-        $db->table('event')->insert($datasimpan);
+        // $db->table('event')->insert($datasimpan);
+        $event = new Dataevent();
+        $insertdata = $event->insertData($datasimpan);
         
         return redirect()->route('events');
 
@@ -98,7 +98,26 @@ class EventController extends BaseController
     }
     public function checkin($id)
     {
-        $nik = $this->request->getPost('nik');
-        echo $nik;
+        $niknya = $this->request->getPost('nik');
+        $data = new Dataevent();
+        $passdataevent = $data->getByIdfirst($id);
+        date_default_timezone_set('Asia/Jakarta');
+        $time = date('Y:m:d H:i:s');
+        $now = date('H:i:s');
+        
+                $idnya = $niknya.$passdataevent['id_event'];
+                $datasimpan = [
+                    'id_absen' => $idnya,
+                    'id_event' => $passdataevent['id_event'],
+                    'nik' => $niknya,
+                    'vote' => '',
+                    'notes' => '',
+                    'jam_checkin' => $now,
+                    'last_update' => $time
+                ];
+                $absen = new Dataabsen();
+                $addabsen = $absen->insertData($datasimpan);
+                // return redirect()->route('dataevent'.'/'.$id);
+                return redirect()->to('dataevent'.'/'.$id);
     }
 }

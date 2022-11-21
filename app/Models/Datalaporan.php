@@ -7,7 +7,10 @@ use CodeIgniter\Model;
 class Datalaporan extends Model
 {
     protected $table = 'wla';
-
+    protected $allowedFields = ['id', 'nik', 'activity', 'detail', 'average_time', 'cat_wla', 'type_wla', 'durasi', 'periode', 'quantity', 'keterangan' ];
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
     public function getAllData()
     {
         return $this->findAll();
@@ -23,5 +26,20 @@ class Datalaporan extends Model
     public function getByNikMonthlyProject($nik)
     {
         return $this->where('nik', $nik)->where('periode', 'Monthly')->where('type_wla', 'Project')->findAll();
+    }
+    public function insertData($datasimpan)
+    {
+       return $this->insert($datasimpan);
+        // return true;
+    }
+    public function dataUpdate($id, $data)
+    {
+        $this->where('id', $id)->update($data);
+        return true;
+    }
+    public function dataDelete($nik)
+    {
+        $this->where('nik', $nik)->delete();
+        return true;
     }
 }
