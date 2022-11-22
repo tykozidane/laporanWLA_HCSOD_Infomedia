@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class Dataevent extends Model
 {
     protected $table = 'event';
-    protected $allowedFields = ['id_event', 'nama', 'cat_event', 'speaker', 'tgl', 'jam' ];
+    protected $allowedFields = ['id', 'nama', 'cat_event', 'speaker', 'tgl', 'jam' ];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -17,11 +17,11 @@ class Dataevent extends Model
     }
     public function getById($id)
     {
-        return$this->where('id_event', $id)->find();
+        return$this->where('id', $id)->find();
     }
     public function getByIdfirst($id)
     {
-        return$this->where('id_event', $id)->first();
+        return$this->where('id', $id)->first();
     }
     public function insertData($datasimpan)
     {
@@ -30,12 +30,12 @@ class Dataevent extends Model
     }
     public function dataUpdate($id, $data)
     {
-        $this->where('id_absen', $id)->update($data);
+        $this->where('id', $id)->update($data);
         return true;
     }
     public function dataDelete($id)
     {
-        $this->where('id_absen', $id)->delete();
+        $this->where('id', $id)->delete();
         return true;
     }
 }

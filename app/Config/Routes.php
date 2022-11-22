@@ -42,14 +42,15 @@ $routes->get('/datapegawai/(:any)', 'Import::datapegawai/$1');
 $routes->get('/printwla/(:any)', 'ExportPDF::printpdf/$1');
 $routes->get('/deletewla/(:any)', 'Import::deletewla/$1');
 $routes->get('/events', 'EventController::index');
-$routes->get('/theday', 'EventController::theday');
 $routes->get('/events/create', 'EventController::formadd');
-$routes->get('/dataevent/(:any)', 'EventController::cektime/$1');
+$routes->get('/formpesertaevent/(:any)', 'EventController::cektime/$1');    
+$routes->get('/dataevent/(:any)', 'EventController::dataevent/$1');
 
 $routes->post('/import/upload', 'Import::upload');
 $routes->post('/events/upload', 'EventController::upload');
 $routes->post('/absen/check/(:any)', 'EventController::checkabsen/$1');
 $routes->post('/absen/checkin/(:any)', 'EventController::checkin/$1');
+$routes->post('/absen/vote/(:any)', 'EventController::voting/$1');
 
 /*
  * --------------------------------------------------------------------

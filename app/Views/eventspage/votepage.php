@@ -15,21 +15,20 @@
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="../../assets/css/stars.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  <link id="pagestyle" href="../../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -49,41 +48,40 @@
   <div class="card-body">
     <h5 class="card-title"><?= $passdataevent['nama'] ?><br>Speaker : <?= $passdataevent['speaker'] ?></h5>
     <p class="card-text">Pada Tanggal : <?= $passdataevent['tgl'] ?> <br>Jam : <?= $passdataevent['jam'] ?></p>
-    <?php
-    $session = \Config\Services::session();
-    if(!empty($session->getFlashdata('pesan'))) {
-      echo '<div class="alert alert-success" role="alert">
-      '. $session->getFlashdata('pesan') .'</div>';
-    } 
-    ?>
-  <?= form_open_multipart('/absen/check/'.$passdataevent['id']) ?> 
-    <div class="form-group row">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-       <label class="input-group-text" for="inputGroupSelect01">Pilih Nama Anda</label>
-      </div>
-      <div class="form-select">
-        <select id="nik" name="nik">
-        <option selected>Choose...</option>
-        <?php
-                foreach ($dataemployee as $datanya) {
-                ?>
-        <option value="<?= $datanya['nik'] ?>">(<?php echo $datanya['nik'] ?>) <?php echo $datanya['nama'] ?></option>
-        <?php
-                }
-                ?>
-        </select></div>
-      </div>
-        <div class="form-group row">
-      <label for="staticEmail" class="col-sm-2 col-form-label"></label>
-        <div class="">
-          <button type="submit" class="btn btn-success">Next</button>
-        </div>
-      </div>
-      
-      </div>
-    <?= form_close(); ?>
+    
+  <?= form_open_multipart('/absen/vote/'.$passdataevent['id']) ?> 
+  <legend>Vote</legend>
+  <div class="row mb-3">
+      <label for="disabledTextInput" class="form-label">NIK</label>
+      <input type="text" id="nik" name="nik" class="form-control" value="<?= $dataemployee['nik'] ?>"  readonly>
+    </div>
+    <div class="row mb-3">
+      <label for="disabledTextInput" class="form-label">Nama</label>
+      <input type="text" id="nama" name="nama" class="form-control" value="<?= $dataemployee['nama'] ?>"  readonly>
+    </div>
+    <div class="row mb-3">
+      <label for="disabledTextInput" class="form-label">Masukan</label>
+      <input type="text" id="notes" name="notes" class="form-control" placeholder="Kritik dan Saran">
+    </div>
+    <div class="row justify-content-start">
+    <div class="col-2 rate">
+    <input type="radio" id="star5" name="rate" value="5" />
+    <label for="star5" title="text">5 stars</label>
+    <input type="radio" id="star4" name="rate" value="4" />
+    <label for="star4" title="text">4 stars</label>
+    <input type="radio" id="star3" name="rate" value="3" />
+    <label for="star3" title="text">3 stars</label>
+    <input type="radio" id="star2" name="rate" value="2" />
+    <label for="star2" title="text">2 stars</label>
+    <input type="radio" id="star1" name="rate" value="1" />
+    <label for="star1" title="text">1 star</label>
   </div>
+</div>
+  <div class="">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <?= form_close(); ?>
+  
               </div>
             </div>
             

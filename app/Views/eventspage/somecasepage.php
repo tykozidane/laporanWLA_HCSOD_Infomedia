@@ -56,33 +56,6 @@
       '. $session->getFlashdata('pesan') .'</div>';
     } 
     ?>
-  <?= form_open_multipart('/absen/check/'.$passdataevent['id']) ?> 
-    <div class="form-group row">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-       <label class="input-group-text" for="inputGroupSelect01">Pilih Nama Anda</label>
-      </div>
-      <div class="form-select">
-        <select id="nik" name="nik">
-        <option selected>Choose...</option>
-        <?php
-                foreach ($dataemployee as $datanya) {
-                ?>
-        <option value="<?= $datanya['nik'] ?>">(<?php echo $datanya['nik'] ?>) <?php echo $datanya['nama'] ?></option>
-        <?php
-                }
-                ?>
-        </select></div>
-      </div>
-        <div class="form-group row">
-      <label for="staticEmail" class="col-sm-2 col-form-label"></label>
-        <div class="">
-          <button type="submit" class="btn btn-success">Next</button>
-        </div>
-      </div>
-      
-      </div>
-    <?= form_close(); ?>
   </div>
               </div>
             </div>

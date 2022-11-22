@@ -3275,21 +3275,23 @@ textarea.form-control-lg {
   position: relative;
   flex: 1 1 auto;
   width: 1%;
+  height: fit-content;
   min-width: 0;
 }
 
 .input-group>.form-control:focus,
 .input-group>.form-select:focus {
-  z-index: 3;
+  z-index: 2;
 }
 
 .input-group .btn {
   position: relative;
+  height: auto;
   z-index: 2;
 }
 
 .input-group .btn:focus {
-  z-index: 3;
+  z-index: 5;
 }
 
 .input-group-text {

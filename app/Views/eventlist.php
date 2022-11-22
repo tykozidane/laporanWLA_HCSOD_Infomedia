@@ -155,7 +155,7 @@
                       </td>
                       <td class="align-middle">
                         <button class="btn btn-link text-secondary mb-0">
-                          <a href="<?= base_url('/dataevent/').'/'.$datanya['id_event'] ?>"><i class="fa fa-ellipsis-v text-xs"></i></a> 
+                          <a href="<?= base_url('/dataevent/').'/'.$datanya['id'] ?>"><img src="../assets/img/info.png" alt="main_logo"></a> 
                         </button>
                       </td>
                     </tr>
