@@ -45,7 +45,7 @@
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-              
+            <?php  if($passdataevent){ ?>  
   <div class="card-body">
     <h5 class="card-title"><?= $passdataevent['nama'] ?><br>Speaker : <?= $passdataevent['speaker'] ?></h5>
     <p class="card-text">Pada Tanggal : <?= $passdataevent['tgl'] ?> <br>Jam : <?= $passdataevent['jam'] ?></p>
@@ -57,6 +57,13 @@
     } 
     ?>
   </div>
+  <?php } else { ?>
+    <div class="card-body">
+    <h5 class="card-title">LINK YANG ANDA GUNAKAN SALAH</h5>
+    <p class="card-text">COBA CEK KEMBALI LINK YANG DIBERIKAN!</p>
+    
+  </div>
+    <?php } ?>
               </div>
             </div>
             

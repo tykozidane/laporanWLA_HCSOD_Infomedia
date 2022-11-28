@@ -50,14 +50,10 @@
 </div>
 
 </div>
-<script>
-
-    var select_box_element = document.querySelector('#nik');
-
-    dselect(select_box_element, {
-        search: true
-    });
-
+<script type="text/javascript">
+ $(document).ready(function() {
+     $('#nik').select2();
+ });
 </script>
 
 <?= $this->endSection(); ?>

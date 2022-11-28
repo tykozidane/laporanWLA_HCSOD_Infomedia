@@ -30,7 +30,7 @@ class Dataevent extends Model
     }
     public function dataUpdate($id, $data)
     {
-        $this->where('id', $id)->update($data);
+        $this->update($id, $data);
         return true;
     }
     public function dataDelete($id)

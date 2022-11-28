@@ -6,6 +6,7 @@ use App\Models\Dataevent;
 use App\Models\Dataemployee;
 use App\Models\Dataabsen;
 use Kint\Parser\TimestampPlugin;
+use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Trunc;
 
 class EventController extends BaseController
 {
@@ -19,7 +20,33 @@ class EventController extends BaseController
     {
         $event = new Dataevent();
         $data = $event->getByIdfirst($id);
-        return view('eventspage/detailevent', compact('data'));
+        $absen = new Dataabsen();
+        $jumlahpeserta = $absen->countAbsen($id);
+        $dataabsen = $absen->getByIdevent($id);
+        $laporan = new Dataemployee();
+        $dataemployee = $laporan->getAllData();
+        $count = 0;
+        $nilai = 0;
+        foreach($dataabsen as $datanya){
+            if ($datanya['vote'] != 0){
+                $nilai += $datanya['vote'];
+                $count++;
+            } else {
+                continue;
+            }
+        }
+        if($count == 0){
+            $averagenilai = 0;
+        } else {
+            $averagenilai = $nilai / $count;
+        }
+        if (strtotime($data['tgl']) <= strtotime('now')){
+            $check = FALSE;
+        } else {
+            $check = TRUE;
+        }
+        // echo $averagenilai;
+        return view('eventspage/detailevent', compact('data', 'jumlahpeserta', 'dataabsen', 'dataemployee', 'averagenilai', 'count', 'check'));
     }
     public function formadd()
     {
@@ -51,6 +78,33 @@ class EventController extends BaseController
         return redirect()->route('events');
 
     }
+    public function editpage($id)
+    {
+        $event = new Dataevent();
+        $data = $event->getByIdfirst($id);
+        return view('eventspage/editeventpage', compact('data'));
+    }
+    public function updateevent($id)
+    {
+        $nama = $this->request->getPost('nama');
+        $speaker = $this->request->getPost('speaker');
+        $tgl = $this->request->getPost('tanggal');
+        $jam = $this->request->getPost('jam');
+        $data = [
+            'nama'=>$nama,
+            'speaker'=>$speaker,
+            'tgl'=>$tgl,
+            'jam'=>$jam
+        ];
+        $event = new Dataevent();
+        $saveupdate = $event->dataUpdate($id, $data);
+        $this->session->setFlashdata('pesan', 'Data Event '.$nama.', telah Berhasil di ubah');
+                return redirect()->to('events');
+    }
+    public function deleteEvent()
+    {
+
+    }
     public function cektime($id)
     {
         $data = new Dataevent();
@@ -58,26 +112,30 @@ class EventController extends BaseController
         $passdataevent = $data->getByIdfirst($id);
         date_default_timezone_set('Asia/Jakarta');
         $time = date('H:i:s');
-        $date = date('Y:m:d');
-        foreach($dataevent as $datanya){
-            if($datanya['tgl'] = $date){
-                if($datanya['jam'] > $time){
-                    $this->session->setFlashdata('pesan', 'EEVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
+        $date = date('Y-m-d');
+        // echo $passdataevent['tgl'].'-'.$date;
+        if(empty($passdataevent)){
                     return view('eventspage/somecasepage', compact('passdataevent'));
-                }
-                if($datanya['jam'] < $time){
-                    $laporan = new Dataemployee();
-                    $dataemployee = $laporan->getAllData();
-                    return view('eventspage/pilihanawal', compact('dataemployee', 'passdataevent'));
-                }
+        }
+        if($passdataevent['tgl'] != $date) {
+            if (strtotime($passdataevent['tgl']) > strtotime('now')) {
+                $this->session->setFlashdata('pesan', 'EVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
+                    return view('eventspage/somecasepage', compact('passdataevent'));
+                    // echo strtotime($datanya['tgl']).'-'.strtotime('now');
             }
-            else if ($datanya['tgl'] < $date) {
-                $this->session->setFlashdata('pesan', 'EEVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
+            else if (strtotime($passdataevent['tgl']) < strtotime('now')) {
+                $this->session->setFlashdata('pesan', 'EVENT SUDAH BERLANGSUNG <br> ANDA SUDAH TIDAK DIPERKENANKAN MENGISI ABSEN');
                     return view('eventspage/somecasepage', compact('passdataevent'));
+            }
+        } else {
+            if($passdataevent['jam'] > $time){
+                $this->session->setFlashdata('pesan', 'EVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
+                return view('eventspage/somecasepage', compact('passdataevent'));
             }
             else {
-                $this->session->setFlashdata('pesan', 'EEVENT SUDAH BERLANGSUNG <br> ANDA SUDAH TIDAK DIPERKENANKAN MENGISI ABSEN');
-                    return view('eventspage/somecasepage', compact('passdataevent'));
+                $laporan = new Dataemployee();
+                $dataemployee = $laporan->getAllData();
+                return view('eventspage/pilihanawal', compact('dataemployee', 'passdataevent'));
             }
         }
     }
@@ -122,7 +180,7 @@ class EventController extends BaseController
                 $absen = new Dataabsen();
                 $addabsen = $absen->insertData($datasimpan);
                 // return redirect()->route('dataevent'.'/'.$id);
-                $this->session->setFlashdata('pesan', 'Absen '.$nama.' telah berhasil di submit');
+                $this->session->setFlashdata('pesan', 'Selamat '.$nama.' Anda telah absen di jam '.$now);
                 return redirect()->to('formpesertaevent'.'/'.$id);
     }
     public function voting($id)
@@ -141,7 +199,7 @@ class EventController extends BaseController
         $idabsen = $dataabsen['id'];
         $updateabsen = $absen->dataUpdate($idabsen,  $data);
         if($updateabsen){
-            $this->session->setFlashdata('pesan', 'Terimakasih '.$nama.' telah memberikan penilaian anda');
+            $this->session->setFlashdata('pesan', 'Terimakasih '.$nama.', telah memberikan penilaian anda');
                 return redirect()->to('formpesertaevent'.'/'.$id);
         } else {
             echo "<pre>";

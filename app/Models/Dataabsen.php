@@ -23,10 +23,18 @@ class Dataabsen extends Model
     {
         return $this->where('id_event', $id)->where('nik', $nik)->first();
     }
+    public function getByIdevent($id)
+    {
+        return $this->where('id_event', $id)->findAll();
+    }
     public function insertData($datasimpan)
     {
        return $this->insert($datasimpan);
         // return true;
+    }
+    public function countAbsen($id)
+    {
+        return $this->where('id_event', $id)->countAllResults();
     }
     public function dataUpdate($idabsen, $data)
     {

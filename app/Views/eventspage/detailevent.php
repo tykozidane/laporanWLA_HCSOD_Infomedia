@@ -25,61 +25,7 @@
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
-    <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">HC Applications</span>
-      </a>
-    </div>
-    <hr class="horizontal dark mt-0">
-   <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('employee') ?>">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">WLA - Workload Analysis</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="<?= base_url('events') ?>">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Event</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Culture Alignment</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-paper-diploma text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Learning And Development</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">HC Information</span>
-          </a>
-        </li>
-       </ul>
-    </div>
-   
-  </aside>
+  <?= $this->include('layouts/sidebar') ?>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
@@ -109,7 +55,11 @@
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
               <h6>Detail Event </h6>
-              <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('events').'/create' ?>">Edit detail</a></button>
+              <?php if($check) {?>
+              <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('events').'/editdata'.'/'.$data['id'] ?>">Edit detail</a></button>
+                <?php } else {?>
+                  <button class="btn btn-primary btn-sm ms-auto" disabled><a href="<?= base_url('events').'/editdata'.'/'.$data['id'] ?>">Edit detail</a></button>
+                  <?php }?>
             </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -186,7 +136,90 @@
 
         </div>
       </div>
-    
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+              <h3> <?= number_format($averagenilai, 1) ?> / 5</h3>
+              <!-- <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('events').'/editdata'.'/'.$data['id'] ?>">Edit detail</a></button> -->
+            </div>
+            <div class="d-flex align-items-center">
+              <h6>Dari <?= $count ?> orang yang memberikan penilaian</h6>
+            </div>
+            </div>
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+              <h6>Hadir <?= $jumlahpeserta?> orang </h6>
+              <!-- <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('events').'/editdata'.'/'.$data['id'] ?>">Edit detail</a></button> -->
+            </div>
+            </div>
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+              <div class="input-group">
+                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                <input type="text" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Type here...">
+              </div>
+            </div>
+            <div class="card-body px-2 pt-0 pb-2 mx-2">
+              <div class="table-responsive p-2">
+                <table class="table align-items-center mb-0" id="myTable">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Karyawan</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Jabatan</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Departemen</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Vote</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Masukan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php  
+                    foreach ($dataabsen as $datanya) {
+                      foreach($dataemployee as $dataorang){
+                        if ($datanya['nik'] == $dataorang['nik']){
+
+                        
+                    ?>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                          
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm"><?php echo $dataorang['nama'] ?></h6>
+                            </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0"><?php echo $dataorang['dept'] ?></p>
+                        </td>
+                      <td class="align-middle  text-sm">
+                        <p class="text-xs text-secondary mb-0"><?php echo $dataorang['divisi'] ?></p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs text-secondary mb-0"><?php echo $datanya['vote'] ?></p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs text-secondary mb-0"><?php echo $datanya['notes'] ?></p>
+                      </td>
+                    </tr>
+                    <?php
+                    }
+                      }
+                }
+                ?>
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+          </div>
+         
+
+        </div>
+      </div>
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">

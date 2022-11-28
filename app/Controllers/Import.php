@@ -10,7 +10,7 @@ class Import extends BaseController
 {
     public function index($nik = '')
     {
-        return redirect()->route('employee');
+        return redirect()->route('wla/employee');
     }
     public function employee()
     {
@@ -124,7 +124,8 @@ class Import extends BaseController
             $laporan = new Datalaporan();
             $datalaporan = $laporan->getByNik($nik);
             if (empty($datalaporan)){
-            return view('homepage');
+                $this->session->setFlashdata('pesan', 'Data Pegawai belum di Import');
+                return redirect()->to('wla/employee');
             }
             $count = 0;
             $counting = [];
@@ -566,7 +567,7 @@ class Import extends BaseController
         $deletedatawla = $wla->dataDelete($nik);
         $pegawai = new Dataemployee();
         $updatefte = $pegawai->updateFteZero($nik);
-        return redirect()->to('/employee');
+        return redirect()->to('wla/employee');
     }
     public function importform()
     {
@@ -594,7 +595,7 @@ class Import extends BaseController
         if(!$valid) {
             
             $this->session->setFlashdata('pesan', $validation->getError('fileimport'));
-            return redirect()->to('/import');
+            return redirect()->to('wla/import');
         } else {
             $file_excel =$this->request->getFile('fileimport');
 
@@ -642,37 +643,37 @@ class Import extends BaseController
                     $db = \Config\Database::connect();
                     $db->table('wla')->where('nik', $niknya)->delete();
                     $this->session->setFlashdata('pesan', 'Terdapat Bagian Detail Yang Belum Diisi');
-                    return redirect()->to('/import');
+                    return redirect()->to('wla/import');
                 }
                 if($average_time == NULL){
                     $db = \Config\Database::connect();
                     $db->table('wla')->where('nik', $niknya)->delete();
                     $this->session->setFlashdata('pesan', 'Terdapat Bagian Average Time Yang Belum Diisi');
-                    return redirect()->to('/import');
+                    return redirect()->to('wla/import');
                 }
                 if($cat_wla == NULL){
                     $db = \Config\Database::connect();
                     $db->table('wla')->where('nik', $niknya)->delete();
                     $this->session->setFlashdata('pesan', 'Terdapat Bagian Job Relevance Yang Belum Diisi');
-                    return redirect()->to('/import');
+                    return redirect()->to('wla/import');
                 }
                 if($type_wla  == NULL){
                     $db = \Config\Database::connect();
                     $db->table('wla')->where('nik', $niknya)->delete();
                     $this->session->setFlashdata('pesan', 'Terdapat Bagian Type of Work Yang Belum Diisi');
-                    return redirect()->to('/import');
+                    return redirect()->to('wla/import');
                 }
                 if($periode == NULL){
                     $db = \Config\Database::connect();
                     $db->table('wla')->where('nik', $niknya)->delete();
                     $this->session->setFlashdata('pesan', 'Terdapat Bagian Periode Yang Belum Diisi');
-                    return redirect()->to('/import');
+                    return redirect()->to('wla/import');
                 }
                 if($quantity  == NULL){
                     $db = \Config\Database::connect();
                     $db->table('wla')->where('nik', $niknya)->delete();
                     $this->session->setFlashdata('pesan', 'Terdapat Bagian Quantity Yang Belum Diisi');
-                    return redirect()->to('/import');
+                    return redirect()->to('wla/import');
                 }
                 
                 $idnya = uniqid($count, $niknya);
@@ -696,7 +697,8 @@ class Import extends BaseController
                 $insertdata = $wla->insertData($datasimpan);
             }
             $this->datapegawai($niknya);
-            return redirect()->route('employee');
+            $this->session->setFlashdata('pesan', 'Import Berhasil dengan ',($count-1).'data');
+            return redirect()->route('wla/employee');
         }
     }
 }
