@@ -5,6 +5,7 @@ $session = \Config\Services::session();
 use App\Models\Dataevent;
 use App\Models\Dataemployee;
 use App\Models\Dataabsen;
+use App\Models\Dataakhlak;
 use Kint\Parser\TimestampPlugin;
 use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Trunc;
 
@@ -14,7 +15,7 @@ class EventController extends BaseController
     {
         $event = new Dataevent();
         $dataevent = $event->getAllData();
-        return view('eventlist', compact('dataevent'));
+        return view('eventspage/eventlist', compact('dataevent'));
     }
     public function dataevent($id)
     {
@@ -50,14 +51,40 @@ class EventController extends BaseController
     }
     public function formadd()
     {
-        return view('eventspage/createevent');
+        $akhlak = new Dataakhlak();
+        $dataakhlak = $akhlak->getAllData();
+        return view('eventspage/createevent', compact('dataakhlak'));
     }
     public function upload()
     {
-        
+        $rules = [
+            'nama' => 'required|min_length[3]',
+            'cat_akhlak' => 'required',
+            'programakhlak' => 'required',
+            'cat_event'=>'required',
+            'cat_speaker'=>'required',
+            'speaker'=>'required',
+            'tanggal'=>'required',
+            'jam'=>'required'
+        ];
+        if($this->validate($rules)){
+            $akhlak = new Dataakhlak();
+        $dataakhlak = $akhlak->getAllData();
         $id = strtotime("now");
         $namaevent = $this->request->getPost('nama');
+        foreach($dataakhlak as $x){
+            if ($x['id'] == $this->request->getPost('cat_akhlak')){
+                $cat_akhlak = $x['nama'];
+
+            }
+        }
+        $program_akhlak = $this->request->getPost('programakhlak');
         $cat_event = $this->request->getPost('cat_event');
+        if($this->request->getPost('cat_speaker') == 1){
+            $cat_speaker = 'Internal';
+        } else if ($this->request->getPost('cat_speaker')){
+            $cat_speaker = 'Eksternal';
+        }
         $speaker = $this->request->getPost('speaker');
         $tanggal = $this->request->getPost('tanggal');
         $jam = $this->request->getPost('jam');
@@ -65,7 +92,10 @@ class EventController extends BaseController
                 $datasimpan = [
                     'id'=>$id,
                     'nama'=>$namaevent,
+                    'cat_akhlak'=>$cat_akhlak,
+                    'program_akhlak'=>$program_akhlak,
                     'cat_event'=>$cat_event,
+                    'cat_speaker'=>$cat_speaker,
                     'speaker'=>$speaker,
                     'tgl'=>$tanggal,
                     'jam'=>$jam
@@ -76,6 +106,13 @@ class EventController extends BaseController
         $insertdata = $event->insertData($datasimpan);
         
         return redirect()->route('events');
+        } else {
+            $data['validation'] = $this->validator;
+            $akhlak = new Dataakhlak();
+            $dataakhlak = $akhlak->getAllData();
+            return view('eventspage/createevent', compact('dataakhlak', 'data'));
+        }
+        
 
     }
     public function editpage($id)

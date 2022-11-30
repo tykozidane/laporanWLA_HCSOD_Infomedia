@@ -10,13 +10,16 @@
     HC Applications
   </title>
   <!--     Fonts and icons     -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+ <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+  
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <script src="library/dselect.js"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
@@ -29,6 +32,9 @@
 <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
 </head>
 
@@ -68,41 +74,102 @@
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-              
+              <?php
+    $session = \Config\Services::session();
+    if(!empty($session->getFlashdata('pesan'))) {
+      echo '<div class="alert alert-success" role="alert">
+      '. $session->getFlashdata('pesan') .'</div>';
+    } 
+    ?>
+    <?php $validation = \Config\Services::validation(); ?>
   <div class="card-body">
     <h5 class="card-title">Form Event</h5>
     <p class="card-text">Masukan detail yang ada sesuai dengan event yang akan dilaksanakan</p>
   <?= form_open_multipart('events/upload') ?> 
     <div class="form-group row">
       <div class="mb-3">
-        <label for="namaevent" class="form-label">Nama Event</label>
-        <input type="text" class="form-control" id="nama" name="nama">
+        <label for="nama" class="form-label">Nama Event</label>
+        <input type="text" class="form-control" id="nama" name="nama" required>
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>  
     <div class="mb-3">
+        <label for="kategori" class="form-label">Kategori AKHLAK</label>
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        <select class="form-select" id="cat_akhlak" name="cat_akhlak" aria-label="Default select example" required>
+            <option selected disabled>Pilih Kategori Akhlak</option>
+            <?php
+              foreach($dataakhlak as $row)
+              {
+              
+              echo '<option value="'.$row["id"].'">'.$row["nama"].'</option>';
+              }  ?>
+        </select>
+       <?php if($validation->getError('cat_akhlak')) {?>
+              <div class="text-danger text-opacity-50">Kategori AKHLAK tidak boleh kosong</div>
+        <?php }?>
+    </div>
+     
+    <div class="mb-3">
+        <label for="kategori" class="form-label">Kategori Program AKHLAK</label>
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        <select class="form-select" id="programakhlak" name="programakhlak" aria-label="Default select example" required>
+            <option selected disabled>Pilih Kategori Program </option>
+            
+        </select>
+        
+    </div>
+    <?php if($validation->getError('programakhlak')) {?>
+      <div class="text-danger text-opacity-50">Program AKHLAK tidak boleh kosong</div>
+        <?php }?>
+    <div class="mb-3">
         <label for="kategori" class="form-label">Kategori Event</label>
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-        <select class="form-select" id="cat_event" name="cat_event" aria-label="Default select example">
-            <option selected>Open this select menu</option>
+        <select class="form-select" id="cat_event" name="cat_event" aria-label="Default select example" required>
+            <option selected disabled>Open this select menu</option>
             <option value="Leader Talk Value">Leader Talk Value</option>
             <option value="Sharing Session">Sharing Session</option>
         </select>
+        
     </div>
+    <?php if($validation->getError('cat_event')) {?>
+      <div class="text-danger text-opacity-50">Kategori event tidak boleh kosong</div>
+        <?php }?>
     <div class="mb-3">
-        <label for="speaker" class="form-label">Speaker</label>
-        <input type="text" class="form-control" id="speaker" name="speaker">
+        <label for="kategori" class="form-label">Kategori Speaker</label>
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        <select class="form-select" id="cat_speaker" name="cat_speaker" aria-label="Default select example" required>
+            <option selected disabled>Kategori Speaker</option>
+            <option value="Internal">Internal</option>
+            <option value="Eksternal">Eksternal</option>
+        </select>
+        <?php if($validation->getError('cat_speaker')) {?>
+      <div class="text-danger text-opacity-50">Kategori speaker tidak boleh kosong</div>
+        <?php }?>
+    </div>
+    
+    <div class="mb-3" id="choose_speaker">
+    <label for="kategori" class="form-label">Speaker</label>
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
+    <?php if($validation->getError('speaker')) {?>
+      <div class="text-danger text-opacity-50">Speaker tidak boleh kosong</div>
+        <?php }?>
     <div class="mb-3">
         <label for="tanggal" class="form-label">Tanggal</label>
-        <input type="date" class="form-control" id="datePickerId" name="tanggal">
+        <input type="date" class="form-control" id="datePickerId" name="tanggal" required>
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-    </div>
+        <?php if($validation->getError('tanggal')) {?>
+          <div class="text-danger text-opacity-50">Tanggal tidak boleh kosong</div>
+        <?php }?>
+      </div>
     <div class="mb-3">
         <label for="jam" class="form-label">Jam</label>
-        <input type="time" class="form-control" id="jam" name="jam">
+        <input type="time" class="form-control" id="jam" name="jam" required>
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-    </div>
+        <?php if($validation->getError('jam')) {?>
+          <div class="text-danger text-opacity-50">Jam tidak boleh kosong</div>
+        <?php }?>
+      </div>
       </div>
       <div class="form-group row">
         <div class="col-sm">
@@ -141,10 +208,97 @@
   </main>
  
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  
+  <script>
+
+$(document).ready(function(){
+    
+    $('#cat_akhlak').change(function(){
+
+        var id_akhlak = $('#cat_akhlak').val();
+        console.log(id_akhlak);
+        if(id_akhlak != '')
+        {
+            $.ajax({
+                url:"<?php echo base_url('/getprogram'); ?>"+"/"+id_akhlak,
+                method:"POST",
+                data:{id_akhlak:id_akhlak},
+                dataType:"JSON",
+                success:function(data)
+                {
+                    var html = '<option value="">Select State</option>';
+
+                    for(var count = 0; count < data.length; count++)
+                    {
+
+                        html += '<option value="'+data[count].program+'">'+data[count].program+'</option>';
+                      console.log(data[count].program);
+                    }
+
+                    $('#programakhlak').html(html);
+                }
+            });
+        }
+        else
+        {
+            $('#programakhlak').val('');
+        }
+    });
+    $('#cat_speaker').change(function(){
+
+      var cat_speaker = $('#cat_speaker').val();
+      console.log(cat_speaker);
+      if(cat_speaker == 'Internal')
+        {
+          $.ajax({
+            url:"<?php echo base_url('/getemployee'); ?>",
+            method:"POST",
+            data:{},
+            dataType:"JSON",
+            success:function(data)
+            {
+              var html = '<label for="kategori" class="form-label">Speaker</label><div class="input-group mb-3"><div class="input-group-prepend"><label class="input-group-text" for="inputGroupSelect01">Speaker</label></div><select id="speaker" name="speaker"><option selected>Choose...</option>';
+
+            for(var count = 0; count < data.length; count++)
+            {
+
+                html += '<option value="'+data[count].nama+'">'+data[count].nama+'</option>';
+             
+            }
+            html += '</select></div>';
+            $('#choose_speaker').html(html);
+            
+            
+            }
+          });
+        }
+        else if(cat_speaker == 'Eksternal'){
+          var html = '<label for="speaker" class="form-label">Speaker</label>';
+          html += '<input type="text" class="form-control" id="speaker" name="speaker">';
+          $('#choose_speaker').html(html);
+        }
+        else
+        {
+          $('#choose_speaker').val('');
+        }
+      });
+});
+
+</script>
+<script type="text/javascript">
+ $(document).ready(function() {
+     $('#nik').select2();
+ });
+</script>
+  <script src="../../assets/js/core/popper.min.js"></script>
+  <script src="../../assets/js/core/bootstrap.min.js"></script>
+  <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -154,18 +308,11 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
-  <script>
-
-var select_box_element = document.querySelector('#nik');
-
-dselect(select_box_element, {
-    search: true
-});
-
-</script>
+  
 <script>
     datePickerId.min = new Date().toISOString().split("T")[0];
 </script>
+
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 
@@ -174,7 +321,7 @@ dselect(select_box_element, {
   <script src="js/demo/datatables-demo.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
-  
+
 
 </body>
 

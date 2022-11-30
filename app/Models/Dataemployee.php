@@ -10,7 +10,7 @@ class Dataemployee extends Model
     protected $allowedFields = ['fte'];
     public function getAllData()
     {
-        return $this->findAll();
+        return $this->orderBy('nama', 'ASC')->findAll();
     }
     public function getByNik($nik)
     {

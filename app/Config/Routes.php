@@ -46,6 +46,8 @@ $routes->get('/events/create', 'EventController::formadd');
 $routes->get('/events/editdata/(:any)', 'EventController::editpage/$1');
 $routes->get('/formpesertaevent/(:any)', 'EventController::cektime/$1');    
 $routes->get('/events/dataevent/(:any)', 'EventController::dataevent/$1');
+$routes->get('/employee/listemployee', 'MasterEmployeeController::index');
+$routes->get('/testing', 'DynamicController::index');
 
 $routes->post('/import/upload', 'Import::upload');
 $routes->post('/events/upload', 'EventController::upload');
@@ -53,6 +55,8 @@ $routes->post('/events/editdata/(:any)', 'EventController::updateevent/$1');
 $routes->post('/absen/check/(:any)', 'EventController::checkabsen/$1');
 $routes->post('/absen/checkin/(:any)', 'EventController::checkin/$1');
 $routes->post('/absen/vote/(:any)', 'EventController::voting/$1');
+$routes->post('/getprogram/(:any)', 'DynamicController::getprogram/$1');
+$routes->post('/getemployee', 'DynamicController::getemployee');
 
 /*
  * --------------------------------------------------------------------

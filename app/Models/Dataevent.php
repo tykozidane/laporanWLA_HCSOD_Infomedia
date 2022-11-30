@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class Dataevent extends Model
 {
     protected $table = 'event';
-    protected $allowedFields = ['id', 'nama', 'cat_event', 'speaker', 'tgl', 'jam' ];
+    protected $allowedFields = ['id', 'nama','cat_akhlak', 'program_akhlak', 'cat_event','cat_speaker', 'speaker', 'tgl', 'jam' ];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
