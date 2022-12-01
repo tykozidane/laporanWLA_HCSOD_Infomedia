@@ -10,7 +10,7 @@ class Import extends BaseController
 {
     public function index($nik = '')
     {
-        return redirect()->route('wla/employee');
+        return redirect()->route('wla/dataemployee');
     }
     public function employee()
     {
@@ -125,7 +125,7 @@ class Import extends BaseController
             $datalaporan = $laporan->getByNik($nik);
             if (empty($datalaporan)){
                 $this->session->setFlashdata('pesan', 'Data Pegawai belum di Import');
-                return redirect()->to('wla/employee');
+                return redirect()->to('wla/dataemployee');
             }
             $count = 0;
             $counting = [];
@@ -567,7 +567,7 @@ class Import extends BaseController
         $deletedatawla = $wla->dataDelete($nik);
         $pegawai = new Dataemployee();
         $updatefte = $pegawai->updateFteZero($nik);
-        return redirect()->to('wla/employee');
+        return redirect()->to('wla/dataemployee');
     }
     public function importform()
     {
@@ -698,7 +698,7 @@ class Import extends BaseController
             }
             $this->datapegawai($niknya);
             $this->session->setFlashdata('pesan', 'Import Berhasil dengan ',($count-1).'data');
-            return redirect()->route('wla/employee');
+            return redirect()->route('wla/dataemployee');
         }
     }
 }

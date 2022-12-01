@@ -53,13 +53,15 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
+              <div class="d-flex justify-content-between align-items-center">
               <h6>Detail Event </h6>
+              <div class="">
+              <button class="btn btn-info btn-sm ms-auto"><a href="<?=  previous_url(); ?>">back</a></button>
               <?php if($check) {?>
               <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('events').'/editdata'.'/'.$data['id'] ?>">Edit detail</a></button>
                 <?php } else {?>
                   <button class="btn btn-primary btn-sm ms-auto" disabled><a href="<?= base_url('events').'/editdata'.'/'.$data['id'] ?>">Edit detail</a></button>
-                  <?php }?>
+                  <?php }?></div>
             </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -125,7 +127,7 @@
                 </div>
                 <div class="col col-lg">
                 <div class="input-group input-group-lg mb-3">
-                    <input id="copy-text" type="text" class="form-control" value="<?= base_url('/formpesertaevent').'/'.$data['id'] ?>" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
+                    <input id="copy-text" type="text" class="form-control" value="<?= base_url('/formpesertaevent').'/'.convert_uuencode($data['id']) ?>" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
                     <button class="btn btn-outline-secondary px-4" type="button" id="button-addon2" onclick="copyText()" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="coppied"><i class="fas fa-copy"></i></button>
                 </div>
                 </div>
@@ -220,23 +222,7 @@
 
         </div>
       </div>
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                by
-                <a href="#" class="font-weight-bold" target="_blank">HC Strategy & Organization Development</a>
-                for a better HC Technology.
-              </div>
-            </div>
-           
-          </div>
-        </div>
-      </footer>
+      <?= $this->include('layouts/footer') ?>
     </div>
   </main>
   

@@ -67,7 +67,7 @@
             <div class="nav-wrapper position-relative end-0">
               <ul class="nav nav-pills nav-fill p-1" role="tablist">
                 <li class="nav-item">
-                    <a href="<?= base_url('/wla/employee/') ?>" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Back</a>
+                    <a href="<?= base_url('/wla/dataemployee/') ?>" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Back</a>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -723,23 +723,7 @@
           </div>
         </div>
       </div>
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                by
-                <a href="#" class="font-weight-bold" target="_blank">HC Strategy & Organization Development</a>
-                for a better HC Technology.
-              </div>
-            </div>
-           
-          </div>
-        </div>
-      </footer>
+      <?= $this->include('layouts/footer') ?>
     </div>
   </div>
  <!-- Modal -->

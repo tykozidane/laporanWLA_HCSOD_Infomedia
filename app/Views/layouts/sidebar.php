@@ -10,7 +10,18 @@
    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('wla/employee') ?>">
+          <a <a <?php 
+          $path = current_url(true);
+          $array = explode('/', ltrim($path, '/'));
+          $cek=0;
+          foreach($array as $x){
+            if ($x == "wla") { 
+              $cek = 1;
+          ?> 
+         class="nav-link active" 
+    <?php  } } if($cek==0) {?>
+      class="nav-link"
+    <?php }?> href="<?= base_url('wla/dataemployee') ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
             </div>
@@ -18,7 +29,18 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="<?= base_url('events') ?>">
+          <a <?php 
+          $path = current_url(true);
+          $array = explode('/', ltrim($path, '/'));
+          $cek=0;
+          foreach($array as $x){
+            if ($x == "events") { 
+              $cek = 1;
+          ?> 
+         class="nav-link active" 
+    <?php  } } if($cek==0) {?>
+      class="nav-link"
+    <?php }?>  href="<?= base_url('events') ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
@@ -26,7 +48,18 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('employee/listemployee') ?>">
+          <a <a <?php 
+          $path = current_url(true);
+          $array = explode('/', ltrim($path, '/'));
+          $cek=0;
+          foreach($array as $x){
+            if ($x == "employee") { 
+              $cek = 1;
+          ?> 
+         class="nav-link active" 
+    <?php  } } if($cek==0) {?>
+      class="nav-link"
+    <?php }?> href="<?= base_url('employee/listemployee') ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
             </div>

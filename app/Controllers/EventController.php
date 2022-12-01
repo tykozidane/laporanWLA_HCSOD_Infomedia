@@ -142,8 +142,14 @@ class EventController extends BaseController
     {
 
     }
-    public function cektime($id)
+    public function cektime($idnya)
     {
+        if(@convert_uudecode($idnya)){
+            $id = convert_uudecode($idnya);
+        } else {
+            $passdataevent = [];
+            return view('eventspage/somecasepage', compact('passdataevent'));
+        }
         $data = new Dataevent();
         $dataevent = $data->getById($id);
         $passdataevent = $data->getByIdfirst($id);
@@ -176,8 +182,14 @@ class EventController extends BaseController
             }
         }
     }
-    public function checkabsen($id)
+    public function checkabsen($idnya)
     {
+        if(@convert_uudecode($idnya)){
+            $id = convert_uudecode($idnya);
+        } else {
+            $passdataevent = [];
+            return view('eventspage/somecasepage', compact('passdataevent'));
+        }
         $nik = $this->request->getPost('nik');
         $cekabsen = new Dataabsen();
         $datanya = $cekabsen->getByIdNik($id, $nik);
@@ -195,8 +207,14 @@ class EventController extends BaseController
                 return redirect()->to('formpesertaevent'.'/'.$id);
         }
     }
-    public function checkin($id)
+    public function checkin($idnya)
     {
+        if(@convert_uudecode($idnya)){
+            $id = convert_uudecode($idnya);
+        } else {
+            $passdataevent = [];
+            return view('eventspage/somecasepage', compact('passdataevent'));
+        }
         $niknya = $this->request->getPost('nik');
         $nama = $this->request->getPost('nama');
         $data = new Dataevent();
@@ -218,10 +236,17 @@ class EventController extends BaseController
                 $addabsen = $absen->insertData($datasimpan);
                 // return redirect()->route('dataevent'.'/'.$id);
                 $this->session->setFlashdata('pesan', 'Selamat '.$nama.' Anda telah absen di jam '.$now);
-                return redirect()->to('formpesertaevent'.'/'.$id);
+                return redirect()->to('formpesertaevent'.'/'.convert_uuencode($id));
     }
-    public function voting($id)
+    public function voting($idnya)
     {
+        if(@convert_uudecode($idnya)){
+            $id = convert_uudecode($idnya);
+        } else {
+            $passdataevent = [];
+            return view('eventspage/somecasepage', compact('passdataevent'));
+        }
+        
         $niknya = $this->request->getPost('nik');
         $nama = $this->request->getPost('nama');
         $vote = $this->request->getPost('rate');
@@ -237,7 +262,7 @@ class EventController extends BaseController
         $updateabsen = $absen->dataUpdate($idabsen,  $data);
         if($updateabsen){
             $this->session->setFlashdata('pesan', 'Terimakasih '.$nama.', telah memberikan penilaian anda');
-                return redirect()->to('formpesertaevent'.'/'.$id);
+                return redirect()->to('formpesertaevent'.'/'.convert_uuencode($id));
         } else {
             echo "<pre>";
             echo print_r($updateabsen->errors());

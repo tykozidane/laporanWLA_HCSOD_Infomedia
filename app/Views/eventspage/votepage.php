@@ -29,6 +29,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -49,7 +50,7 @@
     <h5 class="card-title"><?= $passdataevent['nama'] ?><br>Speaker : <?= $passdataevent['speaker'] ?></h5>
     <p class="card-text">Pada Tanggal : <?= $passdataevent['tgl'] ?> <br>Jam : <?= $passdataevent['jam'] ?></p>
     
-  <?= form_open_multipart('/absen/vote/'.$passdataevent['id']) ?> 
+  <?= form_open_multipart('/absen/vote/'.convert_uuencode($passdataevent['id'])) ?> 
   <legend>Vote</legend>
   <div class="row mb-3">
       <label for="disabledTextInput" class="form-label">NIK</label>
@@ -64,17 +65,18 @@
       <input type="text" id="notes" name="notes" class="form-control" placeholder="Kritik dan Saran">
     </div>
     <div class="row justify-content-start">
-    <div class="col-2 rate">
-    <input type="radio" id="star5" name="rate" value="5" />
-    <label for="star5" title="text">5 stars</label>
-    <input type="radio" id="star4" name="rate" value="4" />
-    <label for="star4" title="text">4 stars</label>
-    <input type="radio" id="star3" name="rate" value="3" />
-    <label for="star3" title="text">3 stars</label>
-    <input type="radio" id="star2" name="rate" value="2" />
-    <label for="star2" title="text">2 stars</label>
-    <input type="radio" id="star1" name="rate" value="1" />
-    <label for="star1" title="text">1 star</label>
+      <p>Berikan Penilaian Anda</p>
+    <div class="col-2 rating">
+    <input type="radio" id="star1" name="rate" value="1" style="display: none;"/>
+    <label for="star1" title="text"><img src="../../assets/img/emoticons/angry.png" width="35px"></label>
+    <input type="radio" id="star2" name="rate" value="2" style="display: none;"/>
+    <label for="star2" title="text"><img src="../../assets/img/emoticons/sad.png" width="35px"></label>
+    <input type="radio" id="star3" name="rate" value="3" style="display: none;"/>
+    <label for="star3" title="text"><img src="../../assets/img/emoticons/neutral.png" width="35px"></label>
+    <input type="radio" id="star4" name="rate" value="4" style="display: none;"/>
+    <label for="star4" title="text"><img src="../../assets/img/emoticons/smile.png" width="35px"></label>
+    <input type="radio" id="star5" name="rate" value="5" style="display: none;" checked="checked"/>
+    <label for="star5" title="text"><img src="../../assets/img/emoticons/smiling.png" width="35px"></label>
   </div>
 </div>
   <div class="">
@@ -91,23 +93,7 @@
         </div>
       </div>
     
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                by
-                <a href="#" class="font-weight-bold" target="_blank">HC Strategy & Organization Development</a>
-                for a better HC Technology.
-              </div>
-            </div>
-           
-          </div>
-        </div>
-      </footer>
+      <?= $this->include('layouts/footer') ?>
     </div>
   </main>
  

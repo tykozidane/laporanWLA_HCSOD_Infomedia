@@ -36,7 +36,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Import::index');
 $routes->get('/wla/import', 'Import::importform');
-$routes->get('/wla/employee', 'Import::employee');
+$routes->get('/wla/dataemployee', 'Import::employee');
 $routes->get('/wla/datapegawai', 'Import::datapegawai');
 $routes->get('/wla/datapegawai/(:any)', 'Import::datapegawai/$1');
 $routes->get('/wla/printwla/(:any)', 'ExportPDF::printpdf/$1');
@@ -47,6 +47,7 @@ $routes->get('/events/editdata/(:any)', 'EventController::editpage/$1');
 $routes->get('/formpesertaevent/(:any)', 'EventController::cektime/$1');    
 $routes->get('/events/dataevent/(:any)', 'EventController::dataevent/$1');
 $routes->get('/employee/listemployee', 'MasterEmployeeController::index');
+$routes->get('/employee/detailemployee/(:any)', 'MasterEmployeeController::detailemployee/$1');
 $routes->get('/testing', 'DynamicController::index');
 
 $routes->post('/import/upload', 'Import::upload');

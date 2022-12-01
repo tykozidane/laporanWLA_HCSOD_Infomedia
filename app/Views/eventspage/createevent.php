@@ -68,8 +68,11 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
+              <div class="d-flex justify-content-between align-items-center">
               <h6>Add Event</h6>
+              <div>
+              <button class="btn btn-danger btn-sm ms-auto"><a href="<?=  previous_url(); ?>">cancel</a></button>
+              </div>
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -187,23 +190,7 @@
         </div>
       </div>
     
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                by
-                <a href="#" class="font-weight-bold" target="_blank">HC Strategy & Organization Development</a>
-                for a better HC Technology.
-              </div>
-            </div>
-           
-          </div>
-        </div>
-      </footer>
+      <?= $this->include('layouts/footer') ?>
     </div>
   </main>
  

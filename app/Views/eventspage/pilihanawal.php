@@ -56,7 +56,7 @@
       '. $session->getFlashdata('pesan') .'</div>';
     } 
     ?>
-  <?= form_open_multipart('/absen/check/'.$passdataevent['id']) ?> 
+  <?= form_open_multipart('/absen/check/'.convert_uuencode($passdataevent['id'])) ?> 
     <div class="form-group row">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -93,23 +93,7 @@
         </div>
       </div>
     
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                by
-                <a href="#" class="font-weight-bold" target="_blank">HC Strategy & Organization Development</a>
-                for a better HC Technology.
-              </div>
-            </div>
-           
-          </div>
-        </div>
-      </footer>
+      <?= $this->include('layouts/footer') ?>
     </div>
   </main>
  

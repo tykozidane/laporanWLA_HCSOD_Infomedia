@@ -15,4 +15,10 @@ class MasterEmployeeController extends BaseController
         $dataemployee = $employee->findAll();
         return view('masteremployeepage/employeelist', compact('dataemployee'));
     }
+    public function detailemployee($id)
+    {
+        $employee =new Datamasteremployee();
+        $dataemployee = $employee->getByIdfirst($id);
+        return view('masteremployeepage/detailemployee', compact('dataemployee'));
+    }
 }
