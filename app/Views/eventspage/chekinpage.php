@@ -48,7 +48,7 @@
     <h5 class="card-title"><?= $passdataevent['nama'] ?><br>Speaker : <?= $passdataevent['speaker'] ?></h5>
     <p class="card-text">Pada Tanggal : <?= $passdataevent['tgl'] ?> <br>Jam : <?= $passdataevent['jam'] ?></p>
     
-  <?= form_open_multipart('/absen/checkin/'.convert_uuencode($passdataevent['id'])) ?> 
+  <?= form_open_multipart('/absen/checkin/'.$idencrypt) ?> 
   <legend>Absensi</legend>
   <div class="mb-3">
       <label for="disabledTextInput" class="form-label">NIK</label>

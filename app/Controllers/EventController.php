@@ -47,7 +47,9 @@ class EventController extends BaseController
             $check = TRUE;
         }
         // echo $averagenilai;
-        return view('eventspage/detailevent', compact('data', 'jumlahpeserta', 'dataabsen', 'dataemployee', 'averagenilai', 'count', 'check'));
+        $encrypter = \Config\Services::encrypter();
+        $idencrypt = bin2hex($encrypter->encrypt($id));
+        return view('eventspage/detailevent', compact('data', 'jumlahpeserta', 'dataabsen', 'dataemployee','idencrypt', 'averagenilai', 'count', 'check'));
     }
     public function formadd()
     {
@@ -144,8 +146,11 @@ class EventController extends BaseController
     }
     public function cektime($idnya)
     {
-        if(@convert_uudecode($idnya)){
-            $id = convert_uudecode($idnya);
+        // echo $idnya."<br>";
+        $encrypter = \Config\Services::encrypter();
+        $decode = $encrypter->decrypt(hex2bin($idnya));
+        if($decode){
+            $id = $decode;
         } else {
             $passdataevent = [];
             return view('eventspage/somecasepage', compact('passdataevent'));
@@ -153,6 +158,7 @@ class EventController extends BaseController
         $data = new Dataevent();
         $dataevent = $data->getById($id);
         $passdataevent = $data->getByIdfirst($id);
+        $idencrypt = bin2hex($encrypter->encrypt($id));
         date_default_timezone_set('Asia/Jakarta');
         $time = date('H:i:s');
         $date = date('Y-m-d');
@@ -163,29 +169,31 @@ class EventController extends BaseController
         if($passdataevent['tgl'] != $date) {
             if (strtotime($passdataevent['tgl']) > strtotime('now')) {
                 $this->session->setFlashdata('pesan', 'EVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
-                    return view('eventspage/somecasepage', compact('passdataevent'));
+                    return view('eventspage/somecasepage', compact('passdataevent','idencrypt'));
                     // echo strtotime($datanya['tgl']).'-'.strtotime('now');
             }
             else if (strtotime($passdataevent['tgl']) < strtotime('now')) {
                 $this->session->setFlashdata('pesan', 'EVENT SUDAH BERLANGSUNG <br> ANDA SUDAH TIDAK DIPERKENANKAN MENGISI ABSEN');
-                    return view('eventspage/somecasepage', compact('passdataevent'));
+                    return view('eventspage/somecasepage', compact('passdataevent','idencrypt'));
             }
         } else {
             if($passdataevent['jam'] > $time){
                 $this->session->setFlashdata('pesan', 'EVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
-                return view('eventspage/somecasepage', compact('passdataevent'));
+                return view('eventspage/somecasepage', compact('passdataevent','idencrypt'));
             }
             else {
                 $laporan = new Dataemployee();
                 $dataemployee = $laporan->getAllData();
-                return view('eventspage/pilihanawal', compact('dataemployee', 'passdataevent'));
+                return view('eventspage/pilihanawal', compact('dataemployee', 'passdataevent','idencrypt'));
             }
         }
     }
     public function checkabsen($idnya)
     {
-        if(@convert_uudecode($idnya)){
-            $id = convert_uudecode($idnya);
+        $encrypter = \Config\Services::encrypter();
+        $decode = $encrypter->decrypt(hex2bin($idnya));
+        if($decode){
+            $id = $decode;
         } else {
             $passdataevent = [];
             return view('eventspage/somecasepage', compact('passdataevent'));
@@ -195,22 +203,25 @@ class EventController extends BaseController
         $datanya = $cekabsen->getByIdNik($id, $nik);
         $data = new Dataevent();
         $passdataevent = $data->getByIdfirst($id);
+        $idencrypt = bin2hex($encrypter->encrypt($id));
         $laporan = new Dataemployee();
         $dataemployee = $laporan->getByNikfirst($nik);
         if(empty($datanya)){
-            return view('eventspage/chekinpage', compact('dataemployee', 'passdataevent'));
+            return view('eventspage/chekinpage', compact('dataemployee', 'passdataevent','idencrypt'));
         } 
         else if($datanya['vote'] == 0) {
-            return view('eventspage/votepage', compact('dataemployee', 'passdataevent'));
+            return view('eventspage/votepage', compact('dataemployee', 'passdataevent','idencrypt'));
         } else {
             $this->session->setFlashdata('pesan', 'Anda '.$dataemployee['nama'].' Sudah melakukan absen dan memberikan penilaian');
-                return redirect()->to('formpesertaevent'.'/'.$id);
+                return redirect()->to('formpesertaevent'.'/'.$idencrypt);
         }
     }
     public function checkin($idnya)
     {
-        if(@convert_uudecode($idnya)){
-            $id = convert_uudecode($idnya);
+        $encrypter = \Config\Services::encrypter();
+        $decode = $encrypter->decrypt(hex2bin($idnya));
+        if($decode){
+            $id = $decode;
         } else {
             $passdataevent = [];
             return view('eventspage/somecasepage', compact('passdataevent'));
@@ -219,6 +230,7 @@ class EventController extends BaseController
         $nama = $this->request->getPost('nama');
         $data = new Dataevent();
         $passdataevent = $data->getByIdfirst($id);
+        $idencrypt = bin2hex($encrypter->encrypt($id));
         // date_default_timezone_set('Asia/Jakarta');
         $time = date('Y:m:d H:i:s');
         $now = date('H:i:s');
@@ -236,17 +248,19 @@ class EventController extends BaseController
                 $addabsen = $absen->insertData($datasimpan);
                 // return redirect()->route('dataevent'.'/'.$id);
                 $this->session->setFlashdata('pesan', 'Selamat '.$nama.' Anda telah absen di jam '.$now);
-                return redirect()->to('formpesertaevent'.'/'.convert_uuencode($id));
+                return redirect()->to('formpesertaevent'.'/'.$idencrypt);
     }
     public function voting($idnya)
     {
-        if(@convert_uudecode($idnya)){
-            $id = convert_uudecode($idnya);
+        $encrypter = \Config\Services::encrypter();
+        $decode = $encrypter->decrypt(hex2bin($idnya));
+        if($decode){
+            $id = $decode;
         } else {
             $passdataevent = [];
             return view('eventspage/somecasepage', compact('passdataevent'));
         }
-        
+        $idencrypt = bin2hex($encrypter->encrypt($id));
         $niknya = $this->request->getPost('nik');
         $nama = $this->request->getPost('nama');
         $vote = $this->request->getPost('rate');
@@ -262,7 +276,7 @@ class EventController extends BaseController
         $updateabsen = $absen->dataUpdate($idabsen,  $data);
         if($updateabsen){
             $this->session->setFlashdata('pesan', 'Terimakasih '.$nama.', telah memberikan penilaian anda');
-                return redirect()->to('formpesertaevent'.'/'.convert_uuencode($id));
+                return redirect()->to('formpesertaevent'.'/'.$idencrypt);
         } else {
             echo "<pre>";
             echo print_r($updateabsen->errors());

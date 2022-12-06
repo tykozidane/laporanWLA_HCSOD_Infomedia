@@ -21,4 +21,10 @@ class MasterEmployeeController extends BaseController
         $dataemployee = $employee->getByIdfirst($id);
         return view('masteremployeepage/detailemployee', compact('dataemployee'));
     }
+    public function editpage($id)
+    {
+        $employee =new Datamasteremployee();
+        $dataemployee = $employee->getByIdfirst($id);
+        return view('masteremployeepage/editemployeepage', compact('dataemployee'));
+    }
 }

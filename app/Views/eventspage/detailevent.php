@@ -127,7 +127,7 @@
                 </div>
                 <div class="col col-lg">
                 <div class="input-group input-group-lg mb-3">
-                    <input id="copy-text" type="text" class="form-control" value="<?= base_url('/formpesertaevent').'/'.convert_uuencode($data['id']) ?>" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
+                    <input id="copy-text" type="text" class="form-control" value="<?= base_url('/formpesertaevent').'/'.$idencrypt ?>" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
                     <button class="btn btn-outline-secondary px-4" type="button" id="button-addon2" onclick="copyText()" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="coppied"><i class="fas fa-copy"></i></button>
                 </div>
                 </div>

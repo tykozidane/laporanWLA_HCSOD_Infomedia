@@ -73,7 +73,7 @@
     <div class="mb-3">
         <label for="kategori" class="form-label">Kategori Event</label>
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-        <input type="text" class="form-control" id="nama" name="nama" value="<?= $data['cat_event']?>" disabled>
+        <input type="text" class="form-control" id="cat_event" name="cat_event" value="<?= $data['cat_event']?>" disabled>
     </div>
     <div class="mb-3">
         <label for="speaker" class="form-label">Speaker</label>

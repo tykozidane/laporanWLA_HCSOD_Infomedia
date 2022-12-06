@@ -54,7 +54,7 @@
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
               <h6>Detail Employee </h6>
-              <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('events').'/editdata'.'/'.$dataemployee['id'] ?>">Edit detail</a></button>
+              <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('employee').'/editdata'.'/'.$dataemployee['id'] ?>">Edit detail</a></button>
             </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -114,11 +114,146 @@
               </div>
               <div class="row">
                 <div class="col col-lg-2 mx-4">
+                    <h6>Email</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['email'] ?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>No. Handphone</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['no_hp'] ?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
                     <h6>Pendidikan</h6>
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col">
                     <h5> <?= $dataemployee['pendidikan']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Tanggal Lahir </h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col m-auto">
+                    <h5> <?= $dataemployee['date_birth']?> </h5>
+                </div>
+              </div>  
+            <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Usia </h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col m-auto">
+                    <h5> <?= $dataemployee['usia']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Kota Lahir</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['kota_lahir']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Status Karyawan</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['status_karyawan']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Unit</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['unit_now']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Posisi</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['posisi'] ?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Penempatan </h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col m-auto">
+                    <h5> <?= $dataemployee['penempatan']?> </h5>
+                </div>
+              </div>  
+            <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Job Family</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col m-auto">
+                    <h5> <?= $dataemployee['job_familiy']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Job Function</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['job_function']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>job_role</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['job_role']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Divisi</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['divisi']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Dir</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['dir'] ?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Nama Atasan</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['nama_atasan1'] ?> </h5>
                 </div>
               </div>
 

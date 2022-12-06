@@ -56,7 +56,7 @@
       '. $session->getFlashdata('pesan') .'</div>';
     } 
     ?>
-  <?= form_open_multipart('/absen/check/'.convert_uuencode($passdataevent['id'])) ?> 
+  <?= form_open_multipart('/absen/check/'.$idencrypt) ?> 
     <div class="form-group row">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
