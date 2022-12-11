@@ -4732,6 +4732,8 @@ fieldset:disabled .btn {
 }
 
 .navbar-collapse {
+  height: auto;
+  display: block;
   flex-basis: 100%;
   flex-grow: 1;
   align-items: center;
@@ -22543,7 +22545,7 @@ hr.horizontal.gray-light {
 .navbar-vertical.navbar-expand-xs .navbar-collapse {
   display: block;
   overflow: auto;
-  height: calc(100vh - 360px);
+  height: auto;
 }
 
 .navbar-vertical.navbar-expand-xs>[class*="container"] {

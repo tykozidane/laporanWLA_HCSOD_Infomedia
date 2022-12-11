@@ -697,7 +697,7 @@ class Import extends BaseController
                 $insertdata = $wla->insertData($datasimpan);
             }
             $this->datapegawai($niknya);
-            $this->session->setFlashdata('pesan', 'Import Berhasil dengan ',($count-1).'data');
+            $this->session->setFlashdata('berhasil', 'Import Berhasil dengan '.($count-1).'data');
             return redirect()->route('wla/dataemployee');
         }
     }

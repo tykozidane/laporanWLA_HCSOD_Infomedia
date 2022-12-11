@@ -10,7 +10,7 @@
   <div class="card-body">
     <h5 class="card-title">Upload File Data yang akan diimport</h5>
     <p class="card-text">File harus berformat xlx. dll</p>
-  <?= form_open_multipart('import/upload') ?> 
+  <?= form_open_multipart('wla/upload') ?> 
     <?php
     $session = \Config\Services::session();
     if(!empty($session->getFlashdata('pesan'))) {
