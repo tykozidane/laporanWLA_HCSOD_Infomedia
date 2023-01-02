@@ -6,18 +6,16 @@ use CodeIgniter\Model;
 
 class Datamasteremployee extends Model
 {
-    protected $table = 'm_employee';
+    protected $table = 'm_emp';
     protected $allowedFields = ['
-        id', 'periode', 'kategori', 'nik_ap',
-        'nik_tg', 'nama', 'join_date', 'etd_pensiun',
-        'masa_kerja', 'date_birth', 'usia', 'tobe_pensiun',
-        'range_age', 'range_age_1', 'age_composite', 'kota_lahir',
-        'jenis_kelamin', 'agama', 'status', 'id_turnover', 'turn_overname',
-        'status_karyawan', 'pendidikan', 'education_level', 'id_pendidikan',
-        'unit_now', 'posisi', 'bp_tg', 'level_position', 'lvl_position', 'bp_inf',
-        'penempatan', 'job_familiy', 'job_function', 'job_role', 'no_hp', 'email',
-        'dept', 'divisi', 'sub_dir','dir', 'nik_atasan1', 'nama_atasan1',
-        'nik_atasan2', 'nama_atasan2', 'cc_model', 'cost_center', 'id_vendor'
+        id', 'periode', 'sub_kategori', 'nik_nif',
+        'nik_tg', 'nama_emp', 'join_date', 'retire_date',
+        'birth_date', 'tahun_retire', 'kota_lahir',
+        'jenis_kelamin', 'agama', 'status', 'id_turnover', 'status_turnover',
+        'status_karyawan', 'pendidikan', 'id_education_level', 'nama_educ',
+        'unit_aktif', 'posisi', 'level_positions', 'band_TG', 'level_position', 'band_INF',
+        'penempatan', 'job_familiy', 'job_function', 'job_role', 'phone_number', 'email',
+        'dept', 'divisi', 'sub_direk','code_dir', 'direktorat', 'cc_model', 'cost_center', 'id_vendor'
     ];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -33,6 +31,18 @@ class Datamasteremployee extends Model
     public function getByIdfirst($id)
     {
         return$this->where('id', $id)->first();
+    }
+    public function getByNIKPeriode($nik, $periode)
+    {
+        return$this->where('nik_inf', $nik)->where('periode', $periode)->first();
+    }
+    public function getByPeriode($periode)
+    {
+        return $this->where('periode', $periode)->find();
+    }
+    public function getFirstByPeriode($periode)
+    {
+        return $this->where('periode', $periode)->first();
     }
     public function insertData($datasimpan)
     {

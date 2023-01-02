@@ -6,7 +6,8 @@ $session = \Config\Services::session();
 use App\Models\Datalaporan;
 use App\Models\Dataemployee;
 use TCPDF;
-
+use RtfHtmlPhp\Document;
+use RtfHtmlPhp\Html\HtmlFormatter;
 class ExportPDF extends BaseController 
 {
     function fetch_data($nik)  
@@ -635,5 +636,38 @@ class ExportPDF extends BaseController
         $pdf->writeHTML($content);
         $this->response->setContentType('application/pdf');
         $pdf->output('datawla_'.$nama.'.pdf', 'I');
+    }
+    public function formsurat()
+    {
+        $pathdoc = '../public/templatedoc/template_surat.rtf';
+        $rtf = file_get_contents($pathdoc);
+        
+        $nama = 'Tyko Zidane';
+        $rtf = str_replace("#NAMA", $nama, $rtf);
+        $document = new Document($rtf);
+        $formatter = new HtmlFormatter();
+        // echo $formatter->Format($document);
+        $content = $formatter->Format($document);
+        // echo $content;
+        $name = 'surat.pdf';
+        require_once('..\vendor\tecnickcom\tcpdf\tcpdf.php'); 
+        $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->SetFont('times', '', 10);
+        $pdf->SetMargins(20, 30, 20, true);
+        $pdf->AddPage('P','A4');
+        $pdf->setJPEGQuality(75);
+        $pdf->Image('../public/assets/img/tandatangan/kopsurat.png', 0, 5, 200, 45, 'PNG', '', 'N', false, 150, '', false, false, 1, false, false, false);
+        $pdf->Image('../public/assets/img/tandatangan/ttd_tyok_nobg.png', 30, 85, 20, 20, 'PNG', '', '', false, 150, '', false, false, false, false, false, false);
+        $pdf->writeHTML($content);
+        $this->response->setContentType('application/pdf');
+        ob_end_clean();
+        $pdf->output($name, 'I');
+        // $this->load->helper('download');
+        // force_download($document, 'surat.soc');
+        // return $this->response->download($name, $rtf);
+    }
+    public function changeimg()
+    {
+        
     }
 }

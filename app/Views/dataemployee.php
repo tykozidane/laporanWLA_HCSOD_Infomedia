@@ -62,6 +62,9 @@
     if(!empty($session->getFlashdata('pesan'))) {
       echo '<div class="alert alert-danger" role="alert">
       '. $session->getFlashdata('pesan') .'</div>';
+    } else if(!empty($session->getFlashdata('berhasil'))) {
+      echo '<div class="alert alert-success" role="alert">
+      '. $session->getFlashdata('berhasil') .'</div>';
     } 
     ?>
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -94,7 +97,7 @@
                           
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"><?php echo $datanya['nama'] ?></h6>
+                            <h6 class="mb-0 text-sm"><?php echo $datanya['nama_emp'] ?></h6>
                             </div>
                         </div>
                       </td>
@@ -104,18 +107,23 @@
                       <td class="align-middle text-center text-sm">
                         <p class="text-xs text-secondary mb-0"><?php echo $datanya['divisi'] ?></p>
                       </td>
+                      <?php  
+                      $cek =0;
+                    foreach ($datafte as $fte) {
+                      if ($fte['nik'] == $datanya['nik_inf']){
+                    ?>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><?php echo $datanya['fte'] ?></span>
+                        <span class="text-secondary text-xs font-weight-bold"><?php echo $fte['nilai'] ?></span>
                       </td>
-                      <?php if($datanya['fte'] < 0.99 & $datanya['fte'] > 0) {?>
+                      <?php if($fte['nilai'] < 0.99 & $fte['nilai'] > 0) {?>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">Underload</span>
                       </td>
-                      <?php } else if($datanya['fte'] > 1 & $datanya['fte'] < 1.28 ) {  ?>
+                      <?php } else if($fte['nilai'] > 1 & $fte['nilai'] < 1.28 ) {  ?>
                         <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">Normal</span>
                       </td>
-                      <?php } else if($datanya['fte'] > 1.28 ) {  ?>
+                      <?php } else if($fte['nilai'] > 1.28 ) {  ?>
                         <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">Overload</span>
                       </td>
@@ -123,10 +131,20 @@
                         <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">-</span>
                       </td>
-                      <?php }?>
+                      <?php }$cek +=1;}
+                      }if($cek == 0){ ?>
+                        <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">-</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">-</span>
+                      </td>
+                      <?php
+                          }
+             ?>
                       <td class="align-middle">
                         <button class="btn btn-link text-secondary mb-0">
-                          <a href="<?= base_url('wla/datapegawai/').'/'.$datanya['nik'] ?>"><img src="../assets/img/info.png" alt="main_logo"></a> 
+                          <a href="<?= base_url('wla/datapegawai/').'/'.$datanya['nik_inf'] ?>"><img src="../assets/img/info.png" alt="main_logo"></a> 
                         </button>
                       </td>
                     </tr>

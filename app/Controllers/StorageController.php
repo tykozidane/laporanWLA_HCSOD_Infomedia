@@ -30,16 +30,16 @@ class StorageController extends BaseController
         $valid = $this->validate(
             [
                 'fileupload' => [
-                    'rules' => 'uploaded[fileupload]|ext_in[fileupload,xls,xlsx,pdf,docx]',
+                    'rules' => 'uploaded[fileupload]|ext_in[fileupload,pdf]',
                     'errors' => [
                         'uploaded' => 'File Upload wajib diisi',
-                        'ext_in' => 'File Upload harus ekstensi docx, xls, xlsx atau PDF'
+                        'ext_in' => 'File Upload harus PDF'
                     ]
                 ]
             ]
         );
         if (!$valid){
-            $this->session->setFlashdata('pesanupload', $validation->getError('fileupload'));
+            session()->setFlashdata('pesanupload', $validation->getError('fileupload'));
             return redirect()->to('storage/uploadpage');
             // echo $validation->getError('fileimport');
         } else {
@@ -50,20 +50,33 @@ class StorageController extends BaseController
             $nama_dokumen = $this->request->getPost('nama_dokumen');
             list($day, $month, $year, $hour, $min, $sec) = explode("/", date('d/m/Y/h/i/s'));
             $idnya = $userId.$month.$day.$year.$hour.$min.$sec;
+            $kategori = $this->request->getPost('kategori');
+            $type = $this->request->getPost('type');
+            $nomor_dokumen = $this->request->getPost('nomor_dokumen');
+            $deskripsi = $this->request->getPost('deskripsi');
             $nama_file = $files->getName();
             $path = $idnya.'.'.$ext;
+            $tanggal_berlaku = $this->request->getPost('tanggal_berlaku');
+            $status = $this->request->getPost('status');
             $datasimpan = [
                 'id' => $idnya,
                 'user_id' => $userId,
+                'kategori'=> $kategori,
+                'type'=> $type,
+                'nomor_dokumen'=> $nomor_dokumen,
                 'nama_dokumen' => $nama_dokumen,
+                'deskripsi' => $deskripsi,
                 'nama_file' => $nama_file,
                 'tipe_file' => $ext,
-                'path' => $path
+                'path' => $path,
+                'tanggal_berlaku'=> $tanggal_berlaku,
+                'status'=> $status
             ];
             // echo $idnya .'-'.$path;
             $storage = new DataStorage();
             $savedata = $storage->insertData($datasimpan);
-            $this->session->setFlashdata('berhasil', 'Upload Berhasil');
+            
+            session()->setFlashdata('berhasil', 'Upload Berhasil');
             $files->move('../public/uploads/storage/', $path);
             return redirect()->route('storage');
         }

@@ -67,16 +67,67 @@
               <div class="table-responsive p-0">
               <div class="card-body">
     <h5 class="card-title">Upload File yang akan disimpan</h5>
-    <p class="card-text">File harus berformat pdf, docs, xls atau xlsx </p>
+    <p class="card-text">File harus berformat pdf </p>
   <?= form_open_multipart('storage/upload') ?> 
   <div class="form-group row">
-        <label for="staticEmail" class="col-sm-2 col-form-label">Nama Dokumen</label>
+        <label class="col-sm-2 col-form-label">Kategori Dokumen</label>
+        <div class="col-sm-4">
+          <select class="form-select" aria-label="Default select example" name="kategori" required>
+              <option value="">Pilih Kategori</option>
+              <option value="SOP">SOP</option>
+              <option value="IK">IK</option>
+              <option value="KEBIJAKAN">KEBIJAKAN</option>
+              <option value="AMANDEMENT">AMANDEMENT</option>
+              <option value="PKB">PKB</option>
+          </select>
+        </div>
+      </div>
+  <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Tipe Dokumen</label>
+        <div class="col-sm-4">
+          <select class="form-select" aria-label="Default select example" name="type" required>
+              <option value="">Public / Private</option>
+              <option value="public">PUBLIC</option>
+              <option value="private">PRIVATE</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nomor Dokumen</label>
+        <div class="col-sm-4">
+          <input type="text" name="nomor_dokumen" class="form-control" required>
+        </div>
+      </div>
+  <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nama Dokumen</label>
         <div class="col-sm-4">
           <input type="text" name="nama_dokumen" class="form-control" required>
         </div>
       </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Deskripsi</label>
+        <div class="col-sm-4">
+          <textarea name="deskripsi" class="form-control" required placeholder="Deskripsi sesuai isi dokumen"></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Tipe Dokumen</label>
+        <div class="col-sm-4">
+          <select class="form-select" aria-label="Default select example" name="status">
+              
+              <option selected value="Berlaku">BERLAKU</option>
+              <option value="Tidak Berlaku">TIDAK BERLAKU</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Tanggal Berlaku</label>
+        <div class="col-sm-4">
+          <input type="date" name="tanggal_berlaku" class="form-control" required>
+        </div>
+      </div>
     <div class="form-group row">
-        <label for="staticEmail" class="col-sm-2 col-form-label">Upload</label>
+        <label class="col-sm-2 col-form-label">Upload</label>
         <div class="col-sm-4">
           <input type="file" name="fileupload" class="form-control">
         </div>

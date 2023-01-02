@@ -75,9 +75,12 @@
                 <table class="table align-items-center mb-0" id="myTable">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" colspan="2">Nama File</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">view</th>
-                      <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">download</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >Kategori</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >Nomor</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >Nama Doc</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Berlakui</th>
+                      <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >Status Doc</th>
                       <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">LTV</th> -->
                       <!-- <th class="text-secondary opacity-7"></th> -->
                     </tr>
@@ -89,29 +92,31 @@
                     <tr>
                       <td>
                         <div class="ps-4 py-1">
-                          <?php  if($datanya['tipe_file'] == 'pdf') { ?>
-                            <img src="../../assets/img/icons/downloads/pdf.png" width="35px" height="35px" alt="main_logo">
-                          <?php }else if($datanya['tipe_file'] == 'docx') { ?>
-                            <img src="../../assets/img/icons/downloads/docx.png" width="35px" height="35px" alt="main_logo">
-                            
-                          <?php } else { ?>
-                          <img src="../../assets/img/icons/downloads/xls.png" width="35px" height="35px" alt="main_logo">
-                        <?php } ?>  
+                        <h6 class=" text-sm text-uppercase"><?php echo $datanya['kategori'] ?></h6>
                         </div>
                       </td>
                       <td>
-                        
-                          <div class="">
-                            <h6 class=" text-sm"><?php echo $datanya['nama_dokumen'] ?>.<?php echo $datanya['tipe_file'] ?></h6>
+                          <div class="ps-4 py-1">
+                            <h6 class=" text-sm"><?php echo $datanya['nomor_dokumen'] ?></h6>
                             </div>
-                        
                       </td>
                       <td>
-                      <?php  if($datanya['tipe_file'] == 'pdf') { ?>
+                          <div class="ps-4 py-1">
+                            <h6 class=" text-sm"><?php echo $datanya['nama_dokumen'] ?></h6>
+                            </div>
+                      </td>
+                      <td>
+                          <div class="ps-4 py-1">
+                            <h6 class=" text-sm"><?php echo $datanya['tanggal_berlaku'] ?></h6>
+                            </div>
+                      </td>
+                      <td>
                         <button class="btn btn-link text-secondary mb-0">
                           <a href="<?= base_url('/storage').'/viewfile'.'/'.$datanya['id'] ?>" target="_blank"><img src="../assets/img/icons/downloads/file.png" width="35px" height="35px" alt="main_logo"></a> 
                         </button>
-                          <?php } ?> 
+                        <button class="btn btn-link text-secondary mb-0">
+                          <a href="<?= base_url('storage').'/downloadfile'.'/'.$datanya['id'] ?>"><img src="../assets/img/icons/downloads/download.png" width="35px" height="35px" alt="main_logo"></a> 
+                        </button>
                         </td>
                       <!-- <td class="align-middle text-center text-sm">
                         <p class="text-xs text-secondary mb-0"></p>
@@ -119,10 +124,15 @@
                       <!-- <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold"></span>
                       </td> -->
-                      <td class="align-middle">
+                      <!-- <td class="align-middle">
                         <button class="btn btn-link text-secondary mb-0">
                           <a href="<?= base_url('storage').'/downloadfile'.'/'.$datanya['id'] ?>"><img src="../assets/img/icons/downloads/download.png" width="35px" height="35px" alt="main_logo"></a> 
                         </button>
+                      </td> -->
+                      <td>
+                          <div class="ps-4 py-1">
+                            <h6 class=" text-sm"><?php echo $datanya['status'] ?></h6>
+                            </div>
                       </td>
                     </tr>
                     <?php

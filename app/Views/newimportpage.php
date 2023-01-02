@@ -88,7 +88,7 @@
         <?php
                 foreach ($dataemployee as $datanya) {
                 ?>
-        <option value="<?= $datanya['nik'] ?>">(<?php echo $datanya['nik'] ?>) <?php echo $datanya['nama'] ?></option>
+        <option value="<?= $datanya['nik_inf'] ?>">(<?php echo $datanya['nik_inf'] ?>) <?php echo $datanya['nama_emp'] ?></option>
         <?php
                 }
                 ?>

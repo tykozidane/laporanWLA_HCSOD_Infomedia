@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 $session = \Config\Services::session();
-use App\Models\Dataemployee;
+use App\Models\Datamasteremployee;
 use App\Models\DataProgramAkhlak;
 
 class DynamicController extends BaseController
@@ -35,8 +35,9 @@ class DynamicController extends BaseController
     }
     public function getemployee()
     {
-        $employee = new Dataemployee();
-        $dataemployee = $employee->getAllData();
+        $periode = getPeriode();
+        $masteremployee = new Datamasteremployee();
+        $dataemployee = $masteremployee->getByPeriode($periode);
         echo json_encode($dataemployee);
     }
 }

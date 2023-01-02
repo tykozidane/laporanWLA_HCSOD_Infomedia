@@ -40,6 +40,7 @@ $routes->group('wla', ['filter' => 'role:user'], function($routes) {
     $routes->get('dataemployee', 'Import::employee');
     $routes->get('datapegawai', 'Import::datapegawai');
     $routes->get('datapegawai/(:any)', 'Import::datapegawai/$1');
+    $routes->get('datapegawai/(:any)/(:any)', 'Import::datapegawai/$1/$2');
     $routes->get('printwla/(:any)', 'ExportPDF::printpdf/$1');
     $routes->get('deletewla/(:any)', 'Import::deletewla/$1');
     $routes->post('upload', 'Import::upload');
@@ -55,7 +56,7 @@ $routes->group('events', ['filter' => 'role:user'], function($routes) {
 $routes->group('employee', ['filter' => 'role:user'], function($routes) {
     $routes->get('listemployee', 'MasterEmployeeController::index');
     $routes->get('detailemployee/(:any)', 'MasterEmployeeController::detailemployee/$1');
-    $routes->get('editdetail/(:any)', 'MasterEmployeeController::editdata/$1');
+    $routes->get('editdetailpage/(:any)', 'MasterEmployeeController::editpage/$1');
     $routes->post('editdata/(:any)', 'MasterEmployeeController::updatedata/$1');
 });
 $routes->group('storage', ['filter' => 'role:user'], function($routes) {
@@ -65,9 +66,15 @@ $routes->group('storage', ['filter' => 'role:user'], function($routes) {
     $routes->post('upload', 'StorageController::upload');
     $routes->get('viewfile/(:any)', 'StorageController::myPdfPage/$1');
 });
+$routes->group('request', ['filter' => 'role:user'], function($routes) {
+    $routes->get('surat', 'ExportPDF::formsurat');
+    $routes->get('image', 'ExportPDF::changeimg');
+    $routes->get('formsurat', 'RequestController::formsurat');
+    
+});
 $routes->get('/formpesertaevent/(:any)', 'EventController::cektime/$1');
 $routes->get('/testing', 'DynamicController::index');
-
+$routes->get('/testingperiode', 'MasterEmployeeController::getPeriode');
 
 
 $routes->post('/absen/check/(:any)', 'EventController::checkabsen/$1');

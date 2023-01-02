@@ -254,7 +254,7 @@ $(document).ready(function(){
             for(var count = 0; count < data.length; count++)
             {
 
-                html += '<option value="'+data[count].nama+'">'+data[count].nama+'</option>';
+                html += '<option value="'+data[count].nama_emp+'">'+data[count].nama_emp+'</option>';
              
             }
             html += '</select></div>';

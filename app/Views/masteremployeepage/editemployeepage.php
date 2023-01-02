@@ -67,13 +67,18 @@
     <div class="form-group row">
       <div class="mb-3">
         <label for="namaevent" class="form-label">Nama</label>
-        <input type="text" class="form-control" id="nama" name="nama" value="<?= $data['nama']?>">
+        <input type="text" class="form-control" id="nama" name="nama" value="<?= $data['nama_emp']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>  
     <div class="mb-3">
+        <label for="kategori" class="form-label">Periode</label>
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        <input type="date" class="form-control" id="" name="" value="<?= $data['periode']?>" disabled>
+    </div>
+    <div class="mb-3">
         <label for="kategori" class="form-label">Kategori</label>
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-        <input type="text" class="form-control" id="kategori" name="kategori" value="<?= $data['kategori']?>" disabled>
+        <input type="text" class="form-control" id="kategori" name="kategori" value="<?= $data['sub_kategori']?>">
     </div>
     <div class="mb-3">
         <label for="speaker" class="form-label">Jenis Kelamin</label>
@@ -82,17 +87,17 @@
     </div>
     <div class="mb-3">
         <label for="tanggal" class="form-label">Tanggal Join</label>
-        <input type="date" class="form-control" id="join_date" name="join_date" value="<?= $data['join_date']?>">
+        <input type="text" class="form-control" id="join_date" name="join_date" value="<?= $data['join_date']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
         <label for="jam" class="form-label">Agama</label>
-        <input type="text" class="form-control" id="agama" name="agama" value="<?= $data['jam']?>">
+        <input type="text" class="form-control" id="agama" name="agama" value="<?= $data['agama']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
         <label for="tanggal" class="form-label">Status</label>
-        <input type="date" class="form-control" id="status" name="status" value="<?= $data['status']?>">
+        <input type="text" class="form-control" id="status" name="status" value="<?= $data['status']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
@@ -102,7 +107,7 @@
     </div>
     <div class="mb-3">
         <label for="tanggal" class="form-label">No. Handphone</label>
-        <input type="date" class="form-control" id="no_hp" name="no_hp" value="<?= $data['no_hp']?>">
+        <input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= $data['phone_number']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
@@ -112,12 +117,12 @@
     </div>
     <div class="mb-3">
         <label for="jam" class="form-label">Tanggal Lahir</label>
-        <input type="text" class="form-control" id="date_birth" name="date_birth" value="<?= $data['date_birth']?>">
+        <input type="text" class="form-control" id="date_birth" name="date_birth" value="<?= $data['birth_date']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
         <label for="tanggal" class="form-label">Kota Lahir</label>
-        <input type="date" class="form-control" id="kota_lahir" name="kota_lahir" value="<?= $data['kota_lahir']?>">
+        <input type="text" class="form-control" id="kota_lahir" name="kota_lahir" value="<?= $data['kota_lahir']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
@@ -127,12 +132,12 @@
     </div>
     <div class="mb-3">
         <label for="jam" class="form-label">Unit</label>
-        <input type="text" class="form-control" id="unit_now" name="unit_now" value="<?= $data['unit_now']?>">
+        <input type="text" class="form-control" id="unit_now" name="unit_now" value="<?= $data['unit_aktif']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
         <label for="tanggal" class="form-label">Posisi</label>
-        <input type="date" class="form-control" id="posisi" name="posisi" value="<?= $data['posisi']?>">
+        <input type="text" class="form-control" id="posisi" name="posisi" value="<?= $data['posisi']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
@@ -147,7 +152,7 @@
     </div>
     <div class="mb-3">
         <label for="tanggal" class="form-label">Job Function</label>
-        <input type="date" class="form-control" id="job_function" name="job_function" value="<?= $data['job_function']?>">
+        <input type="text" class="form-control" id="job_function" name="job_function" value="<?= $data['job_function']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
@@ -162,12 +167,12 @@
     </div>
     <div class="mb-3">
         <label for="tanggal" class="form-label">Dir</label>
-        <input type="date" class="form-control" id="dir" name="dir" value="<?= $data['dir']?>">
+        <input type="text" class="form-control" id="dir" name="dir" value="<?= $data['sub_direk']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
-        <label for="jam" class="form-label">Nama Atasan</label>
-        <input type="text" class="form-control" id="nama_atasan1" name="nama_atasan1" value="<?= $data['nama_atasan1']?>">
+        <label for="jam" class="form-label">Direktorat</label>
+        <input type="text" class="form-control" id="nama_atasan1" name="nama_atasan1" value="<?= $data['direktorat']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
       </div>

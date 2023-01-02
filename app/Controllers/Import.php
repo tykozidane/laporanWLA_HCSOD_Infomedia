@@ -2,9 +2,12 @@
 
 namespace App\Controllers;
 
-$session = \Config\Services::session();
+// $session = \Config\Services::session();
 use App\Models\Datalaporan;
 use App\Models\Dataemployee;
+use App\Models\DataNilaiFte;
+use App\Models\Datamasteremployee;
+use CodeIgniter\I18n\Time;
 
 class Import extends BaseController
 {
@@ -14,9 +17,15 @@ class Import extends BaseController
     }
     public function employee()
     {
-        $laporan = new Dataemployee();
-        $dataemployee = $laporan->getAllData();
-        return view('dataemployee', compact('dataemployee'));
+        $periode = getPeriode();
+        $masteremployee = new Datamasteremployee();
+        $dataemployee = $masteremployee->getByPeriode($periode);
+        $time = Time::parse($periode);
+        $Year = $time->getYear();
+        $trygetdata = new DataNilaiFte();
+        $datafte = $trygetdata->getByPeriode($Year);  
+        
+        return view('dataemployee', compact('dataemployee', 'datafte'));
     }
     // public function datapegawai($nik = '')
     // {
@@ -118,13 +127,21 @@ class Import extends BaseController
     //     }
     // }
 
-    public function datapegawai($nik = '')
+    public function datapegawai($nik = '', $tahun = '')
     {
         if(!empty($nik)){
+            $datatahun = getPeriodeWla($nik);
+            if(empty($tahun)){
+                foreach ($datatahun as $dt){
+                    if($tahun < $dt){
+                        $tahun = $dt;
+                    }
+                }
+            }
             $laporan = new Datalaporan();
-            $datalaporan = $laporan->getByNik($nik);
+            $datalaporan = $laporan->getByNikTahun($nik, $tahun);
             if (empty($datalaporan)){
-                $this->session->setFlashdata('pesan', 'Data Pegawai belum di Import');
+                session()->setFlashdata('pesan', 'Data Pegawai belum di Import');
                 return redirect()->to('wla/dataemployee');
             }
             $count = 0;
@@ -418,8 +435,7 @@ class Import extends BaseController
         }
             $count++;
         };
-        $pegawai = new Dataemployee();
-        $datapegawai = $pegawai->getByNikfirst($nik); 
+        
         $rataprimary = 0;
         $cp =0;
         if($counting['bkpdaily']!=0){
@@ -550,29 +566,63 @@ class Import extends BaseController
         } else {
             $fte = ($nonprojectaverage+$projectaverage)/2/1504;
         }
-            if ($datapegawai['fte'] != $fte){
-                 $db = \Config\Database::connect();
-                $db->table('employee')->set('fte', $fte)->where('nik', $datapegawai['nik'])->update();
+        $periode = getPeriode();
+        $newperiode = Time();
+        $newperiode = $periode;
+        $trygetdata = new DataNilaiFte();
+        $datafte = $trygetdata->getFirstByPeriode($tahun, $nik);
+        if(empty($datafte)){
+            $time = Time::parse($periode);
+            $tahunwla = $time->getYear(); 
+            $bulan = $time->getMonth(); 
+            $newid = $nik.$tahunwla.$bulan;
+            $datasimpan = [
+                'id'=>$newid,
+                'nik'=>$nik,
+                'tahun'=>$tahunwla,
+                'nilai'=>$fte
+            ];
+            $trygetdata->insertData($datasimpan);
+        }else if ($datafte['nilai'] != $fte){
+            $datasimpan = [
+                'nilai'=>$fte
+            ];
+            $trygetdata->dataUpdate($datafte['id'], $datasimpan);
             } 
-        
-        return view('detailwla', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte', 'rataprimary', 'ratasupportive', 'rataoutside', 'rataprimaryp', 'ratasupportivep', 'rataoutsidep'));  
+            $masteremployee = new Datamasteremployee();
+            $datapegawai = $masteremployee->getByNIKPeriode($nik, $periode);
+        if(!empty($tahun)){
+            return view('detailwlawithtahun', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte', 'rataprimary', 'ratasupportive', 'rataoutside', 'rataprimaryp', 'ratasupportivep', 'rataoutsidep', 'datatahun', 'tahun'));  
         } else {
-        $laporan = new Dataemployee();
-        $dataemployee = $laporan->getAllData();
-        return view('homepage', compact('dataemployee'));
+            return view('detailwla', compact('datapegawai','datalaporan', 'counting', 'nonprojectaverage', 'projectaverage', 'fte', 'rataprimary', 'ratasupportive', 'rataoutside', 'rataprimaryp', 'ratasupportivep', 'rataoutsidep', 'datatahun', 'tahun'));  
+        }
+           
+        } else {
+            return redirect()->to('wla/dataemployee');
         }
     }
-    public function deletewla($nik){
+    public function deletewla($nik, $tahun=''){
+        $datatahun = getPeriodeWla($nik);
+            if(empty($tahun)){
+                
+                $tahun = 0;
+                foreach ($datatahun as $dt){
+                    if($tahun < $dt){
+                        $tahun = $dt;
+                    }
+                }
+            }
         $wla = new Datalaporan();
-        $deletedatawla = $wla->dataDelete($nik);
-        $pegawai = new Dataemployee();
-        $updatefte = $pegawai->updateFteZero($nik);
+        $deletedatawla = $wla->dataDelete($nik, $tahun);
+        $datafte = new DataNilaiFte();
+        $deletefte = $datafte->dataDelete($nik, $tahun);
         return redirect()->to('wla/dataemployee');
     }
     public function importform()
     {
-        $laporan = new Dataemployee();
-        $dataemployee = $laporan->getAllData();
+        $periode = getPeriode();
+        $masteremployee = new Datamasteremployee();
+        $dataemployee = $masteremployee->getByPeriode($periode);
         return view('newimportpage', compact('dataemployee'));
     }
     
@@ -594,7 +644,7 @@ class Import extends BaseController
         );
         if(!$valid) {
             
-            $this->session->setFlashdata('pesan', $validation->getError('fileimport'));
+            session()->setFlashdata('pesan', $validation->getError('fileimport'));
             return redirect()->to('wla/import');
         } else {
             $file_excel =$this->request->getFile('fileimport');
@@ -609,6 +659,8 @@ class Import extends BaseController
             $data = $spreadsheet->getActiveSheet()->toArray();
             $niknya = $this->request->getPost('nik');
             $count =1;
+            $periode = getPeriode();
+            $wla = new Datalaporan();
             foreach ($data as $x => $row) {
                 if ($x == 0) {
                     continue;
@@ -640,46 +692,47 @@ class Import extends BaseController
                    $keterangan = $row[10]; 
                 }
                 if($detail == NULL){
-                    $db = \Config\Database::connect();
-                    $db->table('wla')->where('nik', $niknya)->delete();
-                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Detail Yang Belum Diisi');
+                    $deletedata = $wla->dataDelete($niknya, $periode);
+                    session()->setFlashdata('pesan', 'Terdapat Bagian Detail Yang Belum Diisi');
                     return redirect()->to('wla/import');
                 }
                 if($average_time == NULL){
-                    $db = \Config\Database::connect();
-                    $db->table('wla')->where('nik', $niknya)->delete();
-                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Average Time Yang Belum Diisi');
+                    $deletedata = $wla->dataDelete($niknya, $periode);
+                    session()->setFlashdata('pesan', 'Terdapat Bagian Average Time Yang Belum Diisi');
                     return redirect()->to('wla/import');
                 }
                 if($cat_wla == NULL){
-                    $db = \Config\Database::connect();
-                    $db->table('wla')->where('nik', $niknya)->delete();
-                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Job Relevance Yang Belum Diisi');
+                    $deletedata = $wla->dataDelete($niknya, $periode);
+                    session()->setFlashdata('pesan', 'Terdapat Bagian Job Relevance Yang Belum Diisi');
                     return redirect()->to('wla/import');
                 }
                 if($type_wla  == NULL){
-                    $db = \Config\Database::connect();
-                    $db->table('wla')->where('nik', $niknya)->delete();
-                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Type of Work Yang Belum Diisi');
+                    $deletedata = $wla->dataDelete($niknya, $periode);
+                    session()->setFlashdata('pesan', 'Terdapat Bagian Type of Work Yang Belum Diisi');
                     return redirect()->to('wla/import');
                 }
                 if($periode == NULL){
-                    $db = \Config\Database::connect();
-                    $db->table('wla')->where('nik', $niknya)->delete();
-                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Periode Yang Belum Diisi');
+                    $deletedata = $wla->dataDelete($niknya, $periode);
+                    session()->setFlashdata('pesan', 'Terdapat Bagian Periode Yang Belum Diisi');
                     return redirect()->to('wla/import');
                 }
                 if($quantity  == NULL){
-                    $db = \Config\Database::connect();
-                    $db->table('wla')->where('nik', $niknya)->delete();
-                    $this->session->setFlashdata('pesan', 'Terdapat Bagian Quantity Yang Belum Diisi');
+                    $deletedata = $wla->dataDelete($niknya, $periode);
+                    session()->setFlashdata('pesan', 'Terdapat Bagian Quantity Yang Belum Diisi');
                     return redirect()->to('wla/import');
                 }
                 
-                $idnya = uniqid($count, $niknya);
+                $idnya = uniqid($count.$niknya, 1);
+                // $datetime = Time::today();
+                $cariperiode = getPeriode();
+                $time = Time::parse($cariperiode);
+                $Year = $time->getYear();
+                // $Year = $datetime->format('Y');
                 $datasimpan = [
                     'id' => $idnya,
+                    'tahun'=> $Year,
                     'nik' => $niknya,
+                    'periode_employee'=>$periode,
                     'activity' => $activity,
                     'detail' => $detail,
                     'average_time' => $average_time,
@@ -693,12 +746,12 @@ class Import extends BaseController
                 $count++;
                 // echo $idnya;
                 // $db->table('wla')->insert($datasimpan);
-                $wla = new Datalaporan();
+                
                 $insertdata = $wla->insertData($datasimpan);
             }
             $this->datapegawai($niknya);
-            $this->session->setFlashdata('berhasil', 'Import Berhasil dengan '.($count-1).'data');
-            return redirect()->route('wla/dataemployee');
+            session()->setFlashdata('berhasil', 'Import Berhasil dengan '.$count.' data');
+            return redirect()->to('wla/dataemployee');
         }
     }
 }

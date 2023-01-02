@@ -12,14 +12,14 @@
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
-  <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="../../../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../../../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link id="pagestyle" href="../../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  <link id="pagestyle" href="../../../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
   </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -64,6 +64,19 @@
             </div>
           </div>
           <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger"><?= $tahun ?></button>
+                <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <?php foreach($datatahun as $dt){?>
+                    <a class="dropdown-item" href="<?= base_url('wla/datapegawai/').'/'.$datapegawai['nik_inf'].'/'.$dt ?>"><?= $dt?></a>
+                <?php } ?>
+                </div>  
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
             <div class="nav-wrapper position-relative end-0">
               <ul class="nav nav-pills nav-fill p-1" role="tablist">
                 <li class="nav-item">
@@ -76,16 +89,16 @@
                 </li>
                 <li class="nav-item">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modaldelete">
-                    <img src="../../assets/img/delete.png" height="20px" width="15px" alt="main_logo"></button>
+                    <img src="../../../assets/img/delete.png" height="20px" width="15px" alt="main_logo"></button>
                     <!-- <a href="<?= base_url('/wla/deletewla/').'/'.$datapegawai['nik_inf'] ?>" class="btn btn-sm btn-red float-right mb-0 d-none d-lg-block"><img src="../assets/img/delete.png" height="20px" width="15px" alt="main_logo"></a> -->
                   </a>
                 </li>
                </ul>
             </div>
           </div>
+          </div>
         </div>
       </div>
-    </div>
     
     <div class="container-fluid py-4">
       <div class="row">
@@ -209,7 +222,7 @@
         </div>
         <div class="col-md-4">
           <div class="card card-profile">
-            <img src="../../assets/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
+            <img src="../../../assets/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
             <div class="row justify-content-center">
               <div class="col-4 col-lg-4 order-lg-2">
                 <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">

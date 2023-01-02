@@ -137,7 +137,7 @@ class EventController extends BaseController
         ];
         $event = new Dataevent();
         $saveupdate = $event->dataUpdate($id, $data);
-        $this->session->setFlashdata('pesan', 'Data Event '.$nama.', telah Berhasil di ubah');
+        session()->setFlashdata('pesan', 'Data Event '.$nama.', telah Berhasil di ubah');
                 return redirect()->to('events');
     }
     public function deleteEvent()
@@ -168,17 +168,17 @@ class EventController extends BaseController
         }
         if($passdataevent['tgl'] != $date) {
             if (strtotime($passdataevent['tgl']) > strtotime('now')) {
-                $this->session->setFlashdata('pesan', 'EVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
+                session()->setFlashdata('pesan', 'EVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
                     return view('eventspage/somecasepage', compact('passdataevent','idencrypt'));
                     // echo strtotime($datanya['tgl']).'-'.strtotime('now');
             }
             else if (strtotime($passdataevent['tgl']) < strtotime('now')) {
-                $this->session->setFlashdata('pesan', 'EVENT SUDAH BERLANGSUNG <br> ANDA SUDAH TIDAK DIPERKENANKAN MENGISI ABSEN');
+                session()->setFlashdata('pesan', 'EVENT SUDAH BERLANGSUNG <br> ANDA SUDAH TIDAK DIPERKENANKAN MENGISI ABSEN');
                     return view('eventspage/somecasepage', compact('passdataevent','idencrypt'));
             }
         } else {
             if($passdataevent['jam'] > $time){
-                $this->session->setFlashdata('pesan', 'EVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
+                session()->setFlashdata('pesan', 'EVENT MASIH BELUM BERLANGSUNG <br> HARAP MENGISI ABSEN PADA WAKTU YANG DIJADWALKAN');
                 return view('eventspage/somecasepage', compact('passdataevent','idencrypt'));
             }
             else {
@@ -212,7 +212,7 @@ class EventController extends BaseController
         else if($datanya['vote'] == 0) {
             return view('eventspage/votepage', compact('dataemployee', 'passdataevent','idencrypt'));
         } else {
-            $this->session->setFlashdata('pesan', 'Anda '.$dataemployee['nama'].' Sudah melakukan absen dan memberikan penilaian');
+            session()->setFlashdata('pesan', 'Anda '.$dataemployee['nama'].' Sudah melakukan absen dan memberikan penilaian');
                 return redirect()->to('formpesertaevent'.'/'.$idencrypt);
         }
     }
@@ -247,7 +247,7 @@ class EventController extends BaseController
                 $absen = new Dataabsen();
                 $addabsen = $absen->insertData($datasimpan);
                 // return redirect()->route('dataevent'.'/'.$id);
-                $this->session->setFlashdata('pesan', 'Selamat '.$nama.' Anda telah absen di jam '.$now);
+                session()->setFlashdata('pesan', 'Selamat '.$nama.' Anda telah absen di jam '.$now);
                 return redirect()->to('formpesertaevent'.'/'.$idencrypt);
     }
     public function voting($idnya)
@@ -275,7 +275,7 @@ class EventController extends BaseController
         $idabsen = $dataabsen['id'];
         $updateabsen = $absen->dataUpdate($idabsen,  $data);
         if($updateabsen){
-            $this->session->setFlashdata('pesan', 'Terimakasih '.$nama.', telah memberikan penilaian anda');
+            session()->setFlashdata('pesan', 'Terimakasih '.$nama.', telah memberikan penilaian anda');
                 return redirect()->to('formpesertaevent'.'/'.$idencrypt);
         } else {
             echo "<pre>";

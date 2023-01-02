@@ -94,12 +94,12 @@
                           
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"><?php echo $datanya['nama'] ?></h6>
+                            <h6 class="mb-0 text-sm"><?php echo $datanya['nama_emp'] ?></h6>
                             </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0"><?php echo $datanya['kategori'] ?></p>
+                        <p class="text-xs font-weight-bold mb-0"><?php echo $datanya['sub_kategori'] ?></p>
                         </td>
                       <td class="align-middle text-center text-sm">
                         <p class="text-xs text-secondary mb-0"><?php echo $datanya['divisi'] ?></p>

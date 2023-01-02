@@ -54,7 +54,7 @@
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
               <h6>Detail Employee </h6>
-              <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('employee').'/editdata'.'/'.$dataemployee['id'] ?>">Edit detail</a></button>
+              <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('employee').'/editdetailpage'.'/'.$dataemployee['id'] ?>">Edit detail</a></button>
             </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col m-auto">
-                    <h5> <?= $dataemployee['kategori']?> </h5>
+                    <h5> <?= $dataemployee['sub_kategori']?> </h5>
                 </div>
               </div>  
             <div class="row">
@@ -73,18 +73,10 @@
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col m-auto">
-                    <h5> <?= $dataemployee['nama']?> </h5>
+                    <h5> <?= $dataemployee['nama_emp']?> </h5>
                 </div>
               </div>
-              <div class="row">
-                <div class="col col-lg-2 mx-4">
-                    <h6>Join Date</h6>
-                </div>
-                <div class="col col-lg-1">:</div>
-                <div class="col">
-                    <h5> <?= $dataemployee['join_date']?> </h5>
-                </div>
-              </div>
+    
               <div class="row">
                 <div class="col col-lg-2 mx-4">
                     <h6>jenis Kelamin</h6>
@@ -127,7 +119,7 @@
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col">
-                    <h5> <?= $dataemployee['no_hp'] ?> </h5>
+                    <h5> <?= $dataemployee['phone_number'] ?> </h5>
                 </div>
               </div>
               <div class="row">
@@ -145,7 +137,7 @@
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col m-auto">
-                    <h5> <?= $dataemployee['date_birth']?> </h5>
+                    <h5> <?= $dataemployee['birth_date']?> </h5>
                 </div>
               </div>  
             <div class="row">
@@ -159,11 +151,74 @@
               </div>
               <div class="row">
                 <div class="col col-lg-2 mx-4">
+                    <h6>Range Age </h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col m-auto">
+                    <h5> 
+                      <?php 
+                      if($dataemployee['usia'] < 25 ){echo 'Usia <25';}
+                      else if($dataemployee['usia'] < 30 ){echo 'Usia 25-29';}
+                      else if($dataemployee['usia'] <= 40 ){echo 'Usia 30-40';}
+                      else if($dataemployee['usia'] <= 50 ){echo 'Usia 41-50';}
+                      else if($dataemployee['usia'] <=55 ){echo 'Usia 51-55';}
+                      else if($dataemployee['usia'] < 70 ){echo 'Usia diatas 55';}
+                      ?> 
+                  </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Range Age 2 </h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col m-auto">
+                    <h5> 
+                    <?php 
+                      if($dataemployee['usia'] < 25 ){echo 'Usia <25';}
+                      else if($dataemployee['usia'] < 30 ){echo 'Usia 25-29';}
+                      else if($dataemployee['usia'] <= 40 ){echo 'Usia 30-40';}
+                      else if($dataemployee['usia'] <= 50 ){echo 'Usia 41-50';}
+                      else if($dataemployee['usia'] <=55 ){echo 'Usia 51-55';}
+                      else if($dataemployee['usia'] < 70 ){echo 'Usia diatas 55';}
+                      ?> 
+                  </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
                     <h6>Kota Lahir</h6>
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col">
                     <h5> <?= $dataemployee['kota_lahir']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Join Date</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['join_date']?> </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Masa Kerja</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['masa_kerja']?> tahun </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>Tahun Pensiun</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['tahun_retire']?> </h5>
                 </div>
               </div>
               <div class="row">
@@ -181,7 +236,7 @@
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col">
-                    <h5> <?= $dataemployee['unit_now']?> </h5>
+                    <h5> <?= $dataemployee['unit_aktif']?> </h5>
                 </div>
               </div>
               <div class="row">
@@ -202,6 +257,15 @@
                     <h5> <?= $dataemployee['penempatan']?> </h5>
                 </div>
               </div>  
+              <div class="row">
+                <div class="col col-lg-2 mx-4">
+                    <h6>level Position</h6>
+                </div>
+                <div class="col col-lg-1">:</div>
+                <div class="col">
+                    <h5> <?= $dataemployee['level_position']?> </h5>
+                </div>
+              </div>
             <div class="row">
                 <div class="col col-lg-2 mx-4">
                     <h6>Job Family</h6>
@@ -244,16 +308,16 @@
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col">
-                    <h5> <?= $dataemployee['dir'] ?> </h5>
+                    <h5> <?= $dataemployee['sub_direk'] ?> </h5>
                 </div>
               </div>
               <div class="row">
                 <div class="col col-lg-2 mx-4">
-                    <h6>Nama Atasan</h6>
+                    <h6>Direktorat</h6>
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col">
-                    <h5> <?= $dataemployee['nama_atasan1'] ?> </h5>
+                    <h5> <?= $dataemployee['direktorat'] ?> </h5>
                 </div>
               </div>
 
