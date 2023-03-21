@@ -19,7 +19,7 @@
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-   
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -27,7 +27,8 @@
   <?= $this->include('layouts/sidebar') ?>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
+      data-scroll="false">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
@@ -39,10 +40,10 @@
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
-          
+
             </div>
           </div>
-          
+
         </div>
       </div>
     </nav>
@@ -53,9 +54,22 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
-              <h6>List Event table</h6>
-              <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('events').'/create' ?>">Add Event</a></button>
-            </div>
+                <h6>List Event table</h6>
+                <button class="btn btn-primary btn-sm ms-auto" style="margin-right: 5px;"><a
+                    href="<?= base_url('events').'/create' ?>">Add Event</a></button>
+                <?php if($countClaimReward >= 0){ ?>
+                <a href="<?= base_url('events/datareward')?>">
+                  <button type="button" class="btn btn-primary position-relative btn-sm ">
+                    Reward
+                    <?php if($countClaimReward > 0){?>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      <?= $countClaimReward ?>
+                      <span class="visually-hidden">unread messages</span>
+                    </span> <?php } ?>
+                  </button></a>
+                <?php } ?>
+
+              </div>
             </div>
             <?php
     $session = \Config\Services::session();
@@ -77,29 +91,31 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Event</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori Event</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">LTV</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Kategori Event</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">LTV
+                      </th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-                  <?php  
+                    <?php  
                     foreach ($dataevent as $datanya) {
                     ?>
                     <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                          
+
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm"><?php echo $datanya['nama'] ?></h6>
-                            </div>
+                          </div>
                         </div>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0"><?php echo $datanya['tgl'] ?></p>
-                        </td>
+                      </td>
                       <td class="align-middle text-center text-sm">
                         <p class="text-xs text-secondary mb-0"><?php echo $datanya['cat_event'] ?></p>
                       </td>
@@ -108,29 +124,30 @@
                       </td>
                       <td class="align-middle">
                         <button class="btn btn-link text-secondary mb-0">
-                          <a href="<?= base_url('/events/dataevent/').'/'.$datanya['id'] ?>"><img src="../assets/img/info.png" alt="main_logo"></a> 
+                          <a href="<?= base_url('/events/dataevent/').'/'.$datanya['id'] ?>"><img
+                              src="../assets/img/info.png" alt="main_logo"></a>
                         </button>
                       </td>
                     </tr>
                     <?php
                 }
                 ?>
-                    
+
                   </tbody>
                 </table>
               </div>
             </div>
-            
+
           </div>
-         
+
 
         </div>
       </div>
-    
+
       <?= $this->include('layouts/footer') ?>
     </div>
   </main>
- 
+
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
@@ -148,7 +165,7 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-  
+
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
@@ -170,10 +187,10 @@
           } else {
             tr[i].style.display = "none";
           }
-        }       
+        }
       }
     }
-    </script>
+  </script>
 
 </body>
 

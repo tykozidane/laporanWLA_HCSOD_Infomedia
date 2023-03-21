@@ -63,6 +63,7 @@
   <div class="card-body">
     <h5 class="card-title">Form Edit Event</h5>
     <p class="card-text">Masukan detail yang perlu dirubah</p>
+    <button type="button" class="btn btn-primary btn-sm ms-auto" data-bs-toggle="modal" data-bs-target="#addSpeakerModal"  data-id="<?php echo $data['id'] ?>">Add Speaker</button>
   <?= form_open_multipart('events/editdata/'.$data['id']) ?> 
     <div class="form-group row">
       <div class="mb-3">
@@ -75,11 +76,25 @@
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
         <input type="text" class="form-control" id="cat_event" name="cat_event" value="<?= $data['cat_event']?>" disabled>
     </div>
-    <div class="mb-3">
-        <label for="speaker" class="form-label">Speaker</label>
-        <input type="text" class="form-control" id="speaker" name="speaker" value="<?= $data['speaker']?>">
+    
+    <?php $count = 1;
+     foreach($dataspeaker as $speaker){ ?>
+     
+       <input type="text" class="form-control" id="idspeaker<?= $count ?>" name="idspeaker<?= $count ?>" value="<?= $speaker['id']?>" hidden>
+     <div class="mb-3">
+        <label for="speaker" class="form-label">NIK Speaker <?= $count ?></label>
+        <input type="text" class="form-control" id="nikspeaker<?= $count ?>" name="nikspeaker<?= $count ?>" value="<?= $speaker['nik']?>">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
+    <div class="mb-3">
+        <label for="speaker" class="form-label">Nama Speaker <?= $count ?></label>
+        <input type="text" class="form-control" id="speaker<?= $count ?>" name="speaker<?= $count ?>" value="<?= $speaker['nama']?>">
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+    </div>
+    <div class="mb-3">
+      <button type="button" class="btn btn-danger btn-sm ms-auto" data-bs-toggle="modal" data-bs-target="#deleteSpeakerModal"  data-id="<?php echo $speaker['id'] ?>" data-nama="<?= $speaker['nama']?>">Delete Speaker</button>
+     </div>
+    <?php $count++; } ?>
     <div class="mb-3">
         <label for="tanggal" class="form-label">Tanggal</label>
         <input type="date" class="form-control" id="datePickerId" name="tanggal" value="<?= $data['tgl']?>">
@@ -109,6 +124,53 @@
     
       <?= $this->include('layouts/footer') ?>
     </div>
+    <div class="modal fade" id="addSpeakerModal" tabindex="-1" aria-labelledby="addSpeakerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Add Speaker</h5>
+        <h5 class="modal-title" id="addSpeakerModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" enctype="multipart/form-data">
+      <div class="modal-body">
+        
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">NIK Speaker</label>
+            <input type="text" class="form-control" id="recipient-name" name="niknewspeaker">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Nama Speaker</label>
+            <input type="text" class="form-control" id="recipient-name" name="newspeaker">
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save Update</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deleteSpeakerModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Anda yakin akan menghapus Speaker
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger"><a href="<?= base_url('events/deletespeaker')?>">Save changes</a></button>
+      </div>
+    </div>
+  </div>
+</div>
   </main>
  
   <!--   Core JS Files   -->
@@ -134,6 +196,39 @@ dselect(select_box_element, {
 });
 
 </script>
+<script>
+     var addSpeakerModal = document.getElementById('addSpeakerModal')
+addSpeakerModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var id = button.getAttribute('data-id')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalform = addSpeakerModal.querySelector('.modal-content form')
+
+  modalform.action = '<?= base_url('events/addspeaker')?>'+'/'+id
+}) 
+var deleteSpeakerModal = document.getElementById('deleteSpeakerModal')
+deleteSpeakerModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var id = button.getAttribute('data-id')
+  var nama = button.getAttribute('data-nama')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalbutton = deleteSpeakerModal.querySelector('.modal-footer a')
+  var modalTitle = deleteSpeakerModal.querySelector('.modal-title')
+
+  modalbutton.href = '<?= base_url('events/deletespeaker')?>'+'/'+id
+  modalTitle.textContent = 'Delete '+ nama
+})
+  </script>
 <script>
     datePickerId.min = new Date().toISOString().split("T")[0];
 </script>

@@ -28,7 +28,7 @@ abstract class BaseController extends Controller
      * @var CLIRequest|IncomingRequest
      */
     protected $request;
-
+    
     /**
      * An array of helpers to be loaded automatically upon
      * class instantiation. These helpers will be available
@@ -36,7 +36,7 @@ abstract class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = ['form', 'getperiode'];
+    protected $helpers = ['form', 'getperiode', 'getotp'];
     /**
      * @var string - Holds the session instance
      */

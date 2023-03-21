@@ -58,6 +58,7 @@
               <div class="">
               <button class="btn btn-info btn-sm ms-auto"><a href="<?=  previous_url(); ?>">back</a></button>
               <?php if($check) {?>
+                <!-- <button type="button" class="btn btn-primary btn-sm ms-auto" data-bs-toggle="modal" data-bs-target="#addSpeakerModal"  data-id="<?php echo $data['id'] ?>">Add Speaker</button> -->
               <button class="btn btn-primary btn-sm ms-auto"><a href="<?= base_url('events').'/editdata'.'/'.$data['id'] ?>">Edit detail</a></button>
                 <?php } else {?>
                   <button class="btn btn-primary btn-sm ms-auto" disabled><a href="<?= base_url('events').'/editdata'.'/'.$data['id'] ?>">Edit detail</a></button>
@@ -83,15 +84,21 @@
                     <h5> <?= $data['cat_event']?> </h5>
                 </div>
               </div>
+              <?php  
+              $number = 0;
+              foreach($dataspeaker as $speaker){
+                $number++;
+              ?>
               <div class="row">
                 <div class="col col-lg-2 mx-4">
-                    <h6>Speaker</h6>
+                    <h6>Speaker <?= $number?></h6>
                 </div>
                 <div class="col col-lg-1">:</div>
                 <div class="col">
-                    <h5> <?= $data['speaker']?> </h5>
+                    <h5>(<?= $speaker['nik']?>) <?= $speaker['nama']?> </h5>
                 </div>
               </div>
+              <?php }?>
               <div class="row">
                 <div class="col col-lg-2 mx-4">
                     <h6>Jam</h6>
@@ -172,32 +179,35 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Departemen</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Vote</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Masukan</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Poin</th>
                     </tr>
                   </thead>
                   <tbody>
                   <?php  
+                  $auth = service('authentication');
+                  $userId = $auth->id();
+                  $authorize = service('authorization');
                     foreach ($dataabsen as $datanya) {
-                      foreach($dataemployee as $dataorang){
-                        if ($datanya['nik'] == $dataorang['nik']){
-
+                      
                         
                     ?>
-                    <tr>
+                   
+                        <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
                           
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"><?php echo $dataorang['nama'] ?></h6>
+                            <h6 class="mb-0 text-sm"><?php if($datanya['nama_emp']){ echo $datanya['nama_emp']; } else {echo $datanya['nama'];} ?></h6>
                             </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0"><?php echo $dataorang['dept'] ?></p>
+                        <p class="text-xs font-weight-bold mb-0"><?= $datanya['divisi'] ?></p>
                         </td>
                       <td class="align-middle  text-sm">
-                        <p class="text-xs text-secondary mb-0"><?php echo $dataorang['divisi'] ?></p>
+                        <p class="text-xs text-secondary mb-0"><?= $datanya['dept'] ?></p>
                       </td>
                       <td class="align-middle text-center text-sm">
                         <p class="text-xs text-secondary mb-0"><?php echo $datanya['vote'] ?></p>
@@ -205,11 +215,17 @@
                       <td class="align-middle text-center text-sm">
                         <p class="text-xs text-secondary mb-0"><?php echo $datanya['notes'] ?></p>
                       </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs text-secondary mb-0"><?php echo $datanya['nilai'] ?></p>
+                      </td>
+                      <?php if($authorize->inGroup('hcsod', $userId) || $authorize->inGroup('admin', $userId)){ ?>
+                      <td class="align-middle text-center text-sm">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-nilai="<?php echo $datanya['nilai'] ?>" data-id="<?php echo $datanya['id'] ?>" data-status="<?php echo $datanya['status'] ?>" data-namaabsen="<?php echo $datanya['nama_emp'] ?>">edit</button>
+                      </td><?php } ?>
                     </tr>
-                    <?php
-                    }
+                        <?php
                       }
-                }
+                
                 ?>
                     
                   </tbody>
@@ -224,6 +240,68 @@
       </div>
       <?= $this->include('layouts/footer') ?>
     </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Update Data Absen</h5>
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" enctype="multipart/form-data">
+      <div class="modal-body">
+        
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Nilai</label>
+            <input type="text" class="form-control" id="recipient-name" name="nilai">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Status</label>
+            <select class="form-select" id="message-text" name="status">
+            <option selected disabled>Kategori Anda</option>
+            <option value="Partisipan">Partisipan</option>
+            <option value="Panitia">Panitia</option>
+            </select>
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save Update</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+<!-- <div class="modal fade" id="addSpeakerModal" tabindex="-1" aria-labelledby="addSpeakerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Add Speaker</h5>
+        <h5 class="modal-title" id="addSpeakerModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" enctype="multipart/form-data">
+      <div class="modal-body">
+        
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">NIK Speaker</label>
+            <input type="text" class="form-control" id="recipient-name" name="niknewspeaker">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Nama Speaker</label>
+            <input type="text" class="form-control" id="recipient-name" name="newspeaker">
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save Update</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div> -->
   </main>
   
   <!--   Core JS Files   -->
@@ -251,6 +329,44 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+  </script>
+  <script>
+//     var addSpeakerModal = document.getElementById('addSpeakerModal')
+// addSpeakerModal.addEventListener('show.bs.modal', function (event) {
+//   // Button that triggered the modal
+//   var button = event.relatedTarget
+//   // Extract info from data-bs-* attributes
+//   var id = button.getAttribute('data-id')
+//   // If necessary, you could initiate an AJAX request here
+//   // and then do the updating in a callback.
+//   //
+//   // Update the modal's content.
+//   var modalform = addSpeakerModal.querySelector('.modal-content form')
+
+//   modalform.action = '<?= base_url('events/addspeaker')?>'+'/'+id
+// })
+    var exampleModal = document.getElementById('exampleModal')
+exampleModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var nama = button.getAttribute('data-namaabsen')
+  var nilai = button.getAttribute('data-nilai')
+  var id = button.getAttribute('data-id')
+  var status = button.getAttribute('data-status')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalTitle = exampleModal.querySelector('.modal-title')
+  var modalBodyInput = exampleModal.querySelector('.modal-body input')
+  var modalform = exampleModal.querySelector('.modal-content form')
+
+  modalform.action = '<?= base_url('events/updateabsen')?>'+'/'+id
+  modalTitle.textContent = nama
+  modalBodyInput.value = nilai
+})
+ 
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

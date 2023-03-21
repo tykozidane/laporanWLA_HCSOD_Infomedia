@@ -12,6 +12,9 @@ function getperiode()
         $periode = $datetime->format('Y-m-d');
         $employee =new Datamasteremployee();
         $dataemployee = $employee->getFirstByPeriode($periode);
+        if(!empty($dataemployee)){
+            $newperiode = $periode;
+        }
         while(empty($dataemployee)){
             
             $Month = $Month - 1;
@@ -25,6 +28,7 @@ function getperiode()
             // echo 'next, ';
             // $dataemployee = 'tidak kosong';
         }
+
         return $newperiode;
         // foreach($dataemployee as $x){
         //     echo 'data ke '.$x['periode'];
@@ -62,5 +66,20 @@ function getperiode()
             }
         }
         return $datatahun;
+    }
+    function getQuarterReward()
+    {
+        $datetime = Time::today();
+        $Month = $datetime->format('m');
+        if($Month == 3 || $Month == 2 || $Month == 1){
+            $quarter = 1;
+        } else if($Month == 4 || $Month == 5 || $Month == 6){
+            $quarter = 2;
+        } else if($Month == 7 || $Month == 8 || $Month == 9){
+            $quarter = 3;
+        } else if($Month == 10 || $Month == 11 || $Month == 12){
+            $quarter = 4;
+        } 
+        return $quarter;
     }
     

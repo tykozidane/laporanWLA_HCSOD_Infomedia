@@ -9,7 +9,7 @@ class Datamasteremployee extends Model
     protected $table = 'm_emp';
     protected $allowedFields = ['
         id', 'periode', 'sub_kategori', 'nik_nif',
-        'nik_tg', 'nama_emp', 'join_date', 'retire_date',
+        'nik_tg', 'no_ktp', 'nama_emp', 'join_date', 'retire_date',
         'birth_date', 'tahun_retire', 'kota_lahir',
         'jenis_kelamin', 'agama', 'status', 'id_turnover', 'status_turnover',
         'status_karyawan', 'pendidikan', 'id_education_level', 'nama_educ',
@@ -20,13 +20,18 @@ class Datamasteremployee extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+    
     public function getAllData()
     {
         return $this->findAll();
     }
     public function getById($id)
     {
-        return$this->where('id', $id)->find();
+        return $this->where('id', $id)->find();
+    }
+    public function getByNoKtp($no_ktp)
+    {
+        return $this->where('no_ktp', $no_ktp)->first(); 
     }
     public function getByIdfirst($id)
     {
@@ -38,7 +43,7 @@ class Datamasteremployee extends Model
     }
     public function getByPeriode($periode)
     {
-        return $this->where('periode', $periode)->find();
+        return $this->where('periode', $periode)->orderBy('nama_emp', 'ASC')->findAll();
     }
     public function getFirstByPeriode($periode)
     {

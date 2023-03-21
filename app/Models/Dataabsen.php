@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class Dataabsen extends Model
 {
     protected $table = 'absen';
-    protected $allowedFields = ['id', 'id_event', 'nik', 'vote', 'notes', 'jam_checkin', 'last_update' ];
+    protected $allowedFields = ['id', 'id_event', 'corporate', 'nik', 'nama', 'nilai', 'pd_web', 'pd_speaker', 'vote', 'notes', 'jam_checkin','status', 'last_update' ];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -15,7 +15,7 @@ class Dataabsen extends Model
     {
         return $this->findAll();
     }
-    public function getByNik($id)
+    public function getById($id)
     {
         return $this->where('id', $id)->first();
     }
@@ -23,9 +23,26 @@ class Dataabsen extends Model
     {
         return $this->where('id_event', $id)->where('nik', $nik)->first();
     }
+    public function getByNik($nik)
+    {
+        return $this->where('nik', $nik)->first();
+    }
+    public function getByIdJoinMEmployee($id)
+    {
+        $periode = getperiode();
+        return $this->select('absen.*, m_emp.nama_emp, m_emp.dept, m_emp.divisi')->join('m_emp', 'm_emp.nik_inf = absen.nik', 'left')->where('id_event', $id)->findAll();
+    }
+    public function getcekpoin($nik)
+    {
+        return $this->where('nik', $nik)->join('event', 'event.id = absen.id_event')->findAll();
+    }
     public function getByIdevent($id)
     {
         return $this->where('id_event', $id)->findAll();
+    }
+    public function getNonCorporate($id)
+    {
+        return $this->where('id', $id)->where('corporate', 0)->findAll();
     }
     public function insertData($datasimpan)
     {

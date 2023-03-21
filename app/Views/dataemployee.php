@@ -75,6 +75,77 @@
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
+              <!-- <table id="example" class="table table-striped" style="width:100%">
+              <thead>
+                    <tr>
+                      <th >Nama Karyawan</th>
+                      <th >Jabatan</th>
+                      <th >Departemen</th>
+                      <th >FTE</th>
+                      <th >Keterangan</th>
+                      <th ></th>
+                    </tr>
+                  </thead>
+                  <?php  
+                    foreach ($dataemployee as $datanya) {
+                    ?>
+                    <tr>
+                      <td>
+                          <?php echo $datanya['nama_emp'] ?>
+                      </td>
+                      <td>
+                        <?php echo $datanya['dept'] ?>
+                        </td>
+                      <td >
+                        <?php echo $datanya['divisi'] ?>
+                      </td>
+                      <?php  
+                      $cek =0;
+                    foreach ($datafte as $fte) {
+                      if ($fte['nik'] == $datanya['nik_inf']){
+                    ?>
+                      <td >
+                        <?php echo $fte['nilai'] ?>
+                      </td>
+                      <?php if($fte['nilai'] < 0.99 & $fte['nilai'] > 0) {?>
+                      <td>
+                        Underload
+                      </td>
+                      <?php } else if($fte['nilai'] > 1 & $fte['nilai'] < 1.28 ) {  ?>
+                        <td >
+                        Normal
+                      </td>
+                      <?php } else if($fte['nilai'] > 1.28 ) {  ?>
+                        <td >
+                        Overload
+                      </td>
+                      <?php } else {?>
+                        <td>
+                        -
+                      </td>
+                      <?php }$cek +=1;}
+                      }if($cek == 0){ ?>
+                        <td >
+                        -
+                      </td>
+                      <td >
+                        -
+                      </td>
+                      <?php
+                          }
+             ?>
+                      <td >
+                        <button >
+                          <a href="<?= base_url('wla/datapegawai/').'/'.$datanya['nik_inf'] ?>"><img src="../assets/img/info.png" alt="main_logo"></a> 
+                        </button>
+                      </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                    
+                  </tbody>
+            </table> -->
                 <table class="table align-items-center mb-0" id="myTable">
                   <thead>
                     <tr>
@@ -183,7 +254,11 @@
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable();
+});
+</script>
   
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>

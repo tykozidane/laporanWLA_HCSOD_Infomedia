@@ -34,8 +34,9 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Import::index');
-$routes->group('wla', ['filter' => 'role:user'], function($routes) {
+$routes->get('/', 'Import::index', ['filter' => 'role:user']);
+$routes->group('wla', ['filter' => 'role:hcsod, admin'], function($routes) {
+    $routes->get('', 'Import::index');
     $routes->get('import', 'Import::importform');
     $routes->get('dataemployee', 'Import::employee');
     $routes->get('datapegawai', 'Import::datapegawai');
@@ -50,8 +51,18 @@ $routes->group('events', ['filter' => 'role:user'], function($routes) {
     $routes->get('create', 'EventController::formadd');
     $routes->get('editdata/(:any)', 'EventController::editpage/$1');    
     $routes->get('dataevent/(:any)', 'EventController::dataevent/$1');
+    $routes->get('datareward', 'EventController::hcmlistreward');
+
     $routes->post('upload', 'EventController::upload');
     $routes->post('editdata/(:any)', 'EventController::updateevent/$1');
+    $routes->post('updateabsen/(:any)', 'EventController::updateAbsen/$1');
+    $routes->post('addspeaker/(:any)', 'EventController::addspeaker/$1');
+    $routes->get('deletespeaker/(:any)', 'EventController::deletespeaker/$1');
+    $routes->post('addreward', 'EventController::addreward');
+    $routes->post('updatedatareward/(:any)', 'EventController::updatedatareward/$1');
+    $routes->get('deletedatareward/(:any)', 'EventController::deletereward/$1');
+    $routes->get('sendingreward/(:any)', 'EventController::sendingreward/$1');
+    $routes->get('successsendingreward/(:any)', 'EventController::successsendingreward/$1');
 });
 $routes->group('employee', ['filter' => 'role:user'], function($routes) {
     $routes->get('listemployee', 'MasterEmployeeController::index');
@@ -69,19 +80,45 @@ $routes->group('storage', ['filter' => 'role:user'], function($routes) {
 $routes->group('request', ['filter' => 'role:user'], function($routes) {
     $routes->get('surat', 'ExportPDF::formsurat');
     $routes->get('image', 'ExportPDF::changeimg');
+    $routes->get('tandatangan', 'RequestController::tandatangan');
+    $routes->post('addttd', 'RequestController::addttd');
     $routes->get('formsurat', 'RequestController::formsurat');
-    
+    $routes->post('formsurat/savetext', 'RequestController::savetext');
+    $routes->get('formsurat/seepdf/(:any)', 'RequestController::seepdf/$1');
+    $routes->get('dms', 'RequestController::dmspage');
+});
+$routes->group('themplate', ['filter' => 'role:user'], function($routes) {
+    $routes->get('', 'ThemplateController::listthemplate');
+    $routes->get('add', 'ThemplateController::addthemplate');
+    $routes->post('add/savetext', 'ThemplateController::savetext');
+    $routes->get('edit/(:any)', 'ThemplateController::editthemplate/$1');
+    $routes->post('edit/saveupdate/(:any)', 'ThemplateController::saveupdate/$1');
+    $routes->get('seethemplate/(:any)', 'ThemplateController::seethemplate/$1');
+    $routes->get('seepdf/(:any)', 'ThemplateController::seepdf/$1');
+});
+$routes->group('agreement', ['filter' => 'role:user'], function($routes) {
+    $routes->get('', 'AgreementController::index');
 });
 $routes->get('/formpesertaevent/(:any)', 'EventController::cektime/$1');
 $routes->get('/testing', 'DynamicController::index');
 $routes->get('/testingperiode', 'MasterEmployeeController::getPeriode');
+$routes->get('/testingttd', 'RequestController::tandatangan');
+$routes->get('/addnewdata/employee', 'RequestController::createagreement');
+$routes->get('/cekreward', 'EventController::cekreward');
+$routes->get('/claimreward', 'EventController::getotpview');
+$routes->get('/dataclaimreward/(:any)', 'EventController::listreward/$1');
+$routes->get('/cobahtmlemail', 'EventController::cobahtmlemail');
+$routes->get('/claimthis/(:any)/(:any)', 'EventController::claimthis/$1/$2');
+$routes->get('/cobaenkripsi', 'EventController::cobaenkripsi');
 
-
+$routes->post('/cekreward', 'EventController::cekrewards');
+$routes->post('/getthelink', 'EventController::getotp');
 $routes->post('/absen/check/(:any)', 'EventController::checkabsen/$1');
 $routes->post('/absen/checkin/(:any)', 'EventController::checkin/$1');
 $routes->post('/absen/vote/(:any)', 'EventController::voting/$1');
 $routes->post('/getprogram/(:any)', 'DynamicController::getprogram/$1');
 $routes->post('/getemployee', 'DynamicController::getemployee');
+$routes->post('/getabsen/(:any)', 'DynamicController::getabsen/$1');
 
 /*
  * --------------------------------------------------------------------

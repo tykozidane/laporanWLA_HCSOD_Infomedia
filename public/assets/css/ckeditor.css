@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container{
+    width: 1000px;
+    margin: 30px auto;
+}
+.title{
+    text-align: center;
+}
+.toolbar-container{
+    position: relative;
+    box-shadow: 0 12px 20px -10px rgba(0, 0, 0, 3);
+}
+.editor-container{
+    height: 480px;
+    overflow-y: auto;
+    background-color: rgb(199, 198, 198);
+    border: 1px solid rgb(199, 198, 198);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    
+}
+.ck-editor__editable{
+    background-color: #fff;
+    width: 80%;
+    padding: 20px 70px !important;
+    line-height: 25px;
+    font-size: 12px;
+    margin: 30px auto;
+    min-height: 21cm;
+}

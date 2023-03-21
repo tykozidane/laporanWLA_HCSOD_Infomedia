@@ -32,9 +32,9 @@ class Database extends Config
      */
     public $default = [
         'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => '',
-        'password' => '',
+        'hostname' => 'db-corp.infomedia.co.id',
+        'username' => 'hcm',
+        'password' => 'HCMpassword2023',
         'database' => '',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',

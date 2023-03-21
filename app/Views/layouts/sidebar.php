@@ -9,6 +9,12 @@
     <hr class="horizontal dark mt-0">
    <div class="collapse navbar-collapse ">
       <ul class="navbar-nav">
+        <?php 
+        $auth = service('authentication');
+        $userId = $auth->id();
+        $authorize = service('authorization');
+        if($authorize->inGroup('hcsod', $userId) || $authorize->inGroup('admin', $userId)){
+        ?>
         <li class="nav-item">
           <a <a <?php 
           $path = current_url(true);
@@ -28,6 +34,7 @@
             <span class="nav-link-text ms-1">WLA - Workload Analysis</span>
           </a>
         </li>
+        <?php } ?>
         <li class="nav-item">
           <a <?php 
           $path = current_url(true);
@@ -47,7 +54,7 @@
             <span class="nav-link-text ms-1">Event</span>
           </a>
         </li>
-        <!-- <li class="nav-item">
+        <li class="nav-item">
           <a <a <?php 
           $path = current_url(true);
           $array = explode('/', ltrim($path, '/'));
@@ -66,7 +73,7 @@
             <span class="nav-link-text ms-1">Master Employee </span>
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="#">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
@@ -107,6 +114,25 @@
             <img src="../../assets/img/icons/downloads/hosting.png" width="15px" height="15px" alt="main_logo">
             </div>
             <span class="nav-link-text ms-1">Storage</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a <a <?php 
+          $path = current_url(true);
+          $array = explode('/', ltrim($path, '/'));
+          $cek=0;
+          foreach($array as $x){
+            if ($x == "themplate") { 
+              $cek = 1;
+          ?> 
+         class="nav-link active" 
+    <?php  } } if($cek==0) {?>
+      class="nav-link"
+    <?php }?> href="<?= base_url('themplate') ?>">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <img src="../../assets/img/icons/downloads/hosting.png" width="15px" height="15px" alt="main_logo">
+            </div>
+            <span class="nav-link-text ms-1">Themplate</span>
           </a>
         </li>
         <li class="nav-item">

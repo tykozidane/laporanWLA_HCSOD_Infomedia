@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-
+require_once('..\vendor\tecnickcom\tcpdf\tcpdf.php'); 
 $session = \Config\Services::session();
 use App\Models\Datalaporan;
 use App\Models\Dataemployee;
@@ -639,28 +639,61 @@ class ExportPDF extends BaseController
     }
     public function formsurat()
     {
-        $pathdoc = '../public/templatedoc/template_surat.rtf';
+        $pathdoc = '../public/templatedoc/pkwtjib.rtf';
         $rtf = file_get_contents($pathdoc);
         
         $nama = 'Tyko Zidane';
-        $rtf = str_replace("#NAMA", $nama, $rtf);
+        // $rtf = str_replace("#NAMA", $nama, $rtf);
         $document = new Document($rtf);
         $formatter = new HtmlFormatter();
         // echo $formatter->Format($document);
         $content = $formatter->Format($document);
         // echo $content;
         $name = 'surat.pdf';
-        require_once('..\vendor\tecnickcom\tcpdf\tcpdf.php'); 
+        $judul = 'PERJANJIAN KERJA WAKTU TERTENTU';
+        $judul2= 'UNTUK PEKERJAAN JR OFF PROJECT MANAGEMENT SSO';
+        $judul3 = 'Nomor : Perner/yyyymmdd /INF/DEPARTEMEN/ PKWT/MM/YYYY';
+        $ttd ='<p class="MsoNormal" style="margin-left:0cm;text-indent:-.1pt;">
+        <span style="font-family:&quot;Verdana&quot;,sans-serif;font-size:8.0pt;"><b style="mso-bidi-font-weight:normal;"><span style="mso-bidi-font-family:Verdana;mso-fareast-font-family:Verdana;" lang="EN-US" dir="ltr"><strong>PIHAK PERTAMA,</strong></span><span style="mso-bidi-font-family:Verdana;mso-fareast-font-family:Verdana;mso-tab-count:5;" lang="EN-US" dir="ltr"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong></span><span style="mso-bidi-font-family:Verdana;mso-fareast-font-family:Verdana;" lang="EN-US" dir="ltr"><strong>PIHAK KEDUA,</strong></span></b></span><o:p></o:p>
+    </p>
+    <p class="MsoNormal" style="margin-left:0cm;text-indent:-.1pt;">
+        &nbsp;
+    </p>
+    <p class="MsoNormal" style="margin-left:0cm;mso-char-indent-count:0;mso-para-margin-left:0gd;text-indent:0cm;">
+        &nbsp;
+    </p>
+    <p class="MsoNormal" style="margin-left:0cm;text-indent:-.1pt;">
+        &nbsp;
+    </p>
+    <p class="MsoNormal" style="margin-left:0cm;text-indent:-.1pt;">
+        &nbsp;
+    </p>
+    <p class="MsoNormal" style="margin-left:0cm;tab-stops:36.0pt 72.0pt 108.0pt 144.0pt 180.0pt 216.0pt 252.0pt;text-indent:-.1pt;">
+        <span style="font-family:&quot;Verdana&quot;,sans-serif;font-size:8.0pt;"><b style="mso-bidi-font-weight:normal;"><span style="mso-bidi-font-family:Verdana;mso-fareast-font-family:Verdana;" lang="EN-US" dir="ltr"><strong>DIMAS RYANTO</strong></span><span style="mso-bidi-font-family:Verdana;mso-fareast-font-family:Verdana;mso-tab-count:5;" lang="EN-US" dir="ltr"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></span></b></span><span style="font-family:&quot;Tahoma&quot;,sans-serif;font-size:9.0pt;"><b style="mso-bidi-font-weight:normal;"><span style="mso-fareast-font-family:Tahoma;" lang="EN-US" dir="ltr"><strong>&nbsp;</strong></span><span style="mso-fareast-font-family:Tahoma;mso-tab-count:1;" lang="EN-US" dir="ltr"><strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong></span></b></span><span style="font-family:&quot;Tahoma&quot;,sans-serif;font-size:8.0pt;"><b style="mso-bidi-font-weight:normal;"><span style="mso-fareast-font-family:Tahoma;mso-no-proof:yes;" lang="EN-US" dir="ltr"><strong>NAMA PEKERJA</strong></span></b></span><o:p></o:p>
+    </p>
+    <p class="MsoNormal" style="margin-left:0cm;tab-stops:36.0pt 72.0pt 108.0pt 144.0pt 180.0pt 216.0pt;text-indent:-.1pt;">
+        <span style="font-family:&quot;Verdana&quot;,sans-serif;font-size:8.0pt;"><b style="mso-bidi-font-weight:normal;"><span style="mso-bidi-font-family:Verdana;mso-fareast-font-family:Verdana;" lang="EN-US" dir="ltr"><strong>VP HUMAN CAPITAL MANAGEMENT</strong></span><span style="mso-bidi-font-family:Verdana;mso-fareast-font-family:Verdana;mso-tab-count:3;" lang="EN-US" dir="ltr"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong></span><span style="mso-bidi-font-family:Verdana;mso-fareast-font-family:Verdana;" lang="EN-US" dir="ltr"><strong>JABATAN</strong></span></b></span><o:p></o:p>
+    </p>';
         $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        $pdf->SetFont('times', '', 10);
-        $pdf->SetMargins(20, 30, 20, true);
+        $pdf->SetMargins(20, 20, 20, true);
         $pdf->AddPage('P','A4');
+        $pdf->SetFont('times', '', 14);
+        $pdf->SetFillColor(200, 220, 255);
+        $pdf->Cell(180, 6, $judul, 0, 1, 'C');
+        $pdf->Cell(180, 6, $judul2, 0, 2, 'C');
+        $pdf->Cell(180, 6, $judul3, 0, 3, 'C');
+        $pdf->SetFont('times', '', 10);
         $pdf->setJPEGQuality(75);
-        $pdf->Image('../public/assets/img/tandatangan/kopsurat.png', 0, 5, 200, 45, 'PNG', '', 'N', false, 150, '', false, false, 1, false, false, false);
-        $pdf->Image('../public/assets/img/tandatangan/ttd_tyok_nobg.png', 30, 85, 20, 20, 'PNG', '', '', false, 150, '', false, false, false, false, false, false);
+        $pdf->resetColumns();
+        $pdf->setEqualColumns(2, 84);  // KEY PART -  number of cols and width
+        $pdf->selectColumn();  
+        // $pdf->Image('../public/assets/img/tandatangan/kopsurat.png', 0, 5, 200, 45, 'PNG', '', 'N', false, 150, '', false, false, 1, false, false, false);
+        // $pdf->Image('../public/assets/img/tandatangan/ttd_tyok_nobg.png', 30, 85, 20, 20, 'PNG', '', '', false, 150, '', false, false, false, false, false, false);
         $pdf->writeHTML($content);
+        $pdf->resetColumns();
+        $pdf->writeHTML($ttd);
         $this->response->setContentType('application/pdf');
-        ob_end_clean();
+        // ob_end_clean();
         $pdf->output($name, 'I');
         // $this->load->helper('download');
         // force_download($document, 'surat.soc');

@@ -2,18 +2,62 @@
 
 namespace App\Controllers;
 
-// $session = \Config\Services::session();
+$session = \Config\Services::session();
 use App\Models\Datalaporan;
 use App\Models\Dataemployee;
 use App\Models\DataNilaiFte;
 use App\Models\Datamasteremployee;
+use App\Models\DataClaimReward;
+use App\Models\Dataevent;
+// use Myth\Auth\Entities\User;
 use CodeIgniter\I18n\Time;
+use App\Models\DataStorage;
+use App\Models\DataUsers;
 
 class Import extends BaseController
 {
-    public function index($nik = '')
+    public function index()
     {
-        return redirect()->route('wla/dataemployee');
+        // $auth = service('authentication');
+        // $userId = $auth->id();
+        // echo $userId;
+        // $authorize = service('authorization');
+        // $authorize->inGroup('teste', 1), // check if user 1 is in the 'teste' group
+        // $authorize->hasPermission('users-add', 1), //checks if group 1 has 'users-add' permission
+        // $authorize->doesUserHavePermission(1,'users-add'), //check if there is any user with 'users-add' permission in group 1 
+        // return redirect()->route('wla/dataemployee');
+        
+        // $month = getQuarterReward();
+        // echo $month;
+        
+        date_default_timezone_set('Asia/Jakarta');
+        $datetime = Time::today();
+        $Year = $datetime->format('Y');
+        $quarter = getQuarterReward();
+        $modelclaimreward = new DataClaimReward();
+        $modelevent = new Dataevent();
+        $datachart = array();
+        for($i=1; $i<5; $i++){
+            $countclaim = $modelclaimreward->countAllDataByQuarter($Year, $quarter);
+            $countevent = $modelevent->countByQuarter($Year, $quarter);
+            array_push($datachart, array('tahun' => $Year.' q'.$quarter, 'claim' => $countclaim, 'event' => $countevent));
+            // print_r($countevent);
+            $quarter--;
+            if($quarter == 0){
+                $quarter = 4;
+                $Year--;
+            }
+        }
+        $datachart = array_reverse($datachart);
+        // print_r($datachart);
+        return view('chartpage', compact('datachart'));
+        // echo $userId.'apa';
+        // $authorize = service('authorization');
+        // if($authorize->inGroup('hcsod', 8)){
+            // return redirect()->route('wla/dataemployee');
+        // } else {
+        //     return redirect()->route('storage');
+        // }
     }
     public function employee()
     {

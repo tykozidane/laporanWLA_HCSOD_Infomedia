@@ -6,6 +6,13 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('welcome_message');
+        $auth = service('authentication');
+        $userId = $auth->id();
+        $authorize = service('authorization');
+        if($authorize->inGroup('hcsod', $userId)){
+            return redirect()->route('wla/dataemployee');
+        } else {
+            return redirect()->route('storage');
+        }
     }
 }

@@ -15,6 +15,11 @@ class StorageController extends BaseController
         $userId = $auth->id();
         $users = new DataUsers();
         $datausers = $users->getById($userId);
+        // if(empty($datausers)){
+        //     echo 'kosong';
+        // } else {
+        //     echo $datausers['email'];
+        // }
         $storage = new DataStorage();
         $files = $storage->getByUserId($userId);
         return view('storagepage/listfilepage', compact('datausers', 'files'));
@@ -76,7 +81,7 @@ class StorageController extends BaseController
             $storage = new DataStorage();
             $savedata = $storage->insertData($datasimpan);
             
-            session()->setFlashdata('berhasil', 'Upload Berhasil');
+             
             $files->move('../public/uploads/storage/', $path);
             return redirect()->route('storage');
         }
